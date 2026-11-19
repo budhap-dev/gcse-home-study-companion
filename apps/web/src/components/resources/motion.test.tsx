@@ -50,8 +50,9 @@ describe('the motion switch', () => {
   })
 
   it('takes the travelling dashes away, not only their travel: still, they would read as a fault', () => {
-    expect(css).toMatch(/\[data-motion="off"\] \.anim-flow \{[^}]*display: none/)
-    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\) \{ \.anim-flow \{ display: none; \} \}/)
+    // Moving figures' dashes exist only in motion: invisible when still, and gone from print.
+    expect(css).toMatch(/^\.fa-only \{ opacity: 0; \}/m)
+    expect(css).toMatch(/\.fa-only, \.fig-replay \{ display: none !important; \}/)
   })
 
   /** An entrance caught before it began would print as a blank. */
@@ -59,16 +60,16 @@ describe('the motion switch', () => {
     const print = [...css.matchAll(/@media print \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join('\n')
     for (const name of ['anim-rise', 'anim-sq', 'anim-fade-up', 'anim-pop']) expect(print, name).toMatch(new RegExp(`\\.${name}\\b[^{]*\\{[^}]*animation: none !important`))
     expect(print).toMatch(/\.anim-draw \{[^}]*stroke-dasharray: none !important/)
-    expect(print).toMatch(/\.anim-flow \{ display: none !important/)
   })
 })
 
 describe('the loops a designer tunes', () => {
-  const LOOPS = ['flow', 'drift', 'here', 'banner', 'flame', 'streak']
+  // The heart's blood looped here until 19 November 2026; it is a figure that moves once now.
+  const LOOPS = ['drift', 'here', 'banner', 'flame', 'streak']
 
   /** A loop that wrote its own time or "infinite" would ignore the controls in styles.css. */
   it('takes every loop\'s time and number of plays from the tokens', () => {
-    const root = /:root \{\n  --flow-time[\s\S]*?\n\}/.exec(css)![0]
+    const root = /:root \{\n  --drift-time[\s\S]*?\n\}/.exec(css)![0]
     for (const name of LOOPS) {
       expect(root, name).toMatch(new RegExp(`--${name}-time: [\\d.]+s;`))
       expect(root, name).toMatch(new RegExp(`--${name}-plays: infinite;`))
@@ -79,9 +80,11 @@ describe('the loops a designer tunes', () => {
     expect(fixed).toEqual(['animation: screen-opening 0.7s ease-in-out infinite alternate;'])
   })
 
-  it('fades the blood\'s dashes when a counted run of plays ends', () => {
-    expect(css).toMatch(/\.anim-flow\.flow-done \{ opacity: 0; \}/)
-    expect(readFileSync(join(SRC, 'components/diagrams/HeartDiagram.tsx'), 'utf8')).toMatch(/onAnimationEnd=\{\(e\) => e\.currentTarget\.classList\.add\('flow-done'\)\}/)
+  it('fades the blood\'s dashes when they stop, rather than looping', () => {
+    const html = renderToStaticMarkup(<HeartDiagram props={{}} alt="The heart" />)
+    const flows = [...html.matchAll(/class="fa fa-flow fa-only"[^>]*/g)].map((m) => m[0])
+    expect(flows).toHaveLength(4)
+    for (const f of flows) expect(f).not.toMatch(/infinite|animation-iteration-count/)
   })
 })
 
@@ -122,7 +125,7 @@ describe('how long a page takes to arrive', () => {
 })
 
 describe('drawings that move to show something', () => {
-  const dash = (html: string) => [...html.matchAll(/<path d="([^"]+)"[^>]*pathLength="1"[^>]*class="anim-draw"[^>]*style="([^"]*)"/g)].map((m) => ({ d: m[1]!, wait: Number(/--d:([\d.]+)s/.exec(m[2]!)![1]), lasts: Number(/animation-duration:([\d.]+)s/.exec(m[2]!)![1]) }))
+  const dash = (html: string) => [...html.matchAll(/<path d="([^"]+)"[^>]*class="fa fa-draw"[^>]*style="([^"]*)"[^>]*pathLength="1"/g)].map((m) => ({ d: m[1]!, wait: Number(/--d:([\d.]+)s/.exec(m[2]!)![1]), lasts: Number(/--t:([\d.]+)s/.exec(m[2]!)![1]) }))
 
   /** One wave, drawn from the long end to the short: each band starts as the one before it finishes. */
   it('draws the spectrum’s wave in one unbroken sweep', () => {
@@ -146,23 +149,28 @@ describe('drawings that move to show something', () => {
    */
   it('sends the blood the way it flows, along all four vessels', () => {
     const html = renderToStaticMarkup(<HeartDiagram props={{}} alt="The heart" />)
-    const flows = [...html.matchAll(/<path d="(M[^"]+)" class="anim-flow"/g)].map((m) => [...m[1]!.matchAll(/[ML]([\d.]+) ([\d.]+)/g)].map((p) => [Number(p[1]), Number(p[2])] as const))
+    const flows = [...html.matchAll(/<path d="(M[^"]+)" class="fa fa-flow fa-only"/g)].map((m) => [...m[1]!.matchAll(/[ML]([\d.]+) ([\d.]+)/g)].map((p) => [Number(p[1]), Number(p[2])] as const))
     expect(flows).toHaveLength(4)
     // The lungs are the box at the top, the body the box at the bottom, the chambers between.
     const place = ([, y]: readonly [number, number]) => (y < 60 ? 'lungs' : y > 290 ? 'body' : 'heart')
     expect(flows.map((f) => `${place(f[0]!)} to ${place(f.at(-1)!)}`)).toEqual(['body to heart', 'heart to lungs', 'lungs to heart', 'heart to body'])
     // Each runs along its vessel, exactly.
-    for (const [, d] of html.matchAll(/<path d="(M[^"]+)" class="anim-flow"/g)) expect(html).toContain(`<path d="${d}" fill="none" stroke="#`)
+    for (const [, d] of html.matchAll(/<path d="(M[^"]+)" class="fa fa-flow fa-only"/g)) expect(html).toContain(`<path d="${d}" fill="none" stroke="#`)
     // And a screen reader is not told about dashes.
-    expect(html.match(/class="anim-flow"[^>]*aria-hidden="true"/g)).toHaveLength(4)
+    expect(html.match(/class="fa fa-flow fa-only"[^>]*aria-hidden="true"/g)).toHaveLength(4)
   })
 
   it('brings the pH colours in from acid to alkali, each about its own middle', () => {
     const html = renderToStaticMarkup(<PhScale props={{}} alt="The pH scale" />)
-    const cells = [...html.matchAll(/<rect[^>]*class="anim-sq anim-self"[^>]*style="--d:([\d.]+)s"/g)].map((m) => Number(m[1]))
+    const cells = [...html.matchAll(/<rect x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"[^>]*class="fa fa-grow"[^>]*style="--d:([\d.]+)s;[^"]*transform-origin:([\d.]+)px ([\d.]+)px/g)]
+      .map((m) => ({ x: Number(m[1]), y: Number(m[2]), w: Number(m[3]), h: Number(m[4]), wait: Number(m[5]), ox: Number(m[6]), oy: Number(m[7]) }))
     expect(cells).toHaveLength(15)
-    for (let i = 1; i < cells.length; i++) expect(cells[i]).toBeGreaterThan(cells[i - 1]!)
-    expect(cells.at(-1)! + 0.4).toBeLessThan(1.5)
-    expect(css).toMatch(/\.anim-self \{[^}]*transform-box: fill-box[^}]*transform-origin: center/)
+    for (let i = 1; i < cells.length; i++) expect(cells[i]!.wait).toBeGreaterThan(cells[i - 1]!.wait)
+    expect(cells.at(-1)!.wait + 0.4).toBeLessThan(1.5)
+    // Each grows about its own middle, not the drawing's corner.
+    for (const c of cells) {
+      expect(c.ox).toBeCloseTo(c.x + c.w / 2, 0)
+      expect(c.oy).toBeCloseTo(c.y + c.h / 2, 0)
+    }
   })
 })

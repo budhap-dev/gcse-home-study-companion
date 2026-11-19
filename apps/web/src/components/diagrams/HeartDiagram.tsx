@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 
 /**
  * The heart and the double circulation, as Edexcel 1BI0 8.8 asks: the four chambers, the
@@ -36,8 +37,9 @@ function Vessel({ pts, colour, gap = false }: { pts: [number, number][]; colour:
       {gap && <path d={d} fill="none" stroke="#fff" strokeWidth="13" strokeLinejoin="round" />}
       <path d={d} fill="none" stroke={colour} strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" />
       {/* The blood itself: pale dashes moving from the first point to the last, the way it flows.
-          When a designer gives the flow a number of plays (styles.css), the dashes fade once it ends. */}
-      <path d={d} className="anim-flow" data-flow="" onAnimationEnd={(e) => e.currentTarget.classList.add('flow-done')} fill="none" stroke="#fff" strokeOpacity="0.85" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" aria-hidden />
+          They run once the figure is on screen and fade when they stop: still dashes read as a
+          fault, so with no motion there are none (section 15 Part B; it looped until then). */}
+      <path d={d} {...move('flow', 0.3, 3.4, { vars: { run: 96 } })} data-flow="" fill="none" stroke="#fff" strokeOpacity="0.85" strokeWidth="2.2" strokeDasharray="3 9" strokeLinejoin="round" strokeLinecap="round" aria-hidden />
       <path d={head} fill={colour} />
     </g>
   )

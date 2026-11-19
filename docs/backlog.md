@@ -1329,6 +1329,16 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   height but 2.2 f along); fixed, with a test of the construction for every lens the
   content draws.
 - [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
+  **Chemistry and Biology done 19 November 2026 (10.156.0):** ions drifting to the electrode
+  that attracts them, then the products and the gas; the transferred electrons crossing from
+  one atom to the other in ionic bonding, each atom's electron moving into its shared pair in
+  covalent; a reaction's path traced over its profile, the activation energy at the peak and
+  the overall change at the end; water up the xylem and sucrose both ways in the phloem, water
+  into a root hair, gases through a stoma, the potometer's bubble. The four older animations
+  (heart, pH scale, spectrum, circuit symbols) moved onto the framework, so they play on view
+  with Play again, and the heart's blood no longer loops. Fixed on the way: the potometer's
+  arrow showed the bubble moving away from the shoot; it moves towards it, as the shoot takes
+  water up. Maths and Computer Science next.
 - [x] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
   drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and
   Physics lessons first. After it, each subject's Part A PR adds that subject's marks.

@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 
 const GREEN = '#2e8b57', LEAF = '#dff0e3', WATER = '#1f3a93', SUGAR = '#d25b3b'
 /** Line spacing for a wrapped 11px label. */
@@ -12,6 +13,10 @@ const LH = 13
  * that used it. The labels that used to sit beside the picture, one line each, now wrap
  * onto several short lines instead — words are never dropped, only broken across more
  * lines, keeping every original prefix, ✕ and figure the props always carried.
+ *
+ * In motion (section 15 Part B) water moves through the plant: up the xylem, sucrose both
+ * ways in the phloem, into a root hair, the potometer's bubble towards the shoot, and gases
+ * through a stoma.
  */
 export function Plant({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const kind = String(props.kind ?? 'leaf-section')
@@ -56,7 +61,7 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<path key="g2" d={`M${g2x} 176 Q${g2x - 5.3} 184 ${g2x} 192`} fill="#f2f2f2" stroke={INK} strokeWidth="1" />)
     items.push(<path key="g1b" d={`M${g1x} 176 Q${g1x + 10.7} 184 ${g1x} 192 Z`} fill={LEAF} stroke={INK} strokeWidth="1" />)
     items.push(<path key="g2b" d={`M${g2x} 176 Q${g2x - 10.7} 184 ${g2x} 192 Z`} fill={LEAF} stroke={INK} strokeWidth="1" />)
-    items.push(<path key="co2" d={`M${scaleX(95)} 214 L${scaleX(95)} 196`} stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" />)
+    items.push(<path key="co2" d={`M${scaleX(95)} 214 L${scaleX(95)} 196`} stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" {...move('slide', 0.3, 1.2, { vars: { dy: '14px' } })} />)
 
     // The cuticle and the upper epidermis are genuinely only ten pixels apart in the leaf,
     // so their labels collided once the text reached a readable size; now that a phone
@@ -101,7 +106,7 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<circle key="nuc" cx={sx(60)} cy={105} r={14 * k} fill="#c9dccf" stroke={INK} strokeWidth="1" />)
     items.push(<ellipse key="vac" cx={sx(110)} cy={105} rx={20 * k} ry={16 * k} fill="#e6f1ff" stroke={INK_2} strokeWidth="1" />)
     for (let i = 0; i < 5; i++) items.push(<ellipse key={`m${i}`} cx={sx(40 + i * 24)} cy={i % 2 ? 82 : 128} rx={5 * k} ry={3 * k} fill={SUGAR} />)
-    for (let i = 0; i < 5; i++) items.push(<path key={`w${i}`} d={`M${sx(190 + i * 26)} 150 l -4 -10`} stroke={WATER} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    for (let i = 0; i < 5; i++) items.push(<path key={`w${i}`} d={`M${sx(190 + i * 26)} 150 l -4 -10`} stroke={WATER} strokeWidth="2" markerEnd="url(#arrow-plant)" {...move('slide', 0.2 + i * 0.2, 1.0, { vars: { dx: '6px', dy: '15px' } })} />)
     // Right of the mitochondria's leader, which runs straight down at x = sx(88): centred,
     // this label sat across that line.
     label(sx(120), 168, ['water in by osmosis,', 'mineral ions by', 'active transport'], 'lw')
@@ -120,6 +125,8 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<rect key="x" x={xX} y={xTop} width={xW} height={xH} rx="6" fill="#eef3ff" stroke={INK} strokeWidth="2.5" />)
     for (let i = 0; i < 4; i++) items.push(<path key={`lig${i}`} d={`M${xX + 2} ${xTop + 14 + i * 22} q ${xW / 2 - 4} 8 ${xW - 4} 0`} fill="none" stroke={INK} strokeWidth="2" />)
     for (let i = 0; i < 2; i++) items.push(<path key={`up${i}`} d={`M${xX + 14 + i * 22} ${xTop + xH - 6} V ${xTop + 6}`} stroke={WATER} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    // Water moving up, as dots that exist only in motion.
+    for (let i = 0; i < 2; i++) items.push(<path key={`upf${i}`} d={`M${xX + 14 + i * 22} ${xTop + xH - 6} V ${xTop + 6}`} fill="none" stroke={WATER} strokeWidth="5" strokeLinecap="round" strokeDasharray="0.1 14" {...move('flow', 0.2, 3.2, { vars: { run: 84, from: -7 * i } })} />)
     items.push(
       <text key="tx" x={xX + xW / 2} y={xTop + xH + 20} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
         xylem
@@ -138,6 +145,9 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<circle key="ccn" cx={pX + pW + 12} cy={pTop + pH / 2} r="4" fill={SUGAR} opacity="0.7" />)
     items.push(<path key="d1" d={`M${pX + 14} ${pTop + 6} V ${pTop + pH - 6}`} stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
     items.push(<path key="d2" d={`M${pX + 36} ${pTop + pH - 6} V ${pTop + 6}`} stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    // Sucrose, both ways.
+    items.push(<path key="d1f" d={`M${pX + 14} ${pTop + 6} V ${pTop + pH - 6}`} fill="none" stroke={SUGAR} strokeWidth="5" strokeLinecap="round" strokeDasharray="0.1 14" {...move('flow', 0.4, 3.2, { vars: { run: 84 } })} />)
+    items.push(<path key="d2f" d={`M${pX + 36} ${pTop + pH - 6} V ${pTop + 6}`} fill="none" stroke={SUGAR} strokeWidth="5" strokeLinecap="round" strokeDasharray="0.1 14" {...move('flow', 0.4, 3.2, { vars: { run: 84, from: -7 } })} />)
     items.push(
       <text key="tp" x={(pX + pX + pW + 20) / 2} y={pTop + pH + 30} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
         phloem
@@ -170,7 +180,7 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     }
     const openX = 76, closedX = 218
     draw(openX, true, 'o'); draw(closedX, false, 'c')
-    items.push(<path key="in" d={`M${openX} 40 V 20`} stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" />)
+    items.push(<path key="in" d={`M${openX} 40 V 20`} stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" {...move('slide', 0.3, 1.2, { vars: { dy: '14px' } })} />)
     label(8, 14, 'water vapour out, CO₂ in', 'lo')
     label(W / 2, 222, ['the stoma is the gap between the two guard', 'cells'], 'cap', 'middle')
     H = 242
@@ -184,7 +194,8 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<rect key="tap" x={sx(34)} y={110} width={sx(18)} height={10} fill="#ccc" stroke={INK} strokeWidth="1" />)
     items.push(<path key="tube" d={`M${sx(43)} 120 V 150 H ${sx(300)}`} fill="none" stroke={INK} strokeWidth="6" />)
     items.push(<path key="tube2" d={`M${sx(43)} 120 V 150 H ${sx(300)}`} fill="none" stroke="#eef3ff" strokeWidth="3" />)
-    items.push(<rect key="bub" x={sx(200)} y={147} width={12} height={6} rx="3" fill="#fff" stroke={INK} strokeWidth="1" />)
+    // The bubble moves towards the shoot as the shoot takes up water through the open end.
+    items.push(<rect key="bub" x={sx(200)} y={147} width={12} height={6} rx="3" fill="#fff" stroke={INK} strokeWidth="1" {...move('slide', 0.3, 2.8, { ease: 'linear', vars: { dx: '40px' } })} />)
     for (let i = 0; i < 9; i++) items.push(<line key={`sc${i}`} x1={sx(130 + i * 20)} y1={158} x2={sx(130 + i * 20)} y2={i % 2 ? 164 : 168} stroke={INK} strokeWidth="1" />)
     items.push(<path key="stem" d={`M${sx(170)} 150 V 60`} stroke={GREEN} strokeWidth="5" />)
     for (let i = 0; i < 4; i++)
@@ -201,7 +212,8 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
           transform={`rotate(${i % 2 ? -25 : 25} ${sx(170) + (i % 2 ? 22 : -22)} ${70 + i * 18})`}
         />,
       )
-    items.push(<path key="bm" d={`M${sx(212)} 153 H ${sx(236)}`} stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    // Towards the shoot, which is the way it moves: it pointed away until 19 November 2026.
+    items.push(<path key="bm" d={`M${sx(198)} 156 H ${sx(182)}`} stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" {...move('fade', 3.0, 0.4)} />)
     label(8, 14, 'reservoir: tap opened to reset the bubble', 'l1')
     label(8, 200, ['capillary tube with scale: distance the', 'bubble moves per minute'], 'l2')
     // Clear of the lowest leaf, which reached across the label when it sat straight above the bubble.

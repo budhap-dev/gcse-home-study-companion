@@ -13,7 +13,10 @@ import { Visual } from '../Visual.tsx'
  */
 
 /** The diagram kinds that move, and the ones of those allowed to stay still in some drawing. */
-const MOVING = ['circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output'] as const
+const MOVING = [
+  'circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output',
+  'electrolysis-cell', 'dot-and-cross', 'reaction-profile', 'plant', 'heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols',
+] as const
 /** A circuit with a switch draws it open, so no current flows round it. */
 const mayBeStill = (component: string, props: Record<string, unknown>) =>
   component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')
@@ -45,9 +48,14 @@ const moving = (markup: string) => [...markup.matchAll(/<(\w+)\b([^>]*\bclass="f
 describe('figures that move', () => {
   const all = uses().filter((u) => (MOVING as readonly string[]).includes(u.component))
 
+  // Drawn on the Resources pages rather than in lessons: checked from their own default drawing.
+  const SHEETS = new Set(['heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols'])
+  for (const c of SHEETS) all.push({ component: c, props: {}, where: 'resources' })
+  all.push({ component: 'em-spectrum', props: { layout: 'across' }, where: 'resources' })
+
   it('finds every moving kind in the content pack', () => {
-    for (const c of MOVING) expect(all.some((u) => u.component === c), c).toBe(true)
-    expect(all.length).toBeGreaterThan(70)
+    for (const c of MOVING) expect(all.some((u) => u.component === c && (SHEETS.has(c) || u.where !== 'resources')), c).toBe(true)
+    expect(all.length).toBeGreaterThan(110)
   })
 
   it.each(MOVING.map((c) => [c]))('%s: every figure moves, ends within the limit, and never loops', (component) => {
@@ -96,6 +104,24 @@ describe('the current in a circuit', () => {
     const markup = render('circuit-diagram', { supply: { pd: 6 }, arrangement: 'parallel', parts: [{ kind: 'resistor', resistance: 2 }, { kind: 'resistor', resistance: 6 }] })
     const [a, b] = flows(markup)
     expect(b!.spacing / a!.spacing).toBeCloseTo(3, 5)
+  })
+})
+
+describe('chemistry and biology', () => {
+  it('sends the transferred electrons across from the atom that loses them', () => {
+    const markup = render('dot-and-cross', { kind: 'ionic', atoms: [{ symbol: 'Na', outer: 1, mark: 'cross' }, { symbol: 'Cl', outer: 7, mark: 'dot' }], transfer: 1 })
+    // The group holding the gained electrons starts one atom-spacing to the left: on the sodium.
+    expect(markup).toMatch(/class="fa fa-slide" style="--d:0.50s;--t:1.30s;[^"]*--dx:-160px"/)
+  })
+
+  it('moves the potometer bubble towards the shoot, and points its arrow that way', () => {
+    const markup = render('plant', { kind: 'potometer' })
+    const stem = Number(/<path d="M([\d.]+) 150 V 60" stroke="#2e8b57"/.exec(markup)![1])
+    const [, x1, x2] = /<path d="M([\d.]+) 156 H ([\d.]+)" stroke="#d25b3b"/.exec(markup)!.map(Number)
+    const bubble = Number(/<rect x="([\d.]+)" y="147"/.exec(markup)![1])
+    expect(bubble).toBeGreaterThan(stem)
+    expect(x2!).toBeLessThan(x1!)          // pointing left, towards the shoot
+    expect(markup).toMatch(/y="147"[^>]*class="fa fa-slide"[^>]*--dx:40px/)  // arrives from the right
   })
 })
 

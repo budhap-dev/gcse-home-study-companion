@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 import { wrapCell } from './tableLayout.ts'
 
 /**
@@ -194,7 +195,7 @@ export function CircuitSymbols({ props, alt }: { props: Record<string, unknown>;
         const x = (i % columns) * (TILE_W + GAP)
         const c = t.family.colour
         return (
-          <g key={t.id} data-symbol={t.id} className="anim-rise" style={{ '--d': `${Math.min(0.1 + i * 0.04, 0.6).toFixed(2)}s` } as React.CSSProperties}>
+          <g key={t.id} data-symbol={t.id} {...move('fade', Math.min(0.1 + i * 0.04, 0.6), 0.5)}>
             <rect x={x + 1} y={row.top + 1} width={TILE_W - 2} height={row.height - 2} rx="12" fill="#fff" stroke={RULE} />
             <rect x={x + 1} y={row.top + 1} width={TILE_W - 2} height={SYMBOL_H} rx="12" fill={c} fillOpacity={0.07} />
             <Glyph id={t.id} cx={x + TILE_W / 2} cy={row.top + SYMBOL_H / 2 + 4} c={c} />
