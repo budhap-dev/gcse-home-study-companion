@@ -11,11 +11,15 @@ import { setProfile, type Profile } from '../progress/store.ts'
  * went on 1 October 2026 ("not useful for now"): the plan and the map cover every subject.
  *
  * `legend` hides the group's name where the page already shows it as a heading (Settings);
- * screen readers still hear it.
+ * screen readers still hear it. `saveWhen="changed"` (Settings) shows the button only once a
+ * year other than the saved one is picked (19 November 2026): a Save beside the year already
+ * saved read as a step still to do. First visit keeps it, since nothing is saved yet.
  */
-export function ProfileForm({ profile, onSaved, saveLabel = 'Save', legend = 'shown' }: { profile: Profile; onSaved?: () => void; saveLabel?: string; legend?: 'shown' | 'hidden' }) {
+export function ProfileForm({ profile, onSaved, saveLabel = 'Save', legend = 'shown', saveWhen = 'always' }: { profile: Profile; onSaved?: () => void; saveLabel?: string; legend?: 'shown' | 'hidden'; saveWhen?: 'always' | 'changed' }) {
   const [year, setYear] = useState<Profile['year']>(profile.year)
   const [saved, setSaved] = useState(false)
+  const changed = year !== profile.year
+  const showSave = saveWhen === 'always' || changed
   const save = () => {
     setProfile({ year, setupAt: new Date().toISOString() })
     setSaved(true)
@@ -33,10 +37,12 @@ export function ProfileForm({ profile, onSaved, saveLabel = 'Save', legend = 'sh
         </div>
       </fieldset>
 
-      <div className="flex items-center gap-3">
-        <button type="button" onClick={save} className="btn btn-primary btn-lg">{saveLabel}</button>
-        {saved && <span className="text-sm text-ink-2" role="status">Saved.</span>}
-      </div>
+      {(showSave || saved) && (
+        <div className="flex items-center gap-3">
+          {showSave && <button type="button" onClick={save} className="btn btn-primary btn-lg">{saveLabel}</button>}
+          {saved && !changed && <span className="text-sm text-ink-2" role="status">Saved.</span>}
+        </div>
+      )}
     </div>
   )
 }

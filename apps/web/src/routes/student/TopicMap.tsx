@@ -102,32 +102,38 @@ function SubjectHeader({ subject, squares, spec }: { subject: Subject; squares: 
   const c = 2 * Math.PI * r
   // The school's years, which the specification's order does not show.
   const years = spec ? [] : yearsForSubject(subject.id)
+  // A solid band of the subject's colour (19 November 2026: the 20% tint into white read as
+  // pale). It only darkens towards the right: every subject colour is held at 4.5:1 under
+  // white text as a fill, and darker can only raise that. The chips and the links keep their
+  // own surface, so they stand out on the band in every theme.
   return (
     <header
-      className="anim-rise flex flex-col gap-5 rounded-3xl border p-5 sm:p-6 xl:flex-row xl:items-center xl:gap-7"
-      style={{ borderColor: 'color-mix(in srgb, var(--subject) 30%, var(--color-rule))', background: 'linear-gradient(120deg, color-mix(in srgb, var(--subject) 20%, var(--color-surface)), var(--color-surface) 55%, color-mix(in srgb, var(--hero-2) 10%, var(--color-surface)))' }}
+      className="anim-rise relative flex flex-col gap-5 overflow-hidden rounded-3xl p-5 text-white shadow-[0_14px_34px_-14px_color-mix(in_srgb,var(--subject)_70%,transparent)] sm:p-6 xl:flex-row xl:items-center xl:gap-7"
+      style={{ background: 'linear-gradient(120deg, var(--subject), color-mix(in srgb, var(--subject) 68%, #000))' }}
+      data-subject-header=""
     >
-      <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label={`${secure} of ${squares.length} topics secure`} className="shrink-0">
-        <circle cx="52" cy="52" r={r} fill="none" stroke="var(--color-rule)" strokeWidth="12" />
-        <circle className="anim-ring" cx="52" cy="52" r={r} fill="none" stroke="var(--subject)" strokeWidth="12" strokeLinecap="round" strokeDasharray={`${(c * secure) / Math.max(1, squares.length)} ${c}`} transform="rotate(-90 52 52)" />
-        <text x="52" y="53" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="26" fontWeight="700" fill="var(--color-ink)">{secure}</text>
-        <text x="52" y="71" textAnchor="middle" fontSize="12" fill="var(--color-ink-2)">of {squares.length} secure</text>
+      <span className="hero-shine" aria-hidden />
+      <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label={`${secure} of ${squares.length} topics secure`} className="relative shrink-0">
+        <circle cx="52" cy="52" r={r} fill="none" stroke="rgb(255 255 255 / 0.25)" strokeWidth="12" />
+        <circle className="anim-ring" cx="52" cy="52" r={r} fill="none" stroke="#fff" strokeWidth="12" strokeLinecap="round" strokeDasharray={`${(c * secure) / Math.max(1, squares.length)} ${c}`} transform="rotate(-90 52 52)" />
+        <text x="52" y="53" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="26" fontWeight="700" fill="#fff">{secure}</text>
+        <text x="52" y="71" textAnchor="middle" fontSize="12" fill="#fff">of {squares.length} secure</text>
       </svg>
-      <div className="flex min-w-0 flex-grow flex-col gap-1">
-        <p className="text-xs font-bold uppercase tracking-[0.12em] accent-ink">
+      <div className="relative flex min-w-0 flex-grow flex-col gap-1">
+        <p className="text-xs font-bold uppercase tracking-[0.12em] text-white">
           {subject.board}{years.length ? ` · Year${years.length > 1 ? 's' : ''} ${years[0]}${years.length > 1 ? ` to ${years.at(-1)}` : ''}` : ''}
         </p>
         <h1 className="text-[34px] font-bold leading-[1.05] sm:text-[42px]">{subject.name}</h1>
         <ul className="mt-2 flex flex-wrap gap-2">
           {[4, 3, 2, 1, 0].map((level) => (
-            <li key={level} className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1 text-[13px] font-bold">
+            <li key={level} className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-[13px] font-bold text-ink">
               <span aria-hidden className={`map-sq map-l${level} inline-block h-3 w-3 rounded-[3px]`} />
               {counts[level]} {MAP_LEVEL_LABEL[level]!.toLowerCase()}
             </li>
           ))}
         </ul>
       </div>
-      <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 xl:flex-col xl:flex-nowrap xl:gap-2">
+      <div className="relative flex shrink-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 xl:flex-col xl:flex-nowrap xl:gap-2 xl:items-stretch">
         <Link to={`/subjects/${subject.id}/exam-technique`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>✎</span> Exam technique guide
         </Link>
