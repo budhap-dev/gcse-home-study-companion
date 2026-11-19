@@ -7,6 +7,8 @@ interface Part {
   label?: string
   /** Ohms. Given for resistors and lamps, so the readings can be worked out. */
   resistance?: number
+  /** A switch only: drawn closed, so the loop is complete. Open unless this says otherwise. */
+  closed?: boolean
 }
 
 /**
@@ -25,8 +27,9 @@ interface Part {
  * In motion (section 15 Part B), current flows: dots leave the cell's positive terminal (the
  * long plate) and go round to the negative one, the conventional direction. In parallel each
  * branch has its own stream, its dots spaced by that branch's current, so the wires the
- * branches share carry them all and are visibly busier. A circuit with a switch shows none,
- * because the switch symbol is drawn open.
+ * branches share carry them all and are visibly busier. A circuit with an open switch shows
+ * none. A switch is drawn open unless it is `closed`: until 19 November 2026 every switch was
+ * open, so a figure captioned "a closed loop" showed a broken one.
  */
 export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const parts = (props.parts as Part[] | undefined) ?? []
@@ -138,7 +141,9 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
           <>
             <circle cx={cx - 15} cy={cy} r={3} fill={INK} />
             <circle cx={cx + 15} cy={cy} r={3} fill={INK} />
-            <line x1={cx - 15} y1={cy} x2={cx + 12} y2={cy - 14} stroke={INK} strokeWidth={1.8} />
+            {p.closed
+              ? <line x1={cx - 15} y1={cy} x2={cx + 15} y2={cy} stroke={INK} strokeWidth={1.8} data-switch="closed" />
+              : <line x1={cx - 15} y1={cy} x2={cx + 12} y2={cy - 14} stroke={INK} strokeWidth={1.8} data-switch="open" />}
           </>,
         )
       case 'diode':
@@ -199,7 +204,7 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
   )
 
   /** Dots of current along a path, `spacing` units apart, starting `phase` along. */
-  const flowing = parts.every((p) => p.kind !== 'switch')
+  const flowing = parts.every((p) => p.kind !== 'switch' || p.closed === true)
   const FLOW_RUN = 150
   const flow = (pts: [number, number][], spacing: number, phase: number, key: string) => {
     const run = spacing * Math.max(1, Math.round(FLOW_RUN / spacing))

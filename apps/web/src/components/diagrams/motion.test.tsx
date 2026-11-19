@@ -21,7 +21,7 @@ const MOVING = [
 ] as const
 /** A circuit with a switch draws it open, so no current flows round it. */
 const mayBeStill = (component: string, props: Record<string, unknown>) =>
-  (component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')) ||
+  (component === 'circuit-diagram' && ((props.parts as { kind: string; closed?: boolean }[] | undefined) ?? []).some((p) => p.kind === 'switch' && p.closed !== true)) ||
   // A circle with nothing marked on it has no angle to draw.
   (component === 'circle-theorem' && !(props.angles as unknown[] | undefined)?.length && !props.arc)
 
@@ -82,8 +82,23 @@ describe('figures that move', () => {
     }
   })
 
-  it('leaves circuits with an open switch still', () => {
+  it('leaves a circuit with an open switch still, and lets current round a closed one', () => {
     for (const u of all.filter((x) => x.component === 'circuit-diagram' && mayBeStill(x.component, x.props))) expect(moving(render(u.component, u.props)), u.where).toHaveLength(0)
+    const parts = (closed: boolean) => [{ kind: 'switch', closed }, { kind: 'lamp' }]
+    const open = render('circuit-diagram', { supply: { pd: 6 }, parts: parts(false) })
+    const shut = render('circuit-diagram', { supply: { pd: 6 }, parts: parts(true) })
+    expect(open).toContain('data-switch="open"')
+    expect(moving(open)).toHaveLength(0)
+    expect(shut).toContain('data-switch="closed"')
+    expect(shut).toMatch(/class="fa fa-flow fa-only"/)
+  })
+
+  // Every switch the content draws is closed: each figure shows a loop that conducts, and
+  // "a closed loop" was captioned under an open switch until 19 November 2026.
+  it('draws every content switch closed', () => {
+    for (const u of all.filter((x) => x.component === 'circuit-diagram')) {
+      for (const part of (u.props.parts as { kind: string; closed?: boolean }[]) ?? []) if (part.kind === 'switch') expect(part.closed, u.where).toBe(true)
+    }
   })
 })
 
