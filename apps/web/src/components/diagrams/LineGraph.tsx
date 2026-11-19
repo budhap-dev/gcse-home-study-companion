@@ -1,6 +1,7 @@
 import { useId, useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 import { besides, near, settler, type Pt, type Seg, type Spot } from './labelPlace.ts'
 
 interface Line {
@@ -421,7 +422,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     circle: (i: number) => circles[i]!.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!,
   }
   const named = (at: Spot | undefined, text: string | undefined, colour: string, key: string, size = 12) =>
-    at && text ? <text key={key} x={at.x} y={at.y} textAnchor={at.anchor} fontFamily={DISPLAY} fontSize={size} fontWeight="700" fill={colour} {...halo}>{text}</text> : null
+    at && text ? <text key={key} x={at.x} y={at.y} textAnchor={at.anchor} fontFamily={DISPLAY} fontSize={size} fontWeight="700" fill={colour} {...halo} {...move('fade', 2.0, 0.4)}>{text}</text> : null
 
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
@@ -430,6 +431,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}
       {axes && yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {axes && xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
+      {/* In motion (section 15 Part B) everything plotted draws itself from left to right,
+          then the points and the names arrive. */}
+      <g {...move('wipe', 0.2, 1.8)}>
       {lines.map((l, i) => {
         const seg = lineSegs[i]
         if (!seg) return null
@@ -451,7 +455,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         )
       })}
       {circles.map((c, i) => <ellipse key={`c${i}`} cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colourOf.circle(i)} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />)}
-      {points.map((p, i) => <circle key={`p${i}`} cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />)}
+      </g>
+      {points.map((p, i) => <circle key={`p${i}`} cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" {...move('grow', Math.min(2.0 + i * 0.08, 3.2), 0.35, { at: [sx(p.x), sy(p.y)] })} />)}
       {/*
         * The tick numbers sit against the axes, which is exactly where a curve crosses
         * them: every sine wave in the pack had its 180 and 360 struck through. They are
@@ -473,9 +478,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {waves.map((w, i) => named(waveLabels[i], w.label, colourOf.wave(i), `wl${i}`))}
       {polygons.map((g, i) => named(polygonLabels[i], g.label, colourOf.polygon(i), `gl${i}`, 13))}
       {circles.map((c, i) => named(circleLabels[i], c.label, colourOf.circle(i), `cl${i}`))}
-      {points.map((p, i) => pointLabels[i] && <text key={`pl${i}`} x={pointLabels[i]!.x} y={pointLabels[i]!.y} textAnchor={pointLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo}>{p.label}</text>)}
+      {points.map((p, i) => pointLabels[i] && <text key={`pl${i}`} x={pointLabels[i]!.x} y={pointLabels[i]!.y} textAnchor={pointLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo} {...move('fade', 2.1, 0.4)}>{p.label}</text>)}
       {labels.map((l, i) => (
-        <text key={`t${i}`} x={freeLabels[i]!.x} y={freeLabels[i]!.y} textAnchor={freeLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo}>{l.text}</text>
+        <text key={`t${i}`} x={freeLabels[i]!.x} y={freeLabels[i]!.y} textAnchor={freeLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo} {...move('fade', 2.1, 0.4)}>{l.text}</text>
       ))}
     </svg>
   )

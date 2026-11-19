@@ -13,10 +13,17 @@ import { Visual } from '../Visual.tsx'
  */
 
 /** The diagram kinds that move, and the ones of those allowed to stay still in some drawing. */
-const MOVING = ['circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output'] as const
+const MOVING = [
+  'circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output',
+  'electrolysis-cell', 'dot-and-cross', 'reaction-profile', 'plant', 'heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols',
+  'line-graph', 'curve-graph', 'probability-tree', 'frequency-tree', 'vector-figure', 'vector-triangle', 'circle-theorem',
+  'logic-circuit', 'flowchart', 'huffman-tree',
+] as const
 /** A circuit with a switch draws it open, so no current flows round it. */
 const mayBeStill = (component: string, props: Record<string, unknown>) =>
-  component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')
+  (component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')) ||
+  // A circle with nothing marked on it has no angle to draw.
+  (component === 'circle-theorem' && !(props.angles as unknown[] | undefined)?.length && !props.arc)
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
 function uses(): { component: string; props: Record<string, unknown>; where: string }[] {
@@ -45,9 +52,14 @@ const moving = (markup: string) => [...markup.matchAll(/<(\w+)\b([^>]*\bclass="f
 describe('figures that move', () => {
   const all = uses().filter((u) => (MOVING as readonly string[]).includes(u.component))
 
+  // Drawn on the Resources pages rather than in lessons: checked from their own default drawing.
+  const SHEETS = new Set(['heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols'])
+  for (const c of SHEETS) all.push({ component: c, props: {}, where: 'resources' })
+  all.push({ component: 'em-spectrum', props: { layout: 'across' }, where: 'resources' })
+
   it('finds every moving kind in the content pack', () => {
-    for (const c of MOVING) expect(all.some((u) => u.component === c), c).toBe(true)
-    expect(all.length).toBeGreaterThan(70)
+    for (const c of MOVING) expect(all.some((u) => u.component === c && (SHEETS.has(c) || u.where !== 'resources')), c).toBe(true)
+    expect(all.length).toBeGreaterThan(300)
   })
 
   it.each(MOVING.map((c) => [c]))('%s: every figure moves, ends within the limit, and never loops', (component) => {
@@ -71,7 +83,7 @@ describe('figures that move', () => {
   })
 
   it('leaves circuits with an open switch still', () => {
-    for (const u of all.filter((x) => mayBeStill(x.component, x.props))) expect(moving(render(u.component, u.props)), u.where).toHaveLength(0)
+    for (const u of all.filter((x) => x.component === 'circuit-diagram' && mayBeStill(x.component, x.props))) expect(moving(render(u.component, u.props)), u.where).toHaveLength(0)
   })
 })
 
@@ -96,6 +108,44 @@ describe('the current in a circuit', () => {
     const markup = render('circuit-diagram', { supply: { pd: 6 }, arrangement: 'parallel', parts: [{ kind: 'resistor', resistance: 2 }, { kind: 'resistor', resistance: 6 }] })
     const [a, b] = flows(markup)
     expect(b!.spacing / a!.spacing).toBeCloseTo(3, 5)
+  })
+})
+
+describe('chemistry and biology', () => {
+  it('sends the transferred electrons across from the atom that loses them', () => {
+    const markup = render('dot-and-cross', { kind: 'ionic', atoms: [{ symbol: 'Na', outer: 1, mark: 'cross' }, { symbol: 'Cl', outer: 7, mark: 'dot' }], transfer: 1 })
+    // The group holding the gained electrons starts one atom-spacing to the left: on the sodium.
+    expect(markup).toMatch(/class="fa fa-slide" style="--d:0.50s;--t:1.30s;[^"]*--dx:-160px"/)
+  })
+
+  it('moves the potometer bubble towards the shoot, and points its arrow that way', () => {
+    const markup = render('plant', { kind: 'potometer' })
+    const stem = Number(/<path d="M([\d.]+) 150 V 60" stroke="#2e8b57"/.exec(markup)![1])
+    const [, x1, x2] = /<path d="M([\d.]+) 156 H ([\d.]+)" stroke="#d25b3b"/.exec(markup)!.map(Number)
+    const bubble = Number(/<rect x="([\d.]+)" y="147"/.exec(markup)![1])
+    expect(bubble).toBeGreaterThan(stem)
+    expect(x2!).toBeLessThan(x1!)          // pointing left, towards the shoot
+    expect(markup).toMatch(/y="147"[^>]*class="fa fa-slide"[^>]*--dx:40px/)  // arrives from the right
+  })
+})
+
+describe('computer science', () => {
+  it('builds a Huffman tree in merge order: the smallest total first', () => {
+    // a 5, b 2, c 1, d 1: c+d (2) first, then that with b (4), then the root (9).
+    const tree = { weight: 9, left: { char: 'a', weight: 5 }, right: { weight: 4, left: { char: 'b', weight: 2 }, right: { weight: 2, left: { char: 'c', weight: 1 }, right: { char: 'd', weight: 1 } } } }
+    const markup = render('huffman-tree', { tree })
+    const formed = [...markup.matchAll(/<g class="fa fa-grow" style="--d:([\d.]+)s;[^"]*"[^>]*><circle[^>]*><\/circle><text[^>]*>(\d+)<\/text>/g)].map((m) => ({ at: Number(m[1]), weight: Number(m[2]) }))
+    expect(formed.map((f) => f.weight).sort((a, b) => a - b)).toEqual([2, 4, 9])
+    const at = (w: number) => formed.find((f) => f.weight === w)!.at
+    expect(at(2)).toBeLessThan(at(4))
+    expect(at(4)).toBeLessThan(at(9))
+  })
+
+  it('sends the signal through a gate level at a time, then out to Q', () => {
+    const markup = render('logic-circuit', { expression: { op: 'OR', inputs: ['A', { op: 'AND', inputs: ['B', 'C'] }] }, show: 'circuit' })
+    const starts = [...markup.matchAll(/class="fa fa-flow fa-only" style="--d:([\d.]+)s/g)].map((m) => Number(m[1]))
+    // Into AND (level 1), into OR (level 2), and out.
+    expect(new Set(starts)).toEqual(new Set([0.2, 0.9, 1.6]))
   })
 })
 
@@ -139,6 +189,15 @@ describe('the styles', () => {
     for (const m of css.matchAll(/^([^@\n{]*\.fa(?:-[\w-]+)?\b[^{]*)\{([^}]*)\}/gm)) {
       if (/animation(-name)?:\s*fa-/.test(m[2]!)) expect(m[1], m[0]).toMatch(/\[data-anim\]/)
     }
+  })
+
+  it('moves the flow\'s dashes in px, which the browser interpolates', () => {
+    // Bare numbers through var() and calc() were not interpolated in Chrome: the dots stood
+    // still, then jumped once at the halfway mark. Every offset in the flow is a length.
+    const flow = /@keyframes fa-flow \{([\s\S]*?)\n\}/.exec(css)![1]!
+    const offsets = [...flow.matchAll(/stroke-dashoffset: ([^;]+);/g)].map((m) => m[1]!)
+    expect(offsets).toHaveLength(2)
+    for (const o of offsets) expect(o).toMatch(/\* 1px\)$/)
   })
 
   it('never plays a figure forever, and stops it for motion off and for print', () => {

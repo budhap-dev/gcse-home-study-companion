@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 /**
  * An energy level diagram for a reaction. The component places the two levels and both
@@ -12,6 +13,10 @@ import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  * The activation arrow runs from the reactants level to the peak, and the overall change
  * arrow between the two levels, because that difference is what the lesson is teaching
  * and what students most often draw wrongly.
+ *
+ * In motion (section 15 Part B) the curve traces the reaction's path: along the reactants,
+ * up over the peak and down to the products. The activation energy appears as it reaches
+ * the peak, and the overall change once it has arrived.
  */
 export function ReactionProfile({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const change = Number(props.change ?? -80)
@@ -111,15 +116,15 @@ export function ReactionProfile({ props, alt }: { props: Record<string, unknown>
       {/* the height of the peak, carried back to the activation arrow */}
       <line x1={padL + 20} y1={yPeak} x2={xPeak} y2={yPeak} stroke={RULE} strokeDasharray="2 3" />
 
-      <path d={path} fill="none" stroke="var(--subject)" strokeWidth="2.5" />
+      <path d={path} fill="none" stroke="var(--subject)" strokeWidth="2.5" {...move('draw', 0.2, 2.2, { ease: 'linear' })} />
 
       {name(reactantLabel, padL + 4, yReact, 'start')}
       {name(productLabel, right - 2, yProd, 'end')}
 
-      {measure(padL + 20, yReact, yPeak, ['activation', 'energy'], 1)}
-      {measure(right + 12, yReact, yProd, ['overall', 'change'], 1)}
-      <circle cx={xPeak} cy={yPeak} r="3" fill={ACCENT} />
-      <text x={(padL + right) / 2} y={H - 26} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{kind}</text>
+      <g {...move('fade', 1.3, 0.5)}>{measure(padL + 20, yReact, yPeak, ['activation', 'energy'], 1)}</g>
+      <g {...move('fade', 2.4, 0.5)}>{measure(right + 12, yReact, yProd, ['overall', 'change'], 1)}</g>
+      <circle cx={xPeak} cy={yPeak} r="3" fill={ACCENT} {...move('grow', 1.25, 0.3, { at: [xPeak, yPeak] })} />
+      <text {...move('fade', 2.6, 0.5)} x={(padL + right) / 2} y={H - 26} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{kind}</text>
     </svg>
   )
 }

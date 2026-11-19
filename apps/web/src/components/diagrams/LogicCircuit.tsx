@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move, polyPath } from './motion.ts'
 import { hits, type Seg } from './labelPlace.ts'
 
 /** Where the input wires start, just right of the input letters. */
@@ -19,6 +20,10 @@ type Node = string | { op: 'NOT' | 'AND' | 'OR' | 'XOR'; inputs: Node[] }
  * eight rows and one wrong cell looks exactly like seven right ones.
  *
  * Props: expression (a Node tree), show ('circuit' | 'table' | 'both'), label.
+ *
+ * In motion (section 15 Part B) a signal passes through: a pulse runs along each wire the
+ * way the signal goes, into the first gates, then the next, then out to Q; and the truth
+ * table's rows arrive in counting order.
  */
 export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const expr = props.expression as Node | undefined
@@ -137,6 +142,16 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
     )
   }
 
+  /** One pulse along a wire's own route, from x1 to x2, starting at t0; there only in motion. */
+  const pulse = (x1: number, y1: number, x2: number, y2: number, t0: number, key: string) => {
+    const pts: [number, number][] = y1 === y2 ? [[x1, y1], [x2, y2]] : [[x1, y1], [(x1 + x2) / 2, y1], [(x1 + x2) / 2, y2], [x2, y2]]
+    const length = Math.abs(x2 - x1) + Math.abs(y2 - y1)
+    return (
+      <path key={`${key}p`} d={polyPath(pts)} fill="none" stroke={ACCENT} strokeWidth={3.5} strokeLinecap="round" strokeDasharray={`10 ${(length + 40).toFixed(0)}`}
+        {...move('flow', t0, 0.7, { ease: 'ease-in', vars: { from: 10, run: (length + 10).toFixed(1) } })} />
+    )
+  }
+  const signalAt = (gateDepth: number) => 0.2 + (gateDepth - 1) * 0.7
   const wire = (x1: number, y1: number, x2: number, y2: number, key: string) =>
     y1 === y2
       ? <line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth={1.5} />
@@ -194,7 +209,9 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
           const from = typeof child === 'string'
             ? { x: WIRE_START, y: inputY(variables.indexOf(child)) }
             : { x: placed.find((q) => q.node === child)!.x + GATE_W / 2, y: placed.find((q) => q.node === child)!.y }
-          return wire(from.x, from.y, p.x - GATE_W / 2 + back(gate.op, spread), p.y + spread, `w${p.x}-${p.y}-${k}`)
+          const to = { x: p.x - GATE_W / 2 + back(gate.op, spread), y: p.y + spread }
+          const key = `w${p.x}-${p.y}-${k}`
+          return [wire(from.x, from.y, to.x, to.y, key), pulse(from.x, from.y, to.x, to.y, signalAt(depth(gate as Node)), key)]
         })
       })}
       {placed.map((p, i) => gateShape((p.node as { op: string }).op, p.x, p.y, `g${i}`))}
@@ -204,6 +221,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
         </text>
       ))}
       {wire(out.x + GATE_W / 2, out.y, W - 30, out.y, 'out')}
+      {pulse(out.x + GATE_W / 2, out.y, W - 30, out.y, signalAt(levels + 1), 'out')}
       <text x={W - 24} y={out.y + 5} fill={ACCENT} style={{ font: DISPLAY, fontSize: 14, fontWeight: 700 }}>Q</text>
       {label && (
         <text x={W / 2} y={H - 6} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>{label}</text>
@@ -223,7 +241,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
       </thead>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={i}>
+          <tr key={i} {...move('fade', 0.3 + i * 0.12, 0.4)}>
             {variables.map((v) => (
               <td key={v} data-cell="input" style={{ border: `1px solid ${RULE}`, padding: '4px 12px', textAlign: 'center' }}>{r.values[v] ? 1 : 0}</td>
             ))}

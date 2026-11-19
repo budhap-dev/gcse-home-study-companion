@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Node {
   /** A leaf carries the character it stands for; a branch carries none. */
@@ -25,6 +26,10 @@ interface Placed {
  * Props: { tree: Node, caption?: string, hideCodes?: boolean } with Node = { char?, weight?,
  * left?, right? }. hideCodes leaves the code off each leaf, for a question that asks the
  * student to read one off the branches.
+ *
+ * In motion (section 15 Part B) the tree is built as Huffman's method builds it: the
+ * leaves stand, then each new node forms in turn, smallest total first, its branches
+ * growing up from the two it joins; the codes are read off once the tree is whole.
  */
 export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const tree = props.tree as Node | undefined
@@ -73,13 +78,18 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
   const H = 2 * padY + maxDepth * rowH + 46
   const sx = (x: number) => padX + x * colW
   const sy = (y: number) => padY + y * rowH
+  // The merge order: the smallest totals first; between equal totals, the deeper first.
+  const merges = placed.filter((p) => p.node.left || p.node.right).sort((a, b) => (a.node.weight ?? 0) - (b.node.weight ?? 0) || b.y - a.y)
+  const mergeGap = Math.min(0.6, 2.6 / Math.max(1, merges.length))
+  const formed = new Map(merges.map((p, k) => [p, 0.3 + k * mergeGap]))
+  const whole = 0.3 + merges.length * mergeGap
 
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.max(W, 340) }} role="img" aria-label={alt}>
       {edges.map((e, i) => {
         const x1 = sx(e.from.x), y1 = sy(e.from.y), x2 = sx(e.to.x), y2 = sy(e.to.y)
         return (
-          <g key={`e${i}`}>
+          <g key={`e${i}`} {...move('grow', formed.get(e.from) ?? 0.3, 0.45, { at: [x2, y2 - 13] })}>
             <line x1={x1} y1={y1 + 13} x2={x2} y2={y2 - 13} stroke={RULE} strokeWidth="2" />
             <text
               x={(x1 + x2) / 2 + (e.bit === '0' ? -11 : 11)}
@@ -111,7 +121,7 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
                 </text>
               )}
               {!hideCodes && (
-                <text x={x} y={y + 45} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
+                <text x={x} y={y + 45} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK} {...move('fade', whole, 0.4)}>
                   {p.code}
                 </text>
               )}
@@ -119,7 +129,7 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
           )
         }
         return (
-          <g key={`n${i}`}>
+          <g key={`n${i}`} {...move('grow', (formed.get(p) ?? 0.3) + 0.3, 0.35, { at: [x, y] })}>
             <circle cx={x} cy={y} r="13" fill="#fff" stroke={INK_2} strokeWidth="2" />
             {p.node.weight !== undefined && (
               <text x={x} y={y + 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>

@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 import { wrapCell } from './tableLayout.ts'
 
 /**
@@ -51,7 +52,7 @@ export function PhScale({ props, alt }: { props: Record<string, unknown>; alt: s
       <text x={W - BAR_X} y={18} textAnchor="end" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill="#4b3b8f">more alkaline →</text>
       {INDICATOR.map((c, ph) => (
         <g key={ph}>
-          <rect x={BAR_X + ph * CELL} y={barTop} width={CELL} height={CELL + 6} fill={c} className="anim-sq anim-self" style={{ '--d': `${(0.15 + ph * 0.05).toFixed(2)}s` } as React.CSSProperties} />
+          <rect x={BAR_X + ph * CELL} y={barTop} width={CELL} height={CELL + 6} fill={c} {...move('grow', 0.15 + ph * 0.05, 0.4, { at: [BAR_X + ph * CELL + CELL / 2, barTop + (CELL + 6) / 2] })} />
           <text x={BAR_X + ph * CELL + CELL / 2} y={barTop + CELL + 22} textAnchor="middle" fontFamily={FONT} fontSize="11" fontWeight="700" fill={INK}>{ph}</text>
         </g>
       ))}

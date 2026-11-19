@@ -1,5 +1,6 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 import { wrapCell } from './tableLayout.ts'
+import { move } from './motion.ts'
 
 interface Ion {
   /** Shown as written, e.g. "Na⁺" or "Cl⁻". */
@@ -12,6 +13,10 @@ interface Ion {
  * ions drifting to the electrode that attracts them, and the product at each electrode.
  * Props: electrolyte (caption), ions [{label, to}], cathode and anode (product labels),
  * bubbles ['cathode', 'anode'] for gases, electrodes (material caption, e.g. 'graphite').
+ *
+ * In motion (section 15 Part B) the ions drift towards the electrode that attracts them,
+ * positive ions to the cathode and negative ions to the anode, then the products appear and
+ * any gas bubbles rise.
  */
 export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   /*
@@ -36,7 +41,11 @@ export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown
   const ionTop = liquidTop + 26, ionBottom = eBottom - 14
   const ionStep = ions.length > 1 ? Math.min(26, (ionBottom - ionTop) / (ions.length - 1)) : 0
   const bubble = (x: number, side: -1 | 1) => Array.from({ length: 5 }, (_, i) => (
-    <circle key={i} cx={x + side * (12 + (i % 2) * 6)} cy={eBottom - 12 - i * 22} r={3 + (i % 3)} fill="none" stroke={INK_2} strokeWidth="1.2" />
+    // Rising into place, and only seen once they form: a slide alone showed them, shifted, from the start.
+    <g key={i} {...move('fade', 1.8 + i * 0.12, 0.5)}>
+      <circle cx={x + side * (12 + (i % 2) * 6)} cy={eBottom - 12 - i * 22} r={3 + (i % 3)} fill="none" stroke={INK_2} strokeWidth="1.2"
+        {...move('slide', 1.8 + i * 0.12, 0.9, { vars: { dy: '18px' } })} />
+    </g>
   ))
   const ELECTROLYTE_BUDGET = 34
   const electrolyteLines = electrolyte ? wrapCell(electrolyte, ELECTROLYTE_BUDGET) : []
@@ -78,7 +87,7 @@ export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown
         const x = toLeft ? mid + 2 - (i % 2) * 6 : mid - 2 + (i % 2) * 6
         const tx = toLeft ? left + eW / 2 + 22 : right - eW / 2 - 22
         return (
-          <g key={i}>
+          <g key={i} {...move('slide', 0.2 + (i % 3) * 0.1, 1.6, { ease: 'linear', vars: { dx: `${toLeft ? 34 : -34}px` } })}>
             <text x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={toLeft ? '#1f3a93' : '#d25b3b'}>{ion.label}</text>
             <line x1={toLeft ? x - 24 : x + 24} y1={y} x2={tx} y2={y} stroke={toLeft ? '#1f3a93' : '#d25b3b'} strokeWidth="1.5" markerEnd="url(#ec-arrow)" />
           </g>
@@ -86,8 +95,8 @@ export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown
       })}
       <defs><marker id="ec-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill={INK_2} /></marker></defs>
       {/* products, below each electrode's own label rather than out beside the beaker */}
-      {cathode && <text x={left} y={productY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>{cathode}</text>}
-      {anode && <text x={right} y={productY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>{anode}</text>}
+      {cathode && <text {...move('fade', 1.7, 0.5)} x={left} y={productY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>{cathode}</text>}
+      {anode && <text {...move('fade', 1.7, 0.5)} x={right} y={productY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>{anode}</text>}
       {electrolyteLines.map((line, i) => (
         <text key={i} x={W / 2} y={H - 10 - (electrolyteLines.length - 1 - i) * 15} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK}>
           {line}

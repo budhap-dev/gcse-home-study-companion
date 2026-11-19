@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Curve {
   /** saturating: y = max·x/(k + x). optimum: rises to a peak then falls steeply. linear: y = m·x. inverse-square: y = k/x². */
@@ -80,6 +81,8 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
         * label readable wherever a line passes behind it.
         */}
       {markers.map((m, i) => <line key={`ml${i}`} x1={sx(m.x)} y1={pad} x2={sx(m.x)} y2={H - pad} stroke={INK_2} strokeDasharray="4 4" />)}
+      {/* In motion (section 15 Part B) the curves draw themselves from left to right. */}
+      <g {...move('wipe', 0.2, 1.8)}>
       {curves.map((c, i) => (
         <path
           key={`c${i}`}
@@ -87,6 +90,7 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
           fill="none" stroke={c.colour ?? palette[i % palette.length]!} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} strokeLinecap="round"
         />
       ))}
+      </g>
       {markers.map((m, i) => {
         const x = sx(m.x)
         // A label naming what lies on each side of the line ("light limiting | something
@@ -118,6 +122,7 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
             key={`cl${i}`} x={at.x} y={at.y} textAnchor={at.anchor}
             fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}
             stroke="#ffffff" strokeWidth="3.5" paintOrder="stroke"
+            {...move('fade', 2.0, 0.4)}
           >
             {c.label}
           </text>

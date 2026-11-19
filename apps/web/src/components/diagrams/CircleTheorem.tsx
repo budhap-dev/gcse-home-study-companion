@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 import { arcSegs, around, baseline, labelHalf, placeLabel, type Seg } from './labelPlace.ts'
 
 type Pt = { x: number; y: number }
@@ -151,23 +152,26 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     const ly = v.y + Math.sin(mid) * 32 + Math.cos(mid) * side
     return { v, a1, a2, d, kind, lx, ly }
   }
-  const angleMark = (m: AngleMark, key: string) => {
+  // In motion (section 15 Part B) the marked arc lights up first, then each angle is drawn
+  // from one arm to the other in turn, its label after it.
+  const markAt = (k: number) => 0.6 + k * Math.min(0.5, 2.4 / Math.max(1, angles.length))
+  const angleMark = (m: AngleMark, key: string, k = 0) => {
     const g = angleGeom(m)
     if (!g) return null
     const { v, a1, a2, d, kind, lx, ly } = g
     const sweep = d > 0 ? 1 : 0
-    const label = m.text ? <text x={lx} y={ly + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill="#d25b3b" stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{m.text}</text> : null
+    const label = m.text ? <text x={lx} y={ly + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill="#d25b3b" stroke="#ffffff" strokeWidth="3" paintOrder="stroke" {...move('fade', markAt(k) + 0.5, 0.4)}>{m.text}</text> : null
     if (kind === 'r') {
       const s = 11
       const u1 = { x: Math.cos(a1) * s, y: Math.sin(a1) * s }, u2 = { x: Math.cos(a2) * s, y: Math.sin(a2) * s }
-      return <g key={key}><path d={`M${v.x + u1.x} ${v.y + u1.y} L${v.x + u1.x + u2.x} ${v.y + u1.y + u2.y} L${v.x + u2.x} ${v.y + u2.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" />{label}</g>
+      return <g key={key}><path d={`M${v.x + u1.x} ${v.y + u1.y} L${v.x + u1.x + u2.x} ${v.y + u1.y + u2.y} L${v.x + u2.x} ${v.y + u2.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" {...move('draw', markAt(k), 0.5)} />{label}</g>
     }
     return (
       <g key={key}>
         {Array.from({ length: kind }, (_, i) => {
           const rr = 14 + i * 5
           const s = { x: v.x + Math.cos(a1) * rr, y: v.y + Math.sin(a1) * rr }, e = { x: v.x + Math.cos(a2) * rr, y: v.y + Math.sin(a2) * rr }
-          return <path key={i} d={`M${s.x} ${s.y} A${rr} ${rr} 0 0 ${sweep} ${e.x} ${e.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" />
+          return <path key={i} d={`M${s.x} ${s.y} A${rr} ${rr} 0 0 ${sweep} ${e.x} ${e.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" {...move('draw', markAt(k) + i * 0.08, 0.5)} />
         })}
         {label}
       </g>
@@ -182,7 +186,7 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     const p = onCircle(a), q = onCircle(b)
     // Always the minor arc. Anticlockwise on screen is SVG sweep 0, because y points down;
     // when the anticlockwise way round is the long way, go clockwise instead.
-    return <path d={`M${p.x} ${p.y} A${r} ${r} 0 0 ${d > 180 ? 1 : 0} ${q.x} ${q.y}`} fill="none" stroke={ACCENT} strokeWidth="5" strokeLinecap="round" opacity="0.55" />
+    return <path d={`M${p.x} ${p.y} A${r} ${r} 0 0 ${d > 180 ? 1 : 0} ${q.x} ${q.y}`} fill="none" stroke={ACCENT} strokeWidth="5" strokeLinecap="round" opacity="0.55" {...move('draw', 0.2, 0.8)} />
   }
   /*
    * Everything drawn, as segments, for the point labels to keep clear of. Each label used
@@ -228,7 +232,7 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
         return <line key={`s${i}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={INK} strokeWidth="2" strokeDasharray={s[2] === 'dashed' ? '6 5' : undefined} strokeLinecap="round" />
       })}
       {ticks.map((t, i) => { const a = pts[t[0]!], b = pts[t[1]!]; return a && b ? tickMarks(a, b, Number(t[2] ?? 1), `k${i}`) : null })}
-      {angles.map((m, i) => angleMark(m, `a${i}`))}
+      {angles.map((m, i) => angleMark(m, `a${i}`, i))}
       {showCentre && <circle cx={O.x} cy={O.y} r="3" fill={INK} />}
       {Object.entries(pts).map(([name, p]) => {
         if (hidden.has(name) && name !== 'O') return null

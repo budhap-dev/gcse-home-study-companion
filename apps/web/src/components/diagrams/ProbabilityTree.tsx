@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Node {
   /** The outcome this branch leads to, written along the branch. */
@@ -92,6 +93,9 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
   const H = padT * 2 + Math.max(leaves.length - 1, 1) * rowH
   const sx = (d: number) => padL + d * colW
   const sy = (r: number) => padT + r * rowH
+  // In motion (section 15 Part B) the branches grow out of each node, a level at a time,
+  // each probability arriving with its branch, and the outcomes last.
+  const level = (depth: number) => 0.2 + (depth - 1) * Math.min(0.8, 2.4 / Math.max(1, maxDepth))
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.max(W, 360) }} role="img" aria-label={alt}>
@@ -102,7 +106,7 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
         const y2 = sy(e.to.row)
         return (
           <g key={`e${i}`}>
-            <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={RULE} strokeWidth="2" />
+            <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={RULE} strokeWidth="2" {...move('grow', level(e.to.depth), 0.6, { at: [x1, y1] })} />
             {e.to.node.prob && (
               // Beside the branch, on its outer side, never on it: above a branch that rises,
               // below one that falls, so the middle of every fork stays empty. Centred on
@@ -117,6 +121,7 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
                 fontSize="12"
                 fontWeight="700"
                 fill={ACCENT}
+                {...move('fade', level(e.to.depth) + 0.4, 0.4)}
               >
                 {e.to.node.prob}
               </text>
@@ -128,7 +133,7 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
         const leaf = !p.node.children?.length
         const x = sx(p.depth), y = sy(p.row)
         return (
-          <g key={`n${i}`}>
+          <g key={`n${i}`} {...move('fade', level(p.depth) + 0.5, 0.3)}>
             <circle cx={x} cy={y} r="3.5" fill={INK} />
             <text x={leaf ? x + 8 : x - 6} y={leaf ? y + 4 : p.parent && p.row > p.parent.row ? y + 15 : y - 6} textAnchor={leaf ? 'start' : 'end'} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
               {p.node.label}
@@ -137,14 +142,14 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
               // Two lines rather than one: "well, tests negative = 98901/100000" ran to
               // 36 characters, which needed a labelW wide enough to scroll a phone. The
               // path and the result now wrap onto their own lines, each far shorter.
-              <>
+              <g {...move('fade', level(maxDepth) + 0.9, 0.4)}>
                 <text x={x + 8} y={y + 20} fontFamily={FONT} fontSize="11" fill={INK_2}>
                   {p.path.filter(Boolean).join(', ')}
                 </text>
                 <text x={x + 8} y={y + 32} fontFamily={FONT} fontSize="11" fill={INK_2}>
                   = {show(p.prob)}
                 </text>
-              </>
+              </g>
             )}
           </g>
         )

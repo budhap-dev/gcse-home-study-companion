@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Node {
   /** The category this branch leads to, written along the branch: "boys", "walks". */
@@ -71,6 +72,8 @@ export function FrequencyTree({ props, alt }: { props: Record<string, unknown>; 
   const H = padT + Math.max(row - 1, 1) * rowH + 40
   const sx = (d: number) => padL + d * colW
   const sy = (r: number) => padT + r * rowH
+  // In motion (section 15 Part B) the tree grows from its total, a level at a time.
+  const level = (depth: number) => 0.2 + depth * 0.7
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 420 }} role="img" aria-label={alt}>
@@ -80,7 +83,8 @@ export function FrequencyTree({ props, alt }: { props: Record<string, unknown>; 
         </text>
       )}
       {edges.map((e, i) => (
-        <line key={`e${i}`} x1={sx(e.from.depth) + boxW / 2} y1={sy(e.from.row)} x2={sx(e.to.depth) - boxW / 2} y2={sy(e.to.row)} stroke={RULE} strokeWidth="2" />
+        <line key={`e${i}`} x1={sx(e.from.depth) + boxW / 2} y1={sy(e.from.row)} x2={sx(e.to.depth) - boxW / 2} y2={sy(e.to.row)} stroke={RULE} strokeWidth="2"
+          {...move('grow', level(e.from.depth) + 0.3, 0.5, { at: [sx(e.from.depth) + boxW / 2, sy(e.from.row)] })} />
       ))}
       {all.map((p, i) => {
         const x = sx(p.depth), y = sy(p.row)
@@ -93,7 +97,7 @@ export function FrequencyTree({ props, alt }: { props: Record<string, unknown>; 
             ? lines.map((t, k) => <text key={k} x={x} y={y + boxH / 2 + 14 + k * LINE} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{t}</text>)
             : lines.map((t, k) => <text key={k} x={x + boxW / 2 + 6} y={y + 4 + (k - (lines.length - 1) / 2) * LINE} textAnchor="start" fontFamily={FONT} fontSize="11" fill={INK_2}>{t}</text>)
         return (
-          <g key={`n${i}`}>
+          <g key={`n${i}`} {...move('fade', p.depth === 0 ? 0.1 : level(p.depth - 1) + 0.7, 0.4)}>
             <rect x={x - boxW / 2} y={y - boxH / 2} width={boxW} height={boxH} rx="6" fill={ACCENT} fillOpacity="0.15" stroke={ACCENT} strokeWidth="2" />
             <text x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
               {p.node.count}

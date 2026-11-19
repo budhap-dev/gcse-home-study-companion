@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 
 interface AtomSpec {
   symbol: string
@@ -17,6 +18,10 @@ interface AtomSpec {
  *          Three or more atoms: atoms[0] is the central atom and shares one pair with each of the others)
  *   shared: number of shared pairs (covalent, two atoms only)
  *   transfer: number of electrons moved from atoms[0] to atoms[1] (ionic only)
+ *
+ * In motion (section 15 Part B) the bonding electrons move: in an ionic diagram the
+ * transferred electrons cross from the first atom to the second and the charges appear;
+ * in a covalent one each atom's electron moves into the pair it shares.
  */
 /** Splits a caption at the space nearest its midpoint, for a label too wide to fit one
  * line at the fontSize-11 floor without shrinking it or running off the canvas. */
@@ -89,9 +94,17 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
     const gaps = n === 2 ? [90, 270] : n === 3 ? [270, 30, 150] : Array.from({ length: n }, (_, i) => (360 / n) * i)
     const lonePairs = Math.max(0, Math.floor((centre.outer - n) / 2))
     const pt = (x: number, y: number, deg: number, d: number): [number, number] => [x + d * Math.cos((deg * Math.PI) / 180), y - d * Math.sin((deg * Math.PI) / 180)]
-    const pair = (x: number, y: number, deg: number, m1: 'dot' | 'cross', m2: 'dot' | 'cross', key: string) => {
+    const pair = (x: number, y: number, deg: number, m1: 'dot' | 'cross', m2: 'dot' | 'cross', key: string, sharing = false) => {
       const px = Math.sin((deg * Math.PI) / 180) * 5, py = Math.cos((deg * Math.PI) / 180) * 5
-      return <g key={key}>{mark(x + px, y + py, m1)}{mark(x - px, y - py, m2)}</g>
+      if (!sharing) return <g key={key}>{mark(x + px, y + py, m1)}{mark(x - px, y - py, m2)}</g>
+      // Shared: the centre's electron comes out from the centre, the other's in from its atom.
+      const ux = Math.cos((deg * Math.PI) / 180) * 12, uy = -Math.sin((deg * Math.PI) / 180) * 12
+      return (
+        <g key={key}>
+          <g {...move('slide', 0.3, 0.9, { vars: { dx: `${(-ux).toFixed(1)}px`, dy: `${(-uy).toFixed(1)}px` } })}>{mark(x + px, y + py, m1)}</g>
+          <g {...move('slide', 0.3, 0.9, { vars: { dx: `${ux.toFixed(1)}px`, dy: `${uy.toFixed(1)}px` } })}>{mark(x - px, y - py, m2)}</g>
+        </g>
+      )
     }
     const items: React.ReactNode[] = []
     items.push(<circle key="c" cx={cx0} cy={cy0} r={R} fill="none" stroke={INK} strokeWidth="1.5" />)
@@ -103,7 +116,7 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
       const [lx, ly] = pt(cx0, cy0, a, dist + 6)
       items.push(<text key={`es${i}`} x={lx} y={ly + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={INK}>{end.symbol}</text>)
       const [mx, my] = pt(cx0, cy0, a, (R + dist - rEnd) / 2)
-      items.push(pair(mx, my, a, centre.mark, end.mark, `sp${i}`))
+      items.push(pair(mx, my, a, centre.mark, end.mark, `sp${i}`, true))
       const rest = end.outer - 1
       if (rest > 0) {
         const pairs = Math.ceil(rest / 2)
@@ -153,24 +166,25 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
               <circle cx={cx[i]} cy={cy} r={r} fill="none" stroke={INK} strokeWidth="1.5" />
               <text x={cx[i]} y={cy + 6} textAnchor="middle" fontFamily={DISPLAY} fontSize="18" fontWeight="700" fill={INK}>{at.symbol}</text>
               {ring(cx[i]!, own, at.mark, null)}
-              {gained > 0 && ring(cx[i]!, own + gained, a.mark, null).slice(own)}
+              {/* The transferred electrons, which cross over from the first atom. */}
+              {gained > 0 && <g {...move('slide', 0.5, 1.3, { ease: 'ease-in-out', vars: { dx: `${-gap}px` } })}>{ring(cx[i]!, own + gained, a.mark, null).slice(own)}</g>}
               {/* The charge is a superscript outside the bracket's top-right corner, starting clear
                   of its edge: centred 4 units past the edge, the edge ran through the "+". */}
-              <text x={cx[i]! + r + 13} y={cy - r - 4} textAnchor="start" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
+              <text {...move('fade', 1.9, 0.4)} x={cx[i]! + r + 13} y={cy - r - 4} textAnchor="start" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
               {n === 0 && (
                 // "outer electrons given away" is 27 characters — at the fontSize-11 floor
                 // that runs wider than the atom's own half of the canvas, so it always
                 // wraps rather than shrink or spill off the left edge.
-                <>
+                <g {...move('fade', 1.9, 0.4)}>
                   {/* Clear of the box, whose edge is at cy + r + 10: at + 20 the words touched it. */}
                   <text x={cx[i]} y={cy + r + 24} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons</text>
                   <text x={cx[i]} y={cy + r + 37} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>given away</text>
-                </>
+                </g>
               )}
             </g>
           )
         })}
-        <path d={`M${cx[0]! + r + 20} ${cy} C ${cx[0]! + r + 50} ${cy - 30}, ${cx[1]! - r - 50} ${cy - 30}, ${cx[1]! - r - 20} ${cy}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" markerEnd="url(#dc-arrow)" />
+        <path {...move('fade', 0.2, 0.5)} d={`M${cx[0]! + r + 20} ${cy} C ${cx[0]! + r + 50} ${cy - 30}, ${cx[1]! - r - 50} ${cy - 30}, ${cx[1]! - r - 20} ${cy}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" markerEnd="url(#dc-arrow)" />
         <text x={(cx[0]! + cx[1]!) / 2} y={14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{transfer} electron{transfer > 1 ? 's' : ''} transferred</text>
         <defs><marker id="dc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#d25b3b" /></marker></defs>
         {(() => {
@@ -200,7 +214,12 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
       {ring(cx[1]!, b.outer - shared, b.mark, 'left')}
       {Array.from({ length: shared }, (_, i) => {
         const y = cy + (i - (shared - 1) / 2) * 16
-        return <g key={i}>{mark(overlapX - 5, y, a.mark)}{mark(overlapX + 5, y, b.mark)}</g>
+        return (
+          <g key={i}>
+            <g {...move('slide', 0.3 + i * 0.15, 0.9, { vars: { dx: '-16px' } })}>{mark(overlapX - 5, y, a.mark)}</g>
+            <g {...move('slide', 0.3 + i * 0.15, 0.9, { vars: { dx: '16px' } })}>{mark(overlapX + 5, y, b.mark)}</g>
+          </g>
+        )
       })}
       <text x={W / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{shared} shared pair{shared > 1 ? 's' : ''}: a {shared === 1 ? 'single' : shared === 2 ? 'double' : 'triple'} covalent bond</text>
     </svg>

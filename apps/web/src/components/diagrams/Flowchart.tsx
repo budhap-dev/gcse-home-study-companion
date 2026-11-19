@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 import { wrapCell } from './tableLayout.ts'
 
 interface Node {
@@ -101,6 +102,10 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
     return <rect x={cx - half} y={top} width={NODE_W} height={h} rx={n.kind === 'terminal' ? h / 2 : 4} fill="#fff" stroke={ACCENT} strokeWidth="2" />
   }
 
+  // In motion (section 15 Part B) the chart steps through: each box in turn with the arrow
+  // out of it, and a loop's return arrow once the body has been reached.
+  const stepGap = Math.min(0.45, 2.8 / Math.max(1, nodes.length))
+  const stepAt = (i: number) => 0.2 + i * stepGap
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 500 }} role="img" aria-label={alt}>
       <defs>
@@ -115,7 +120,7 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
         const from = tops[i]! + heightOf(n)
         const to = tops[i + 1]!
         return (
-          <g key={`e${i}`}>
+          <g key={`e${i}`} {...move('fade', stepAt(i) + stepGap * 0.6, 0.3)}>
             <line x1={cx} y1={from} x2={cx} y2={to} stroke={INK_2} strokeWidth="1.5" markerEnd="url(#fc-arrow)" />
             {n.kind === 'decision' && n.yes && (
               <text x={cx + 7} y={(from + to) / 2 + 4} fontFamily={FONT} fontSize="11" fill={INK_2}>{n.yes}</text>
@@ -135,7 +140,7 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
         const after = loop.from + 1
         const bodyBottom = tops[loop.from]! + heightOf(nodes[loop.from]!)
         return (
-          <g>
+          <g {...move('fade', stepAt(Math.max(loop.from, loop.to)) + stepGap * 0.6, 0.4)}>
             <path
               d={`M ${cx + NODE_W / 2} ${centre(loop.from)} H ${right} V ${centre(loop.to)} H ${cx + NODE_W / 2}`}
               fill="none" stroke={INK_2} strokeWidth="1.5" markerEnd="url(#fc-arrow)"
@@ -155,7 +160,7 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
       })()}
 
       {nodes.map((n, i) => (
-        <g key={`n${i}`}>
+        <g key={`n${i}`} {...move('fade', stepAt(i), 0.35)}>
           {shape(n, i)}
           <text
             x={cx} y={centre(i) + 4} textAnchor="middle"
@@ -175,7 +180,7 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
         const lines = wrapCell(n.no, labelChars)
         const first = centre(i) + 4 - ((lines.length - 1) * LABEL_LINE) / 2
         return (
-          <text key={`no${i}`} x={cx + NODE_W / 2 + 6} y={first} fontFamily={FONT} fontSize="11" fill={INK_2}>
+          <text key={`no${i}`} x={cx + NODE_W / 2 + 6} y={first} fontFamily={FONT} fontSize="11" fill={INK_2} {...move('fade', stepAt(i) + 0.2, 0.3)}>
             {lines.map((l, k) => <tspan key={k} x={cx + NODE_W / 2 + 6} dy={k === 0 ? 0 : LABEL_LINE}>{l}</tspan>)}
           </text>
         )
