@@ -1328,7 +1328,7 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   convex lens figures the parallel ray missed both F and the image (it ended at the image's
   height but 2.2 f along); fixed, with a test of the construction for every lens the
   content draws.
-- [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
+- [x] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
   **Chemistry and Biology done 19 November 2026 (10.156.0):** ions drifting to the electrode
   that attracts them, then the products and the gas; the transferred electrons crossing from
   one atom to the other in ionic bonding, each atom's electron moving into its shared pair in
@@ -1344,7 +1344,14 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   tree diagrams grow a level at a time, each probability with its branch and the outcomes
   last; frequency trees grow from the total; vectors are drawn out from their tails in turn,
   head to tail with the resultant last; on a circle theorem the marked arc lights up, then
-  each angle is drawn from one arm to the other with its label. Computer Science next.
+  each angle is drawn from one arm to the other with its label.
+  **Computer Science done 19 November 2026 (10.158.0):** a pulse runs along each wire of a
+  logic circuit the way the signal goes, a gate level at a time and out to Q, and the truth
+  table counts down a row at a time; a Huffman tree is built in its merge order, smallest total
+  first, its codes read off at the end; a flowchart steps through box by box, in every subject
+  that draws one. Found on the way: the dots of every flow (current, sap, blood, signal) stood
+  still and jumped once at the halfway mark, because Chrome does not interpolate a unitless
+  calc() for stroke-dashoffset; the keyframes now work in px, and a test holds it.
 - [x] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
   drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and
   Physics lessons first. After it, each subject's Part A PR adds that subject's marks.

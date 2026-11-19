@@ -622,10 +622,12 @@ figure[data-diagram] {
   37.5%, 62.5% { transform: scaleY(-0.71); }
   50% { transform: scaleY(-1); }
 }
+/* In px, not bare numbers: Chrome does not interpolate a unitless calc() here, and the dots
+   stood still and jumped once at the halfway mark (found 19 November 2026). */
 @keyframes fa-flow {
-  0% { opacity: 0; stroke-dashoffset: var(--from, 0); }
+  0% { opacity: 0; stroke-dashoffset: calc(var(--from, 0) * 1px); }
   10%, 86% { opacity: 1; }
-  100% { opacity: 0; stroke-dashoffset: calc(var(--from, 0) - var(--run, 100)); }
+  100% { opacity: 0; stroke-dashoffset: calc((var(--from, 0) - var(--run, 100)) * 1px); }
 }
 @keyframes fa-wipe { from { clip-path: inset(-20px 100% -20px -20px); } to { clip-path: inset(-20px -20px -20px -20px); } }
 @keyframes fa-slide { from { transform: translate(var(--dx, 0px), var(--dy, 0px)); } }

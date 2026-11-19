@@ -17,6 +17,7 @@ const MOVING = [
   'circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output',
   'electrolysis-cell', 'dot-and-cross', 'reaction-profile', 'plant', 'heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols',
   'line-graph', 'curve-graph', 'probability-tree', 'frequency-tree', 'vector-figure', 'vector-triangle', 'circle-theorem',
+  'logic-circuit', 'flowchart', 'huffman-tree',
 ] as const
 /** A circuit with a switch draws it open, so no current flows round it. */
 const mayBeStill = (component: string, props: Record<string, unknown>) =>
@@ -128,6 +129,26 @@ describe('chemistry and biology', () => {
   })
 })
 
+describe('computer science', () => {
+  it('builds a Huffman tree in merge order: the smallest total first', () => {
+    // a 5, b 2, c 1, d 1: c+d (2) first, then that with b (4), then the root (9).
+    const tree = { weight: 9, left: { char: 'a', weight: 5 }, right: { weight: 4, left: { char: 'b', weight: 2 }, right: { weight: 2, left: { char: 'c', weight: 1 }, right: { char: 'd', weight: 1 } } } }
+    const markup = render('huffman-tree', { tree })
+    const formed = [...markup.matchAll(/<g class="fa fa-grow" style="--d:([\d.]+)s;[^"]*"[^>]*><circle[^>]*><\/circle><text[^>]*>(\d+)<\/text>/g)].map((m) => ({ at: Number(m[1]), weight: Number(m[2]) }))
+    expect(formed.map((f) => f.weight).sort((a, b) => a - b)).toEqual([2, 4, 9])
+    const at = (w: number) => formed.find((f) => f.weight === w)!.at
+    expect(at(2)).toBeLessThan(at(4))
+    expect(at(4)).toBeLessThan(at(9))
+  })
+
+  it('sends the signal through a gate level at a time, then out to Q', () => {
+    const markup = render('logic-circuit', { expression: { op: 'OR', inputs: ['A', { op: 'AND', inputs: ['B', 'C'] }] }, show: 'circuit' })
+    const starts = [...markup.matchAll(/class="fa fa-flow fa-only" style="--d:([\d.]+)s/g)].map((m) => Number(m[1]))
+    // Into AND (level 1), into OR (level 2), and out.
+    expect(new Set(starts)).toEqual(new Set([0.2, 0.9, 1.6]))
+  })
+})
+
 describe('a beam on a pivot', () => {
   it('tips and settles only when the moments balance', () => {
     const balanced = render('beam-moments', { length: 4, pivot: 2, forces: [{ at: 1, force: 6 }, { at: 4, force: 3 }] })
@@ -168,6 +189,15 @@ describe('the styles', () => {
     for (const m of css.matchAll(/^([^@\n{]*\.fa(?:-[\w-]+)?\b[^{]*)\{([^}]*)\}/gm)) {
       if (/animation(-name)?:\s*fa-/.test(m[2]!)) expect(m[1], m[0]).toMatch(/\[data-anim\]/)
     }
+  })
+
+  it('moves the flow\'s dashes in px, which the browser interpolates', () => {
+    // Bare numbers through var() and calc() were not interpolated in Chrome: the dots stood
+    // still, then jumped once at the halfway mark. Every offset in the flow is a length.
+    const flow = /@keyframes fa-flow \{([\s\S]*?)\n\}/.exec(css)![1]!
+    const offsets = [...flow.matchAll(/stroke-dashoffset: ([^;]+);/g)].map((m) => m[1]!)
+    expect(offsets).toHaveLength(2)
+    for (const o of offsets) expect(o).toMatch(/\* 1px\)$/)
   })
 
   it('never plays a figure forever, and stops it for motion off and for print', () => {
