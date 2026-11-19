@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Vec {
   /** Components in newtons; x to the right, y upwards. */
@@ -56,7 +57,9 @@ export function VectorTriangle({ props, alt }: { props: Record<string, unknown>;
     const side = nx * (sx(mid[0]) - x1) + ny * (sy(mid[1]) - y1)
     return side > 0 ? -1 : 1
   }
-  const arrow = (a: [number, number], b: [number, number], colour: string, dashed: boolean, label: string | undefined, key: string) => {
+  // In motion (section 15 Part B) the vectors are drawn head to tail in turn, the resultant last.
+  const arrive = (k: number) => 0.2 + k * Math.min(0.7, 2.4 / Math.max(1, vectors.length))
+  const arrow = (a: [number, number], b: [number, number], colour: string, dashed: boolean, label: string | undefined, key: string, at = 0) => {
     const x1 = sx(a[0]), y1 = sy(a[1]), x2 = sx(b[0]), y2 = sy(b[1])
     const ang = Math.atan2(y2 - y1, x2 - x1)
     const hx = x2 - 10 * Math.cos(ang), hy = y2 - 10 * Math.sin(ang)
@@ -85,9 +88,11 @@ export function VectorTriangle({ props, alt }: { props: Record<string, unknown>;
     const anchor = ox > 4 ? 'start' : ox < -4 ? 'end' : 'middle'
     return (
       <g key={key}>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={colour} strokeWidth="3" strokeLinecap="round" strokeDasharray={dashed ? '7 5' : undefined} />
-        <polygon points={head} fill={colour} />
-        {label && <text x={mx + ox} y={my + oy + 4} textAnchor={anchor} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{label}</text>}
+        <g {...move('grow', at, 0.6, { at: [x1, y1] })}>
+          <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={colour} strokeWidth="3" strokeLinecap="round" strokeDasharray={dashed ? '7 5' : undefined} />
+          <polygon points={head} fill={colour} />
+        </g>
+        {label && <text x={mx + ox} y={my + oy + 4} textAnchor={anchor} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} {...move('fade', at + 0.45, 0.4)}>{label}</text>}
       </g>
     )
   }
@@ -95,8 +100,8 @@ export function VectorTriangle({ props, alt }: { props: Record<string, unknown>;
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 420 }} role="img" aria-label={alt}>
       {Array.from({ length: 9 }, (_, i) => <line key={`g${i}`} x1={padL} y1={padT + (i * usableH) / 8} x2={W - padR} y2={padT + (i * usableH) / 8} stroke={RULE} />)}
       {Array.from({ length: 13 }, (_, i) => <line key={`v${i}`} x1={padL + (i * usableW) / 12} y1={padT} x2={padL + (i * usableW) / 12} y2={H - padB} stroke={RULE} />)}
-      {vectors.map((v, i) => arrow(pts[i]!, pts[i + 1]!, ACCENT, false, v.label ?? `${fmt(Math.hypot(v.x, v.y))} ${unit}`, `v${i}`))}
-      {showResultant && vectors.length > 1 && arrow(pts[0]!, end, '#d25b3b', true, `resultant ${fmt(size)} ${unit}`, 'r')}
+      {vectors.map((v, i) => arrow(pts[i]!, pts[i + 1]!, ACCENT, false, v.label ?? `${fmt(Math.hypot(v.x, v.y))} ${unit}`, `v${i}`, arrive(i)))}
+      {showResultant && vectors.length > 1 && arrow(pts[0]!, end, '#d25b3b', true, `resultant ${fmt(size)} ${unit}`, 'r', arrive(vectors.length) + 0.2)}
       <circle cx={sx(0)} cy={sy(0)} r="4" fill={INK} />
       <text x={sx(0) - 8} y={sy(0) + 16} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>start</text>
       <text x={W - padR} y={H - 8} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>drawn head to tail, to scale</text>

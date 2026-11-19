@@ -16,10 +16,13 @@ import { Visual } from '../Visual.tsx'
 const MOVING = [
   'circuit-diagram', 'beam-moments', 'free-body', 'fluid-column', 'collision', 'lens-diagram', 'ray-diagram', 'magnet-field', 'electric-field', 'generator-output',
   'electrolysis-cell', 'dot-and-cross', 'reaction-profile', 'plant', 'heart-diagram', 'ph-scale', 'em-spectrum', 'circuit-symbols',
+  'line-graph', 'curve-graph', 'probability-tree', 'frequency-tree', 'vector-figure', 'vector-triangle', 'circle-theorem',
 ] as const
 /** A circuit with a switch draws it open, so no current flows round it. */
 const mayBeStill = (component: string, props: Record<string, unknown>) =>
-  component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')
+  (component === 'circuit-diagram' && ((props.parts as { kind: string }[] | undefined) ?? []).some((p) => p.kind === 'switch')) ||
+  // A circle with nothing marked on it has no angle to draw.
+  (component === 'circle-theorem' && !(props.angles as unknown[] | undefined)?.length && !props.arc)
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
 function uses(): { component: string; props: Record<string, unknown>; where: string }[] {
@@ -55,7 +58,7 @@ describe('figures that move', () => {
 
   it('finds every moving kind in the content pack', () => {
     for (const c of MOVING) expect(all.some((u) => u.component === c && (SHEETS.has(c) || u.where !== 'resources')), c).toBe(true)
-    expect(all.length).toBeGreaterThan(110)
+    expect(all.length).toBeGreaterThan(300)
   })
 
   it.each(MOVING.map((c) => [c]))('%s: every figure moves, ends within the limit, and never loops', (component) => {
@@ -79,7 +82,7 @@ describe('figures that move', () => {
   })
 
   it('leaves circuits with an open switch still', () => {
-    for (const u of all.filter((x) => mayBeStill(x.component, x.props))) expect(moving(render(u.component, u.props)), u.where).toHaveLength(0)
+    for (const u of all.filter((x) => x.component === 'circuit-diagram' && mayBeStill(x.component, x.props))) expect(moving(render(u.component, u.props)), u.where).toHaveLength(0)
   })
 })
 

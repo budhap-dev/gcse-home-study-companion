@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Point {
   name: string
@@ -149,15 +150,18 @@ export function VectorFigure({ props, alt }: { props: Record<string, unknown>; a
         const spot = labelSpot(x1, y1, x2, y2, nx, ny, sign, e.label ?? '')
         return (
           <g key={i}>
-            <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={colour} strokeWidth={e.dashed ? 1.5 : 2} strokeDasharray={e.dashed ? '5 4' : undefined} />
-            {e.arrow !== false && (
-              <polygon
-                points={`${hx},${hy} ${tx - 5 * Math.sin(ang)},${ty + 5 * Math.cos(ang)} ${tx + 5 * Math.sin(ang)},${ty - 5 * Math.cos(ang)}`}
-                fill={colour}
-              />
-            )}
+            {/* In motion (section 15 Part B) each vector is drawn out from its start, in turn. */}
+            <g {...move('grow', 0.2 + Math.min(i * 0.5, 2.2), 0.7, { at: [x1, y1] })}>
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={colour} strokeWidth={e.dashed ? 1.5 : 2} strokeDasharray={e.dashed ? '5 4' : undefined} />
+              {e.arrow !== false && (
+                <polygon
+                  points={`${hx},${hy} ${tx - 5 * Math.sin(ang)},${ty + 5 * Math.cos(ang)} ${tx + 5 * Math.sin(ang)},${ty - 5 * Math.cos(ang)}`}
+                  fill={colour}
+                />
+              )}
+            </g>
             {e.label && (
-              <text x={spot.px} y={spot.py + 4} textAnchor="middle" fill={colour} fontFamily={DISPLAY} fontSize="13" fontWeight="600">
+              <text x={spot.px} y={spot.py + 4} textAnchor="middle" fill={colour} fontFamily={DISPLAY} fontSize="13" fontWeight="600" {...move('fade', 0.7 + Math.min(i * 0.5, 2.2), 0.4)}>
                 {e.label}
               </text>
             )}

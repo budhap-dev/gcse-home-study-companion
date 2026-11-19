@@ -1338,7 +1338,13 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   (heart, pH scale, spectrum, circuit symbols) moved onto the framework, so they play on view
   with Play again, and the heart's blood no longer loops. Fixed on the way: the potometer's
   arrow showed the bubble moving away from the shoot; it moves towards it, as the shoot takes
-  water up. Maths and Computer Science next.
+  water up.
+  **Maths done 19 November 2026 (10.157.0):** graphs and curves draw themselves from left to
+  right (every line graph and curve graph, in whatever subject), then their points and names;
+  tree diagrams grow a level at a time, each probability with its branch and the outcomes
+  last; frequency trees grow from the total; vectors are drawn out from their tails in turn,
+  head to tail with the resultant last; on a circle theorem the marked arc lights up, then
+  each angle is drawn from one arm to the other with its label. Computer Science next.
 - [x] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
   drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and
   Physics lessons first. After it, each subject's Part A PR adds that subject's marks.
