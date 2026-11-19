@@ -8,8 +8,9 @@ const svg = (props: Record<string, unknown>) => renderToStaticMarkup(<RayDiagram
 /** Every angle the diagram writes on itself, in the order it draws them. */
 const angles = (markup: string) => [...markup.matchAll(/>(\d+)°</g)].map((m) => Number(m[1]))
 /** The horizontal run of each line, which is what shows whether rays stay parallel. */
+/** Each ray's run across the page, in drawing order: rays are paths so they can draw themselves. */
 const runs = (markup: string) =>
-  [...markup.matchAll(/<line[^>]*x1="([-\d.]+)"[^>]*x2="([-\d.]+)"/g)].map((m) => Math.round(Number(m[2]) - Number(m[1])))
+  [...markup.matchAll(/<path d="M ([-\d.]+) [-\d.]+ L ([-\d.]+) [-\d.]+"[^>]*stroke="var\(--subject\)"/g)].map((m) => Math.round(Number(m[2]) - Number(m[1])))
 
 /**
  * The angles are computed from the physics rather than drawn by hand, so a diagram
@@ -45,9 +46,11 @@ describe('ray diagram', () => {
   })
 
   it('scatters on a rough surface but not on a smooth one', () => {
-    // The last three lines drawn are the reflected rays.
-    const smooth = runs(svg({ kind: 'specular' })).slice(-3)
-    const rough = runs(svg({ kind: 'diffuse' })).slice(-3)
+    // Each ray is drawn in, then out: every second one is a reflected ray.
+    const out = (all: number[]) => all.filter((_, k) => k % 2 === 1)
+    const smooth = out(runs(svg({ kind: 'specular' })))
+    const rough = out(runs(svg({ kind: 'diffuse' })))
+    expect(smooth).toHaveLength(3)
     expect(new Set(smooth).size).toBe(1)
     expect(new Set(rough).size).toBeGreaterThan(1)
   })
@@ -73,12 +76,13 @@ describe('ray through a block', () => {
 
   it('sends the emergent ray out parallel to the incident ray', () => {
     const markup = svg({ kind: 'block', incidence: 40, speedRatio: 2 / 3 })
-    const solid = [...markup.matchAll(/<line x1="([-\d.]+)" y1="([-\d.]+)" x2="([-\d.]+)" y2="([-\d.]+)" stroke="var\(--subject\)" stroke-width="2.5"/g)]
+    const solid = [...markup.matchAll(/<path d="M ([-\d.]+) ([-\d.]+) L ([-\d.]+) ([-\d.]+)" fill="none" stroke="var\(--subject\)" stroke-width="2.5"/g)]
       .map((m) => m.slice(1, 5).map(Number))
     expect(solid).toHaveLength(3)
     const slope = ([x1, y1, x2, y2]: number[]) => (x2! - x1!) / (y2! - y1!)
     const incident = solid[0]!, refracted = solid[1]!, emergent = solid[2]!
-    expect(slope(emergent)).toBeCloseTo(slope(incident), 6)
+    // To the drawing's own precision: its coordinates are written to two decimals.
+    expect(slope(emergent)).toBeCloseTo(slope(incident), 3)
     // Inside the block the ray is steeper: closer to the normal.
     expect(Math.abs(slope(refracted))).toBeLessThan(Math.abs(slope(incident)))
     // And it is shifted sideways: it leaves to the right of where the straight line would have gone.

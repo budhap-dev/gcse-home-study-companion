@@ -1,5 +1,6 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 import { wrapCell } from './tableLayout.ts'
+import { move, polyPath } from './motion.ts'
 
 interface Part {
   kind: 'resistor' | 'lamp' | 'switch' | 'diode' | 'thermistor' | 'ldr' | 'ammeter' | 'voltmeter' | 'motor'
@@ -20,6 +21,12 @@ interface Part {
  *
  * Props: supply {pd, label}, arrangement ('series' | 'parallel'), parts Part[],
  * showValues (default true when every resistance is given), note.
+ *
+ * In motion (section 15 Part B), current flows: dots leave the cell's positive terminal (the
+ * long plate) and go round to the negative one, the conventional direction. In parallel each
+ * branch has its own stream, its dots spaced by that branch's current, so the wires the
+ * branches share carry them all and are visibly busier. A circuit with a switch shows none,
+ * because the switch symbol is drawn open.
  */
 export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const parts = (props.parts as Part[] | undefined) ?? []
@@ -191,6 +198,17 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
     </g>
   )
 
+  /** Dots of current along a path, `spacing` units apart, starting `phase` along. */
+  const flowing = parts.every((p) => p.kind !== 'switch')
+  const FLOW_RUN = 150
+  const flow = (pts: [number, number][], spacing: number, phase: number, key: string) => {
+    const run = spacing * Math.max(1, Math.round(FLOW_RUN / spacing))
+    return (
+      <path key={key} d={polyPath(pts)} fill="none" stroke={ACCENT} strokeWidth={5} strokeLinecap="round" strokeDasharray={`0.1 ${spacing.toFixed(1)}`} data-flow=""
+        {...move('flow', 0.3, 3.2, { vars: { run: run.toFixed(1), from: (-phase).toFixed(1) } })} />
+    )
+  }
+
   const wire = (x1: number, y1: number, x2: number, y2: number, key: string) => (
     <line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth={1.8} />
   )
@@ -216,6 +234,7 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
         {wire(at[parts.length - 1]! + gap, top, right, top, 'wr')}
         {wire(right, top, right, bottom, 'rr')}
         {wire(right, bottom, left, bottom, 'bb')}
+        {flowing && flow([[left, midY - CELL_GAP], [left, top], [right, top], [right, bottom], [left, bottom], [left, midY + CELL_GAP]], 18, 0, 'flow')}
         {cell(left, midY)}
         {parts.map((p, i) => symbol(p, at[i]!, top, `p${i}`))}
         {bottomNote}
@@ -243,6 +262,13 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
       {wire(railR, lastY, railR, loopBottom, 'rd')}
       {wire(railR, loopBottom, left, loopBottom, 'bb')}
       {wire(left, loopBottom, left, midY + CELL_GAP, 'lb')}
+      {flowing && parts.map((p, i) => {
+        // Spacing falls as the branch current rises; without resistances every branch is alike.
+        const current = (q: Part) => (showValues && typeof q.resistance === 'number' ? 1 / q.resistance : 1)
+        const most = Math.max(...parts.map(current))
+        const spacing = 18 * parts.length * (most / current(p))
+        return flow([[left, midY - CELL_GAP], [left, branchY[0]!], [railL, branchY[0]!], [railL, branchY[i]!], [railR, branchY[i]!], [railR, lastY], [railR, loopBottom], [left, loopBottom], [left, midY + CELL_GAP]], spacing, (18 * i) % spacing, `flow${i}`)
+      })}
       {cell(left, midY)}
       {parts.map((p, i) => symbol(p, (railL + railR) / 2, branchY[i]!, `p${i}`))}
       {bottomNote}

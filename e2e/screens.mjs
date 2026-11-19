@@ -63,6 +63,8 @@ const ROUTES = [
   // one with fractions in its running text.
   '/subjects/computer-science/topics/bubble-sort/lesson?step=2',
   '/subjects/maths/topics/averages-and-range/lesson?step=2',
+  // Two circuits that move (section 15 Part B), each with its Play again button under it.
+  '/subjects/physics/topics/series-and-parallel-circuits/lesson?step=1',
   '/progress',
   // The daily recap: its opening page, then its first question once Start is pressed.
   { path: '/recap', tap: ['main article > button'] },
@@ -255,6 +257,9 @@ for (const theme of THEMES) {
       await page.waitForSelector('main h1', { timeout: 20000 }).catch(() => errors.push('no heading rendered'))
       // Entrance animations run to about 1.6s; measuring mid-animation reports boxes that are not the layout.
       await page.waitForTimeout(2200)
+      // A moving figure (section 15 Part B) runs up to 4 s once on screen. Wait for every
+      // animation that ends, as the walk does; the menu's gradient runs forever and is skipped.
+      await page.waitForFunction(() => document.getAnimations().every((a) => a.playState === 'finished' || a.playState === 'idle' || a.effect?.getComputedTiming().iterations === Infinity), null, { timeout: 4000 }).catch(() => {})
       // Where the page put what it was asked for, before anything below moves it.
       const landing = lands ? await page.evaluate((selector) => {
         const box = document.querySelector(selector)?.getBoundingClientRect()

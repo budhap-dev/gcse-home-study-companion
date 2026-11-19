@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move } from './motion.ts'
 
 interface ForceMark {
   /** Position along the beam from the left end, in metres. */
@@ -11,6 +12,12 @@ interface ForceMark {
 /**
  * A horizontal beam on a pivot with forces drawn as arrows and distances from the
  * pivot marked. Props: { length: m, pivot: m from left, forces: ForceMark[], showDistances }.
+ *
+ * In motion (section 15 Part B) the forces arrive one side at a time. When the moments
+ * balance, the beam tips under the first side's turning effect and settles level again
+ * once the other side's force arrives, which is the principle of moments happening. When
+ * they do not balance (a door pushed at two places), the forces only arrive: a beam that
+ * levelled out would claim a balance that is not there.
  */
 export function BeamMoments({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const length = Number(props.length ?? 4)
@@ -65,45 +72,68 @@ export function BeamMoments({ props, alt }: { props: Record<string, unknown>; al
   )
   const distRowOf = new Map(forces.filter((f) => f.at !== pivot).map((f, i) => [f, distRow[i]!]))
   const LINE = 15
+  // Clockwise positive: a downward push right of the pivot turns the beam clockwise.
+  const moment = (f: ForceMark) => f.force * (f.at - pivot)
+  const biggest = Math.max(...forces.map((f) => Math.abs(moment(f))), 1e-9)
+  const balanced = forces.length > 1 && Math.abs(forces.reduce((t, f) => t + moment(f), 0)) < biggest * 1e-6
+  const firstTurn = Math.sign(forces.map(moment).find((m) => m !== 0) ?? 0)
+  const firstSide = (f: ForceMark) => Math.sign(moment(f)) !== -firstTurn
+  const sideA = forces.filter(firstSide), sideB = forces.filter((f) => !firstSide(f))
+  const arrives = new Map<ForceMark, number>([
+    ...sideA.map((f, i) => [f, 0.15 + i * 0.3] as const),
+    ...sideB.map((f, i) => [f, 1.45 + i * 0.3] as const),
+  ])
+  const turnA = sideA.reduce((t, f) => t + moment(f), 0)
+  const tip = balanced && turnA !== 0
+    ? move('tip', 0, 3.4, { at: [x(pivot), beamY + 6], vars: { tilt: `${turnA > 0 ? 7 : -7}deg` } })
+    : undefined
   // The canvas grows downwards when distance labels need a second line, so nothing is clipped.
   const extra = Math.max(0, ...distRow) * LINE
   return (
     <svg viewBox={`0 0 ${W} ${baseH + extra}`} width="100%" style={{ maxWidth: Math.min(600, W * 1.2) }} role="img" aria-label={alt}>
-      <rect x={x(0)} y={beamY - 6} width={length * scale} height="12" rx="2" fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
       <polygon points={`${x(pivot)},${beamY + 6} ${x(pivot) - 16},${beamY + 40} ${x(pivot) + 16},${beamY + 40}`} fill={INK} />
       {/* Below the distance labels rather than twelve pixels under them: a force close to
           the pivot puts its distance label directly over this one. */}
       <text x={x(pivot)} y={beamY + 74} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>pivot</text>
-      {forces.map((f, i) => {
-        const len = 22 + (Math.abs(f.force) / maxF) * 38
-        const down = f.force > 0
-        const y1 = down ? beamY - 6 - len : beamY + 6 + len
-        const y2 = down ? beamY - 8 : beamY + 8
-        const colour = down ? '#d25b3b' : '#2e8b57'
-        return (
-          <g key={i}>
-            <line x1={x(f.at)} y1={y1} x2={x(f.at)} y2={y2} stroke={colour} strokeWidth="3" strokeLinecap="round" />
-            <polygon points={down ? `${x(f.at)},${y2 + 2} ${x(f.at) - 6},${y2 - 8} ${x(f.at) + 6},${y2 - 8}` : `${x(f.at)},${y2 - 2} ${x(f.at) - 6},${y2 + 8} ${x(f.at) + 6},${y2 + 8}`} fill={colour} />
-            <text
-              x={x(f.at)}
-              y={(down ? y1 - 6 : y1 + 14) + (down ? -1 : 1) * forceRow[i]! * LINE}
-              textAnchor="middle"
-              fontFamily={DISPLAY}
-              fontSize="12"
-              fontWeight="700"
-              fill={colour}
-            >
-              {labelText(f)}
-            </text>
-            {showDistances && f.at !== pivot && (
-              <g>
-                <line x1={x(Math.min(f.at, pivot))} y1={beamY + 30} x2={x(Math.max(f.at, pivot))} y2={beamY + 30} stroke={INK_2} strokeDasharray="3 3" />
-                <text x={x((f.at + pivot) / 2)} y={beamY + 52 + (distRowOf.get(f) ?? 0) * LINE} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{Math.abs(f.at - pivot)} m</text>
+      {showDistances && forces.map((f, i) => f.at !== pivot && (
+        <g key={`d${i}`}>
+          <line x1={x(Math.min(f.at, pivot))} y1={beamY + 30} x2={x(Math.max(f.at, pivot))} y2={beamY + 30} stroke={INK_2} strokeDasharray="3 3" />
+          <text x={x((f.at + pivot) / 2)} y={beamY + 52 + (distRowOf.get(f) ?? 0) * LINE} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{Math.abs(f.at - pivot)} m</text>
+        </g>
+      ))}
+      {/* The beam and the forces on it, which tip together about the pivot. */}
+      <g data-beam="" {...tip}>
+        <rect x={x(0)} y={beamY - 6} width={length * scale} height="12" rx="2" fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
+        {forces.map((f, i) => {
+          const len = 22 + (Math.abs(f.force) / maxF) * 38
+          const down = f.force > 0
+          const y1 = down ? beamY - 6 - len : beamY + 6 + len
+          const y2 = down ? beamY - 8 : beamY + 8
+          const colour = down ? '#d25b3b' : '#2e8b57'
+          const at = arrives.get(f) ?? 0.15
+          return (
+            <g key={i}>
+              {/* Grows from its tail to its head, the way the push is applied. */}
+              <g {...move('grow-y', at, 0.5, { at: [x(f.at), y1] })}>
+                <line x1={x(f.at)} y1={y1} x2={x(f.at)} y2={y2} stroke={colour} strokeWidth="3" strokeLinecap="round" />
+                <polygon points={down ? `${x(f.at)},${y2 + 2} ${x(f.at) - 6},${y2 - 8} ${x(f.at) + 6},${y2 - 8}` : `${x(f.at)},${y2 - 2} ${x(f.at) - 6},${y2 + 8} ${x(f.at) + 6},${y2 + 8}`} fill={colour} />
               </g>
-            )}
-          </g>
-        )
-      })}
+              <text
+                {...move('fade', at + 0.2, 0.4)}
+                x={x(f.at)}
+                y={(down ? y1 - 6 : y1 + 14) + (down ? -1 : 1) * forceRow[i]! * LINE}
+                textAnchor="middle"
+                fontFamily={DISPLAY}
+                fontSize="12"
+                fontWeight="700"
+                fill={colour}
+              >
+                {labelText(f)}
+              </text>
+            </g>
+          )
+        })}
+      </g>
     </svg>
   )
 }

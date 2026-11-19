@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move, seg } from './motion.ts'
 
 interface Charge {
   /** +1 or -1; the sign decides which way every arrow in the picture points. */
@@ -17,6 +18,10 @@ interface Charge {
  *
  * Props: charges [{sign, label}] (one for a field pattern, two for a force pair),
  * lines (how many field lines, default 12), note.
+ *
+ * In motion (section 15 Part B) the field lines draw themselves the way they point: out
+ * from a positive sphere, in to a negative one, with the arrowheads after. The force on a
+ * pair grows out of each sphere.
  */
 export function ElectricField({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const charges = (props.charges as Charge[] | undefined) ?? [{ sign: 1 }]
@@ -122,10 +127,12 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
         c.sign > 0
           ? [cx + reach * 0.72 * Math.cos(a), midY + reach * 0.72 * Math.sin(a), a]
           : [cx + R * 1.35 * Math.cos(a), midY + R * 1.35 * Math.sin(a), a + Math.PI]
+      // Out from a positive charge, in to a negative one.
+      const d = c.sign > 0 ? seg(x1, y1, x2, y2) : seg(x2, y2, x1, y1)
       return (
         <g key={i}>
-          <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={ACCENT} strokeWidth={1.4} />
-          {head(hx, hy, angle, ACCENT, `h${i}`)}
+          <path d={d} fill="none" stroke={ACCENT} strokeWidth={1.4} {...move('draw', 0.2, 1.1)} />
+          <g {...move('fade', c.sign > 0 ? 0.9 : 1.2, 0.3)}>{head(hx, hy, angle, ACCENT, `h${i}`)}</g>
         </g>
       )
     })
@@ -167,7 +174,7 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
     const start = from + dir * (R + 8)
     const end = start + dir * ARROW_LEN
     return (
-      <g key={key}>
+      <g key={key} {...move('grow-x', 0.3, 0.6, { at: [start, midY] })}>
         <line x1={start} y1={midY} x2={end} y2={midY} stroke="#d25b3b" strokeWidth={2.4} />
         {head(end, midY, dir > 0 ? 0 : Math.PI, '#d25b3b', `${key}h`)}
       </g>

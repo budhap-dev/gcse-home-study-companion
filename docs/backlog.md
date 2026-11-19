@@ -1216,7 +1216,7 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   valve that "touches the road"; three satellite spheres meet at two points, not one; a
   function and its inverse need not meet on y = x; the bounds example's "tenth of the
   length". A browser scan of every Maths step checks each tag draws as a mark.
-- [ ] **2. Part A, Physics, Chemistry and Biology.** One PR each.
+- [x] **2. Part A, Physics, Chemistry and Biology.** One PR each.
   **Physics done 15 November 2026:** six reviewers read all 34 lessons (298 steps). 418 edits:
   215 marks, 92 terms explained where first used, 66 real-life examples in the steps, 16
   jumps given their reason, 21 corrections. What was wrong: the gradient of an I–V graph is
@@ -1308,8 +1308,26 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   `n ← USERINPUT` compared with a number, now `STRING_TO_INT`; "lossy" sound in a lesson
   that never explains it; cache "near" the CPU (it is on the chip). Every board claim the
   reviewers listed is in the 8525 text.
-- [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
+- [x] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
+  **Done 19 November 2026 (10.155.0):** `diagrams/motion.ts` tags a part of a drawing with one
+  of ten movements (draw, fade, grow, tip, spin, flow, wipe, slide); the keyframes in
+  styles.css run only once the figure has `data-anim`, which it gets when 40% of it (or half
+  the screen) is in view, and again from a Play again button under it. The still drawing is
+  the last frame, so print, motion off, reduced motion and the screens checks see today's
+  figure; every figure ends within 4 seconds and nothing loops. Ten Physics kinds, all 76
+  figures the content draws: current flowing from the cell's positive plate round a circuit
+  (each parallel branch's dots spaced by its own current; none where the switch is drawn
+  open); a beam tipping under one side's forces and settling level when the other side's
+  arrive (only where the moments balance, 10 of 12); forces growing on a free-body diagram,
+  then the resultant; pressure arrows lengthening with depth; bodies gliding before and after
+  a collision; light travelling at one speed through lenses, mirrors and a block; field lines
+  drawing the way the field runs (N to S, round a wire by the grip rule, S to N in a coil, out
+  of + and into −); a generator's coil turning and its pd traced against time.
+  `motion.test.tsx` holds the rules over every figure in the pack. What it found: in all five
+  convex lens figures the parallel ray missed both F and the image (it ended at the image's
+  height but 2.2 f along); fixed, with a test of the construction for every lens the
+  content draws.
 - [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
 - [x] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
   drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and

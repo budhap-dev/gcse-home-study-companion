@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move, seg } from './motion.ts'
 
 /**
  * Greedy word wrap to a room measured the same way the phone-fit test measures text: a
@@ -33,7 +34,14 @@ function wrapWords(text: string, size: number, room: number): string[] {
  * reflection off its top face, the refracted ray inside, and the ray emerging from the
  * bottom face. The emergent ray leaves at the angle the incident ray arrived, so it is
  * drawn parallel to it, shifted sideways; `media` names [the surroundings, the block].
+ *
+ * In motion (section 15 Part B) the light travels at one steady speed: the incident ray
+ * reaches the surface, then the reflected or refracted ray leaves it (in a block, through
+ * it and out), each arrowhead appearing as the light passes, and the angles last.
  */
+
+/** Units a second that light is drawn at, so a longer ray takes longer and none races. */
+const LIGHT_SPEED = 150
 export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const kind = String(props.kind ?? 'reflection') as 'reflection' | 'refraction' | 'specular' | 'diffuse' | 'block'
   const i = Math.max(5, Math.min(80, Number(props.incidence ?? 40)))
@@ -62,7 +70,13 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
   const refracted = { x: P.x + len * Math.sin(rad(r)), y: P.y + len * Math.cos(rad(r)) }
 
   /** An arrowhead partway along a ray, so the direction of travel is never in doubt. */
-  const arrow = (a: { x: number; y: number }, b: { x: number; y: number }, at = 0.55) => {
+  type Pt = { x: number; y: number }
+  /** A ray from a to b that starts travelling at `t0`; returns it and when it arrives. */
+  const light = (a: Pt, b: Pt, t0: number, extra: React.SVGProps<SVGPathElement> = {}) => {
+    const dur = Math.hypot(b.x - a.x, b.y - a.y) / LIGHT_SPEED
+    return { el: <path d={seg(a.x, a.y, b.x, b.y)} fill="none" {...extra} {...move('draw', t0, dur, { ease: 'linear' })} />, end: t0 + dur, dur }
+  }
+  const arrow = (a: Pt, b: Pt, at = 0.55, shown?: number) => {
     const x = a.x + (b.x - a.x) * at
     const y = a.y + (b.y - a.y) * at
     const ang = Math.atan2(b.y - a.y, b.x - a.x)
@@ -72,18 +86,18 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
       [x - size * Math.cos(ang - 0.4), y - size * Math.sin(ang - 0.4)],
       [x - size * Math.cos(ang + 0.4), y - size * Math.sin(ang + 0.4)],
     ]
-    return <polygon points={pts.map((p) => p.join(',')).join(' ')} fill="var(--subject)" />
+    return <polygon points={pts.map((p) => p.join(',')).join(' ')} fill="var(--subject)" {...(shown === undefined ? {} : move('fade', shown, 0.15))} />
   }
 
   /** The arc between a ray and the normal, with the angle written beside it. */
-  const angleArc = (fromDeg: number, toDeg: number, label: string, radius: number) => {
+  const angleArc = (fromDeg: number, toDeg: number, label: string, radius: number, shown = 0) => {
     const a0 = rad(fromDeg)
     const a1 = rad(toDeg)
     const p0 = { x: P.x + radius * Math.sin(a0), y: P.y - radius * Math.cos(a0) }
     const p1 = { x: P.x + radius * Math.sin(a1), y: P.y - radius * Math.cos(a1) }
     const mid = (a0 + a1) / 2
     return (
-      <g>
+      <g {...move('fade', shown, 0.4)}>
         <path d={`M${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${radius} ${radius} 0 0 ${a1 > a0 ? 1 : 0} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`} fill="none" stroke={INK_2} strokeWidth="1.5" />
         <text x={P.x + (radius + 14) * Math.sin(mid)} y={P.y - (radius + 14) * Math.cos(mid) + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>{label}</text>
       </g>
@@ -111,18 +125,22 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
      * the side away from the normal, because for a small angle the wedge is narrower than
      * the text and a label inside it has a line through it whatever the radius.
      */
-    const arc = (at: { x: number; y: number }, fromDeg: number, toDeg: number, label: string, radius: number, labelDeg: number, labelR: number) => {
+    const arc = (at: { x: number; y: number }, fromDeg: number, toDeg: number, label: string, radius: number, labelDeg: number, labelR: number, shown = 0) => {
       const a0 = rad(fromDeg), a1 = rad(toDeg), la = rad(labelDeg)
       const p0 = { x: at.x + radius * Math.sin(a0), y: at.y - radius * Math.cos(a0) }
       const p1 = { x: at.x + radius * Math.sin(a1), y: at.y - radius * Math.cos(a1) }
       return (
-        <g>
+        <g {...move('fade', shown, 0.4)}>
           <path d={`M${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${radius} ${radius} 0 0 ${a1 > a0 ? 1 : 0} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`} fill="none" stroke={INK_2} strokeWidth="1.5" />
           <text x={at.x + labelR * Math.sin(la)} y={at.y - labelR * Math.cos(la) + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{label}</text>
         </g>
       )
     }
     const cornerLines = wrapWords('out parallel to in, shifted sideways', 12, BW - 24)
+    const rayIn = light(start, entry, 0.2, { stroke: 'var(--subject)', strokeWidth: 2.5 })
+    const rayThrough = light(entry, exit, rayIn.end, { stroke: 'var(--subject)', strokeWidth: 2.5 })
+    const rayOut = light(exit, end, rayThrough.end, { stroke: 'var(--subject)', strokeWidth: 2.5 })
+    const angles = rayOut.end + 0.1
     return (
       // 360 keeps the desktop size this had at its old 300-unit width (300 × 1.2); only
       // the phone-facing viewBox got narrower.
@@ -135,16 +153,16 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
         <line x1={exit.x} y1={bottom - 30} x2={exit.x} y2={bottom + 24} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
         <text x={entry.x + 5} y={top - 58} fontFamily={FONT} fontSize="11" fill={INK_2}>normal</text>
         {/* Incident, the faint reflection, refracted, emergent. */}
-        <line x1={start.x} y1={start.y} x2={entry.x} y2={entry.y} stroke="var(--subject)" strokeWidth="2.5" />
-        {arrow(start, entry)}
-        <line x1={entry.x} y1={entry.y} x2={bounce.x} y2={bounce.y} stroke="var(--subject)" strokeWidth="1.2" strokeDasharray="4 3" opacity="0.7" />
-        <line x1={entry.x} y1={entry.y} x2={exit.x} y2={exit.y} stroke="var(--subject)" strokeWidth="2.5" />
-        {arrow(entry, exit, 0.5)}
-        <line x1={exit.x} y1={exit.y} x2={end.x} y2={end.y} stroke="var(--subject)" strokeWidth="2.5" />
-        {arrow(exit, end, 0.6)}
-        {arc(entry, -i, 0, `${Math.round(i)}°`, 34, -(i + 16), 46)}
-        {arc(entry, 180, 180 - r, `${Math.round(r)}°`, 30, 180 - r - 16, 50)}
-        {arc(exit, 180, 180 - i, `${Math.round(i)}°`, 30, 180 - i - 16, 46)}
+        {rayIn.el}
+        {arrow(start, entry, 0.55, 0.2 + rayIn.dur * 0.55)}
+        <line x1={entry.x} y1={entry.y} x2={bounce.x} y2={bounce.y} stroke="var(--subject)" strokeWidth="1.2" strokeDasharray="4 3" opacity="0.7" {...move('fade', rayIn.end, 0.5)} />
+        {rayThrough.el}
+        {arrow(entry, exit, 0.5, rayIn.end + rayThrough.dur * 0.5)}
+        {rayOut.el}
+        {arrow(exit, end, 0.6, rayThrough.end + rayOut.dur * 0.6)}
+        {arc(entry, -i, 0, `${Math.round(i)}°`, 34, -(i + 16), 46, angles)}
+        {arc(entry, 180, 180 - r, `${Math.round(r)}°`, 30, 180 - r - 16, 50, angles + 0.15)}
+        {arc(exit, 180, 180 - i, `${Math.round(i)}°`, 30, 180 - i - 16, 46, angles + 0.3)}
         <circle cx={entry.x} cy={entry.y} r="3.5" fill={ACCENT} />
         <circle cx={exit.x} cy={exit.y} r="3.5" fill={ACCENT} />
         {cornerLines.map((line, j) => (
@@ -182,12 +200,15 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
           const inFrom = { x: hit.x - spreadX, y: hit.y - runY }
           const spread = kind === 'specular' ? 0 : [20, -14, 8][n]
           const out = { x: hit.x + spreadX + spread, y: hit.y - runY + (kind === 'specular' ? 0 : [10, -14, 18][n]) }
+          // Side by side and parallel, so they set off together and meet the surface together.
+          const rayIn = light(inFrom, hit, 0.2, { stroke: 'var(--subject)', strokeWidth: 2 })
+          const rayOut = light(hit, out, rayIn.end, { stroke: 'var(--subject)', strokeWidth: 2 })
           return (
             <g key={n}>
-              <line x1={inFrom.x} y1={inFrom.y} x2={hit.x} y2={hit.y} stroke="var(--subject)" strokeWidth="2" />
-              {arrow(inFrom, hit)}
-              <line x1={hit.x} y1={hit.y} x2={out.x} y2={out.y} stroke="var(--subject)" strokeWidth="2" />
-              {arrow(hit, out)}
+              {rayIn.el}
+              {arrow(inFrom, hit, 0.55, 0.2 + rayIn.dur * 0.55)}
+              {rayOut.el}
+              {arrow(hit, out, 0.55, rayIn.end + rayOut.dur * 0.55)}
             </g>
           )
         })}
@@ -199,6 +220,8 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
   }
 
   const reflectionCaption = wrapWords('angle of incidence = angle of reflection', 12, W - 20)
+  const incident = light(from, P, 0.2, { stroke: 'var(--subject)', strokeWidth: 2.5 })
+  const leaving = light(P, kind === 'refraction' ? refracted : reflected, incident.end, { stroke: 'var(--subject)', strokeWidth: 2.5 })
   const refractionCaption = wrapWords(
     ratio < 1 ? 'slower in the second medium, so it bends towards the normal' : 'faster in the second medium, so it bends away from the normal',
     12,
@@ -214,15 +237,15 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
       <line x1={P.x} y1={surfaceY - 100} x2={P.x} y2={surfaceY + (kind === 'refraction' ? 100 : 26)} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
       <text x={P.x + 6} y={surfaceY - 104} fontFamily={FONT} fontSize="11" fill={INK_2}>normal</text>
 
-      <line x1={from.x} y1={from.y} x2={P.x} y2={P.y} stroke="var(--subject)" strokeWidth="2.5" />
-      {arrow(from, P)}
-      {angleArc(-i, 0, `${Math.round(i)}°`, 42)}
+      {incident.el}
+      {arrow(from, P, 0.55, 0.2 + incident.dur * 0.55)}
+      {angleArc(-i, 0, `${Math.round(i)}°`, 42, leaving.end + 0.1)}
 
       {kind === 'reflection' && (
         <g>
-          <line x1={P.x} y1={P.y} x2={reflected.x} y2={reflected.y} stroke="var(--subject)" strokeWidth="2.5" />
-          {arrow(P, reflected)}
-          {angleArc(0, i, `${Math.round(i)}°`, 42)}
+          {leaving.el}
+          {arrow(P, reflected, 0.55, incident.end + leaving.dur * 0.55)}
+          {angleArc(0, i, `${Math.round(i)}°`, 42, leaving.end + 0.25)}
           {reflectionCaption.map((line, j) => (
             <text key={`refl${j}`} x={W / 2} y={H - 10 - (reflectionCaption.length - 1 - j) * 14} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
           ))}
@@ -231,9 +254,9 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
 
       {kind === 'refraction' && (
         <g>
-          <line x1={P.x} y1={P.y} x2={refracted.x} y2={refracted.y} stroke="var(--subject)" strokeWidth="2.5" />
-          {arrow(P, refracted)}
-          {angleArc(180, 180 - r, `${Math.round(r)}°`, 42)}
+          {leaving.el}
+          {arrow(P, refracted, 0.55, incident.end + leaving.dur * 0.55)}
+          {angleArc(180, 180 - r, `${Math.round(r)}°`, 42, leaving.end + 0.25)}
           <text x="14" y={surfaceY - 12} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[0]}</text>
           <text x="14" y={surfaceY + 20} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[1]}</text>
           {refractionCaption.map((line, j) => (

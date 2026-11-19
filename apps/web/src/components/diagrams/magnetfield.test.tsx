@@ -144,7 +144,8 @@ describe('the field a current makes', () => {
 
   it('runs the lines inside the solenoid straight, parallel and evenly spaced', () => {
     const markup = svg({ kind: 'solenoid', current: 'up' })
-    const ys = [...markup.matchAll(/<line x1="58" y1="([\d.]+)"[^>]*x2="238" y2="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])])
+    // Paths, drawn from the south end to the north end, so they can draw themselves that way.
+    const ys = [...markup.matchAll(/<path d="M (?:58|238)\.00 ([\d.]+) L (?:58|238)\.00 ([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])])
     expect(ys).toHaveLength(3)
     for (const [y1, y2] of ys) expect(y1).toBe(y2)
     const sorted = ys.map((p) => p[0]!).sort((a, b) => a - b)

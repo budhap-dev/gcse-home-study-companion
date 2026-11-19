@@ -1,4 +1,6 @@
 import type { Visual as VisualBlock } from '@study/shared'
+import { useLayoutEffect, useState, type RefObject } from 'react'
+import { usePref } from '../theme/prefs.ts'
 import { useFitSvgText } from './fitSvgText.ts'
 import { RichText } from './RichText.tsx'
 import { DIAGRAMS } from './diagrams/index.tsx'
@@ -26,10 +28,65 @@ export const LIGHT_CANVAS = {
   '--accent-l-max': '0.47',
 } as React.CSSProperties
 
+/** How much of a figure must be on screen before it plays: 40% of it, or half the screen. */
+function wellOnScreen(r: DOMRect): boolean {
+  if (r.height <= 0) return false
+  const seen = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)
+  return seen >= Math.min(r.height * 0.4, innerHeight * 0.5)
+}
+
+/**
+ * A figure with moving parts (section 15 Part B, diagrams/motion.ts) plays once, when it is
+ * well on screen: `data-anim` switches its keyframes on. Until then, and with motion off or
+ * reduced, it shows its still drawing, which is the last frame. Checked before the first
+ * paint, so a figure already on screen starts from its first frame rather than flashing
+ * the finished drawing; one further down starts when scrolled to.
+ */
+function useFigurePlay(ref: RefObject<HTMLElement | null>, drawing: unknown) {
+  const motion = usePref('motion')
+  const [moving, setMoving] = useState(false)
+  useLayoutEffect(() => {
+    const el = ref.current
+    const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
+    const has = !!el && motion && !reduced && !!el.querySelector('.fa')
+    setMoving(has)
+    if (!el || !has) {
+      delete el?.dataset.anim
+      return
+    }
+    if (wellOnScreen(el.getBoundingClientRect())) {
+      el.dataset.anim = 'play'
+      return
+    }
+    if (typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting && wellOnScreen(e.boundingClientRect))) {
+          el.dataset.anim = 'play'
+          io.disconnect()
+        }
+      },
+      { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [ref, motion, drawing])
+  const replay = () => {
+    const el = ref.current
+    if (!el) return
+    // Off, a layout read so the browser sees it off, then on again: the keyframes restart.
+    delete el.dataset.anim
+    void el.getBoundingClientRect()
+    el.dataset.anim = 'play'
+  }
+  return { moving, replay }
+}
+
 /** The diagram canvas, fitted so a label wider than the drawing is not cut off. */
-function DiagramFigure({ component, children }: { component: string; children: React.ReactNode }) {
+function DiagramFigure({ component, drawing, children }: { component: string; drawing?: unknown; children: React.ReactNode }) {
   const ref = useFitSvgText<HTMLElement>()
-  return (
+  const { moving, replay } = useFigurePlay(ref, drawing)
+  const figure = (
     // overflow-x-auto, and no justify-center: below its natural width the drawing stops
     // shrinking (see stopShrinkingBelowNaturalWidth) and this is what it scrolls inside.
     // The centring moved onto the svg's own auto margins, because justify-content puts a
@@ -45,6 +102,17 @@ function DiagramFigure({ component, children }: { component: string; children: R
     <figure ref={ref} className="flex items-center overflow-x-auto rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
       {children}
     </figure>
+  )
+  // Always this wrapper, so the figure is never remounted when its button appears. The
+  // button sits under the drawing, not over a corner of it, where a label could be.
+  return (
+    <div className="flex flex-col gap-1.5">
+      {figure}
+      {moving && <button type="button" onClick={replay} className="fig-replay btn btn-sm btn-secondary self-end" aria-label="Play the figure's movement again">
+        <svg aria-hidden width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" /></svg>
+        Play again
+      </button>}
+    </div>
   )
 }
 
@@ -83,7 +151,7 @@ export function Visual({ visual }: { visual: VisualBlock }) {
       const Diagram = DIAGRAMS[visual.component]
       if (Diagram) {
         return (
-          <DiagramFigure component={visual.component}>
+          <DiagramFigure component={visual.component} drawing={visual.props}>
             <Diagram props={visual.props} alt={visual.alt} />
           </DiagramFigure>
         )

@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 interface Body {
   /** Mass in kg, shown on the block and used for its width. */
@@ -20,6 +21,10 @@ interface Body {
  * a phone regardless. Width is now worked out from what each row draws: not just the
  * blocks, but the velocity arrow above each one and its "400 m/s" label too, since a
  * fast, light body can carry an arrow wider than its own block.
+ *
+ * In motion (section 15 Part B) each moving body glides the way its arrow points, further
+ * the faster it goes, and a body at rest stays put; then the After row arrives and does the
+ * same. The glide is short and inside the drawing, which clips it.
  */
 export function Collision({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const before = (props.before as Body[] | undefined) ?? [{ mass: 2, velocity: 3, label: 'A' }, { mass: 1, velocity: 0, label: 'B' }]
@@ -49,8 +54,9 @@ export function Collision({ props, alt }: { props: Record<string, unknown>; alt:
     const widths = bodies.map((b) => slotW(b))
     const total = widths.reduce((a, b) => a + b, 0) + gap * (bodies.length - 1)
     let cursor = (W - total) / 2
+    const start = r === 0 ? 0.2 : 1.5
     return (
-      <g key={title}>
+      <g key={title} {...(r === 1 ? move('fade', 1.3, 0.4) : {})}>
         {/* On its own line above the arrows: level with them, "Before" ran into the first
             body's speed ("Befor3 m/s") once the drawing narrowed to a phone. */}
         <text x="16" y={30 + r * rowH - 10} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={ACCENT}>{title}</text>
@@ -69,8 +75,9 @@ export function Collision({ props, alt }: { props: Record<string, unknown>; alt:
           const ay = y - h - 16
           const ax = cx - (v >= 0 ? len / 2 : -len / 2)
           const ex = cx + (v >= 0 ? len / 2 : -len / 2)
+          const glide = v === 0 ? 0 : 8 + 22 * Math.sqrt(Math.abs(v) / maxV)
           return (
-            <g key={i}>
+            <g key={i} {...(v === 0 ? {} : move('slide', start, 1.1, { ease: 'linear', vars: { dx: `${(-Math.sign(v) * glide).toFixed(1)}px` } }))}>
               <rect x={x} y={y - h} width={w} height={h} rx="6" fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
               <text x={cx} y={y - h / 2 + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={INK}>{b.mass} kg</text>
               {b.label && <text x={cx} y={y + 18} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{b.label}</text>}

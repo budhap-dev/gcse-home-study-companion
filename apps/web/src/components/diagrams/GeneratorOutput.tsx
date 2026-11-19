@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move } from './motion.ts'
 
 /**
  * What comes out of a generator, for AQA 4.7.3.2: the potential difference induced in a
@@ -18,6 +19,10 @@ import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  *   compareSpeed: draw a second, dashed graph for the coil turned this many times faster,
  *     which raises the peak and the frequency by the same factor
  *   note: a caption under the drawing
+ *
+ * In motion (section 15 Part B) the graph is traced against time, two turns of the coil
+ * from left to right, the faster coil's trace building over the same time; and in the side
+ * view the coil turns twice on its axle.
  */
 const W = 296
 
@@ -63,7 +68,7 @@ export function GeneratorOutput({ props, alt }: { props: Record<string, unknown>
         <text x={coilX + coilW / 2} y={cy + coilH / 2 + 25} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill="#fff">S</text>
         {/* The axle, then the coil across it. */}
         <line x1={coilX + 10} y1={cy} x2={axleEnd} y2={cy} stroke={INK_2} strokeWidth="3" />
-        <rect x={coilX} y={cy - coilH / 2} width={coilW} height={coilH} fill="none" stroke={ACCENT} strokeWidth="2.5" />
+        <rect x={coilX} y={cy - coilH / 2} width={coilW} height={coilH} fill="none" stroke={ACCENT} strokeWidth="2.5" {...move('spin-y', 0.3, 1.4, { at: [coilX + coilW / 2, cy], plays: 2 })} />
         <text x={coilX + coilW / 2} y={cy - 9} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>coil</text>
         {/* Each end of the coil runs along the axle to its own ring, or to its own half of the split ring. */}
         {[cy - 8, cy + 8].map((wireY, i) => {
@@ -134,8 +139,10 @@ export function GeneratorOutput({ props, alt }: { props: Record<string, unknown>
           <text x={x(t)} y={bottom + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{tickLabel(t)}</text>
         </g>
       ))}
-      <path d={path(1)} fill="none" stroke={ACCENT} strokeWidth="2.5" />
-      {compare && <path d={path(compare)} fill="none" stroke="#d25b3b" strokeWidth="2" strokeDasharray="5 4" />}
+      <g {...move('wipe', 0.2, 2.8)}>
+        <path d={path(1)} fill="none" stroke={ACCENT} strokeWidth="2.5" />
+        {compare && <path d={path(compare)} fill="none" stroke="#d25b3b" strokeWidth="2" strokeDasharray="5 4" />}
+      </g>
       <text x={W / 2} y={18} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
         {kind === 'dynamo' ? 'Dynamo: dc, never reversing' : 'Alternator: ac, reversing every half turn'}
       </text>
