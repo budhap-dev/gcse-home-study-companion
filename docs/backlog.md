@@ -968,7 +968,7 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   The marker now takes one point written any usual way ("x = −3 and y = 3", "y = 3, x = −3"),
   "dy/dx =" in front of a derivative, and x-coordinates or values of sin x in any order.
   Further Maths is complete: 181 new questions over 22 topics.
-- [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
+- [x] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
   the three sciences that need two or more units at once (for example forces with energy, or
   algebra with geometry), as a "Challenge" set on the subject page beside the grade 9 sets.
   **Maths done 14 November 2026:** 12 multi-part problems (26 parts, 74 marks; a reviewer agent recomputed every answer and ran the marker on likely inputs), each in its
@@ -976,7 +976,22 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   (four problems, drawn by its link's code) opens from the subject page once a subject has
   four. Challenge problems stay out of unit tests, grade 9 sets and made worksheets, and off
   topic worksheets and quizzes; `challenge.test.ts` holds each subject's count and that every
-  problem reaches another unit. Physics, Chemistry and Biology next.
+  problem reaches another unit.
+  **Physics, Chemistry and Biology done 19 November 2026 (10.159.0):** ten problems each, 79
+  parts, every one numeric and auto-marked, written by a script that computes each answer
+  and checks it by a second route, rounds a half up as an exam does (Python's own rounding
+  made 17.25 into 17.2), and refuses an answer printed in its own stem. Physics (AQA 8463): a
+  lift motor, braking, a kettle, a bat's echo while it flies, a lamp transformer, a diver's
+  bubble, trolleys that stick, a spring launcher, an oil heater, National Grid losses.
+  Chemistry (AQA 8462): aluminium smelting and its anodes, a 1 : 2 titration, hydrogen by
+  bond energies, Haber volumes, a limiting reactant, marble chips, fermentation's atom
+  economy, a propane barbecue, magnesium sulfate's yield, cracking to a polymer. Biology
+  (Edexcel 1BI0): a root tip's size and mitosis, BMI and cardiac output, potato osmosis, a
+  potometer and stomatal density, pondweed and its limiting factors, bacteria and inhibition
+  zones, a guinea-pig cross for breeding, energy through a field, kidneys and glucose,
+  calorimetry for a run. Each stem was checked against its topic's existing ones and
+  changed where it repeated one. The real marker accepts each answer typed bare, with its
+  units and rounded as asked, and rejects wrong ones.
 
 ## 14. Past papers by subject and year (13 November 2026)
 

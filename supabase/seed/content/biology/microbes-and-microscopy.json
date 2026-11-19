@@ -767,6 +767,10 @@
     {
       "id": "microbe-groups",
       "body": "Microbes include bacteria, fungi, protists and viruses."
+    },
+    {
+      "id": "challenge-bacteria-antibiotics",
+      "body": "A culture starts with 50 bacteria, which divide every 30 minutes. On an agar plate spread with the same bacteria, a paper disc soaked in antibiotic A gives a clear zone 18 mm across, and a disc soaked in antibiotic B a clear zone 12 mm across."
     }
   ],
   "questions": [
@@ -1922,6 +1926,122 @@
         }
       ],
       "modelAnswer": "Flame the loop; sterile plates; lift the lid briefly near a flame; tape the lid; incubate at ≤25 °C upside down."
+    },
+    {
+      "id": "q37",
+      "type": "numeric",
+      "prompt": "Calculate the number of bacteria in the culture after 4.0 hours.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "population from mean division time",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "4.0 hours is 240 minutes, which is $\\frac{240}{30} = 8$ divisions. The population doubles each time: $50 \\times 2^8 = 50 \\times 256 = 12\\,800$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8 divisions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12 800"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 12800,
+      "tolerance": 0.5,
+      "step": "s5",
+      "context": "challenge-bacteria-antibiotics",
+      "challenge": {
+        "draws": [
+          "antibiotics-medicines-and-monoclonal-antibodies"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "bacteria"
+    },
+    {
+      "id": "q38",
+      "type": "numeric",
+      "prompt": "Calculate the area of the clear zone round antibiotic A, in mm², to 3 significant figures.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "area of an inhibition zone",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The zone is 18 mm across, so its radius is 9 mm: $\\pi \\times 9^2 = 254$ mm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "radius 9 mm in $\\pi r^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "254 mm²"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 254,
+      "tolerance": 0.5,
+      "step": "s7",
+      "context": "challenge-bacteria-antibiotics",
+      "challenge": {
+        "draws": [
+          "antibiotics-medicines-and-monoclonal-antibodies"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "mm²"
+    },
+    {
+      "id": "q39",
+      "type": "numeric",
+      "prompt": "How many times larger is the area of the clear zone round antibiotic A than round antibiotic B?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing inhibition zones by area",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Areas: $\\pi \\times 9^2 = 254$ mm² and $\\pi \\times 6^2 = 113$ mm². $\\frac{254}{113} = 2.25$. The diameters differ by a factor of 1.5, but the areas by $1.5^2 = 2.25$, so comparing diameters understates how much better A is.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both areas, or the ratio of radii squared"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{9^2}{6^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.25,
+      "tolerance": 0.01,
+      "step": "s7",
+      "context": "challenge-bacteria-antibiotics",
+      "challenge": {
+        "draws": [
+          "antibiotics-medicines-and-monoclonal-antibodies"
+        ]
+      },
+      "unitsRequired": false,
+      "units": ""
     }
   ],
   "worksheets": {

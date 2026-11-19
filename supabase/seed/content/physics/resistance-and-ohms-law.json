@@ -698,6 +698,10 @@
     {
       "id": "resistor-24",
       "body": "A 24 Ω resistor is connected to a 6.0 V supply."
+    },
+    {
+      "id": "challenge-oil-heater",
+      "body": "A heating element with a resistance of 4.8 Ω is connected to a 12 V supply. It heats 0.50 kg of oil for 5.0 minutes. The specific heat capacity of the oil is 2000 J/kg °C. Assume all the energy transferred by the element heats the oil."
     }
   ],
   "questions": [
@@ -1573,6 +1577,130 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "V"
+    },
+    {
+      "id": "q28",
+      "type": "numeric",
+      "prompt": "Calculate the current in the heating element.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "current from V = IR",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$V = IR$, so $I = \\frac{12}{4.8} = 2.5$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{12}{4.8}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.5 A"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.5,
+      "tolerance": 0.01,
+      "step": "s4",
+      "context": "challenge-oil-heater",
+      "challenge": {
+        "draws": [
+          "mains-electricity",
+          "thermal-physics"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "prompt": "Calculate the energy transferred by the element in 5.0 minutes.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "energy from power and time",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Current $I = \\frac{12}{4.8} = 2.5$ A, so power $P = VI = 12 \\times 2.5 = 30$ W. Time $= 5.0 \\times 60 = 300$ s, so $E = Pt = 30 \\times 300 = 9000$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "power 30 W"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "time in seconds, 300 s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9000 J"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 9000,
+      "tolerance": 1,
+      "step": "s7",
+      "context": "challenge-oil-heater",
+      "challenge": {
+        "draws": [
+          "mains-electricity",
+          "thermal-physics"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q30",
+      "type": "numeric",
+      "prompt": "Calculate the rise in temperature of the oil.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "temperature rise from specific heat capacity",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The element transfers $12 \\times 2.5 \\times 300 = 9000$ J. $\\Delta E = mc\\Delta\\theta$, so $\\Delta\\theta = \\frac{9000}{0.50 \\times 2000} = 9.0$ °C.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "energy 9000 J"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{9000}{0.50 \\times 2000}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9.0 °C"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 9,
+      "tolerance": 0.05,
+      "step": "s7",
+      "context": "challenge-oil-heater",
+      "challenge": {
+        "draws": [
+          "mains-electricity",
+          "thermal-physics"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "°C"
     }
   ],
   "examTechnique": {

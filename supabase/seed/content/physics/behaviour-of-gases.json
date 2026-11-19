@@ -799,6 +799,10 @@
     {
       "id": "pump-quick",
       "body": "The barrel of a bicycle pump holds 30 cm³ of air at 100 kPa. The outlet is blocked and the handle is pushed in until the volume is 12 cm³."
+    },
+    {
+      "id": "challenge-diver-bubble",
+      "body": "A diver at a depth of 20 m in the sea breathes out a bubble of air with a volume of 2.0 cm³. The density of sea water is 1030 kg/m³ and $g = 9.8$ N/kg. Atmospheric pressure at the surface is 101 000 Pa. Assume the temperature of the air in the bubble stays the same as it rises."
     }
   ],
   "questions": [
@@ -1673,6 +1677,122 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "%"
+    },
+    {
+      "id": "q27",
+      "type": "numeric",
+      "prompt": "Calculate the pressure caused by the sea water alone at a depth of 20 m.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "pressure in a liquid",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$p = h\\rho g = 20 \\times 1030 \\times 9.8 = 201\\,880$ Pa.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$20 \\times 1030 \\times 9.8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "201 880 Pa"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 201880,
+      "tolerance": 150,
+      "step": "s3",
+      "context": "challenge-diver-bubble",
+      "challenge": {
+        "draws": [
+          "pressure-in-fluids"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "Pa"
+    },
+    {
+      "id": "q28",
+      "type": "numeric",
+      "prompt": "Calculate the total pressure on the bubble when it is released.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "liquid pressure plus atmospheric pressure",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The water pushes $20 \\times 1030 \\times 9.8 = 201\\,880$ Pa, and the atmosphere presses on the surface above it, adding 101 000 Pa: $201\\,880 + 101\\,000 = 302\\,880$ Pa.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds atmospheric pressure to $h\\rho g$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "302 880 Pa"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 302880,
+      "tolerance": 150,
+      "step": "s3",
+      "context": "challenge-diver-bubble",
+      "challenge": {
+        "draws": [
+          "pressure-in-fluids"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "Pa"
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "prompt": "Calculate the volume of the bubble when it reaches the surface, to 2 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "gas volume from pV = constant",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "At constant temperature $p_1V_1 = p_2V_2$. At depth $p_1 = 101\\,000 + 20 \\times 1030 \\times 9.8 = 302\\,880$ Pa; at the surface $p_2 = 101\\,000$ Pa. $V_2 = \\frac{302\\,880 \\times 2.0}{101\\,000} = 5.99\\ldots$, which is 6.0 cm³: three times as big.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total pressure at depth, 302 880 Pa"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$V_2 = \\frac{p_1V_1}{p_2}$ with $p_2 = 101\\,000$ Pa"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6.0 cm³"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0.05,
+      "step": "s5",
+      "context": "challenge-diver-bubble",
+      "challenge": {
+        "draws": [
+          "pressure-in-fluids"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "cm³"
     }
   ],
   "worksheets": {

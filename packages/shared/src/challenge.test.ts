@@ -16,7 +16,7 @@ function topics(subject: string): T[] {
 }
 
 /** Problems per subject: a multi-part problem counts once. Ten to twenty each, as box 12 plans. */
-const COUNTS: Record<string, number> = { maths: 12 }
+const COUNTS: Record<string, number> = { maths: 12, physics: 10, chemistry: 10, biology: 10 }
 
 describe('Challenge problems', () => {
   for (const [subject, count] of Object.entries(COUNTS)) {
