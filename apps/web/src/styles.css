@@ -520,6 +520,39 @@ figure[data-diagram] {
   animation: hero-shift var(--banner-time) ease var(--banner-plays);
   color: #fff;
 }
+/* The target grade picker (GradePanel): a subject-tinted control, and on focus one ring of
+   its own instead of the page-wide outline 2px outside its border, which drew a double
+   frame that stayed after a mouse pick (19 November 2026). Unlayered and (0,2,0), so it
+   beats the bare :focus-visible rule. */
+.grade-select {
+  border-color: color-mix(in srgb, var(--subject) 35%, var(--color-rule));
+  background-color: color-mix(in srgb, var(--subject) 8%, var(--color-surface));
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.grade-select:hover { border-color: color-mix(in srgb, var(--subject) 60%, var(--color-rule)); }
+.grade-select:focus-visible {
+  outline: none;
+  border-color: var(--subject);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--subject) 22%, transparent);
+}
+
+/* A card in a set of choices (Settings: topic order, theme). The chosen one takes the
+   theme's banner colour, a tint and a tick, rather than only a darker border, which read as
+   barely different (19 November 2026). --hero-2 sits under white text in every theme, so
+   the tick is held with it. */
+.choice-card { position: relative; border: 2px solid var(--color-rule); background-color: var(--color-surface); transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease; }
+.choice-card:hover { border-color: color-mix(in srgb, var(--hero-2) 45%, var(--color-rule)); }
+.choice-card[aria-checked="true"] {
+  border-color: var(--hero-2);
+  background-color: color-mix(in srgb, var(--hero-2) 9%, var(--color-surface));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hero-2) 16%, transparent);
+}
+.choice-tick { display: none; }
+.choice-card[aria-checked="true"] .choice-tick {
+  position: absolute; top: 0.6rem; right: 0.6rem; display: flex; align-items: center; justify-content: center;
+  width: 1.4rem; height: 1.4rem; border-radius: 999px; background: var(--hero-2); color: #fff;
+}
+
 /* The soft light across a banner's top corner. Decoration only. */
 .hero-shine { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(420px 260px at 88% 8%, rgb(255 255 255 / 0.26), transparent 70%); }
 
@@ -712,7 +745,8 @@ mark.hand-highlight { background-color: transparent; color: inherit; padding: 0.
 [data-theme="notebook"] body { font-size: 1.0625rem; }
 [data-theme="notebook"] :is(h1, h2, h3) { font-family: var(--font-hand-head); font-weight: 700; letter-spacing: 0.01em; }
 /* A banner keeps its white writing; everywhere else a heading is in blue pen. */
-[data-theme="notebook"] :is(h1, h2, h3):not(.hero-gradient *) { color: var(--pen-blue); }
+/* Not on a white-text band: the home banner, or a subject page's header (solid subject colour). */
+[data-theme="notebook"] :is(h1, h2, h3):not(.hero-gradient *, [data-subject-header] *) { color: var(--pen-blue); }
 [data-theme="notebook"] h1 { font-size: 1.3em; }
 [data-theme="notebook"] :is(figure[data-diagram], svg, table, input, textarea, select, math-field, [data-plain-face]) { --font-sans: var(--font-plain); --font-display: 'Bricolage Grotesque', var(--font-plain); font-family: var(--font-plain); }
 [data-theme="notebook"] :is(table, pre) { background-color: var(--color-surface); }

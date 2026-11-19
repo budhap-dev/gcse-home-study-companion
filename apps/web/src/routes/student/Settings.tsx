@@ -31,6 +31,7 @@ export function Settings() {
   const smileys = usePref('smileys')
   const pen = usePen()
   const topicOrder = useTopicOrder()
+  const [orderSaved, setOrderSaved] = useState(false)
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -42,21 +43,23 @@ export function Settings() {
       <section id="you" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
         <h2 className="font-bold">Your school year</h2>
         <p className="text-sm text-ink-2">The plan puts your year’s topics first, and each subject’s map opens on it.</p>
-        <ProfileForm profile={progress.profile ?? {}} legend="hidden" />
+        <ProfileForm profile={progress.profile ?? {}} legend="hidden" saveWhen="changed" />
       </section>
 
       <section id="order" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
         <h2 className="font-bold" id="order-label">Topic order</h2>
-        <p className="text-sm text-ink-2">How each subject’s topics are set out on this device. The lessons, questions and progress are the same either way.</p>
+        <p className="text-sm text-ink-2">How each subject’s topics are set out on this device. The lessons, questions and progress are the same either way. A tap saves it.</p>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" role="radiogroup" aria-labelledby="order-label">
           {TOPIC_ORDERS.map((o) => (
-            <button key={o.id} type="button" role="radio" aria-checked={topicOrder === o.id} onClick={() => setTopicOrder(o.id)}
-              className={`press flex flex-col gap-1 rounded-xl border-2 p-3 text-left ${topicOrder === o.id ? 'border-[color:var(--subject)]' : 'border-rule'}`}>
+            <button key={o.id} type="button" role="radio" aria-checked={topicOrder === o.id} onClick={() => { setTopicOrder(o.id); setOrderSaved(true) }}
+              className="choice-card press flex flex-col gap-1 rounded-xl p-3 pr-10 text-left">
+              <span className="choice-tick" aria-hidden><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
               <span className="text-sm font-bold">{o.name}</span>
               <span className="text-xs text-ink-2">{o.blurb}</span>
             </button>
           ))}
         </div>
+        {orderSaved && <p className="text-sm text-ink-2" role="status">Saved. Each subject now shows {topicOrder === 'spec' ? 'the board’s order' : 'your school’s plan'}.</p>}
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
@@ -68,7 +71,8 @@ export function Settings() {
             // The device choice shows a swatch of both themes it moves between.
             const swatches = t.id === AUTO_THEME.id ? [resolveTheme(t.id, false), resolveTheme(t.id, true)] : [resolveTheme(t.id)]
             return (
-              <button key={t.id} type="button" role="radio" aria-checked={on} onClick={() => { applyTheme(t.id); setTheme(t.id) }} className={`press flex flex-col gap-2 rounded-xl border-2 p-3 text-left ${on ? 'border-[color:var(--subject)]' : 'border-rule'}`}>
+              <button key={t.id} type="button" role="radio" aria-checked={on} onClick={() => { applyTheme(t.id); setTheme(t.id) }} className="choice-card press flex flex-col gap-2 rounded-xl p-3 text-left">
+                <span className="choice-tick" aria-hidden><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
                 <span className="flex h-10 w-full gap-1" aria-hidden>
                   {swatches.map((s) => {
                     const v = (k: string, fallback: string) => s.vars[k] ?? fallback

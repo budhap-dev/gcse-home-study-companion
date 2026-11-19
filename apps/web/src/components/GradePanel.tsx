@@ -38,7 +38,9 @@ export function GradePanel({ subjectId, topics, progress, readOnly = false, now 
   const value = 'flex h-12 items-center text-3xl font-bold leading-none'
   return (
     <section aria-label="Grade" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-      <div className="grid grid-cols-2 gap-4">
+      {/* Two columns on a phone; wider up the pair sits together rather than the target
+          floating at the middle of a wide card. */}
+      <div className="grid grid-cols-2 gap-4 sm:flex sm:gap-16">
         <div className="flex min-w-0 flex-col gap-1">
           <span className={label}>Working at</span>
           {w.kind === 'estimate' ? (
@@ -57,16 +59,16 @@ export function GradePanel({ subjectId, topics, progress, readOnly = false, now 
           {readOnly ? (
             <span className={value}>{target}</span>
           ) : (
-            <span className="relative w-fit">
+            <span className="relative flex h-12 w-fit items-center">
               <select
                 id={id}
                 value={target}
                 onChange={(e) => setTarget(subjectId, Number(e.target.value))}
-                className="h-12 appearance-none rounded-xl border border-rule bg-surface py-0 pl-3 pr-9 text-3xl font-bold leading-none"
+                className="grade-select h-12 min-w-24 cursor-pointer appearance-none rounded-xl border-2 py-0 pl-4 pr-11 text-3xl font-bold leading-none text-ink"
               >
                 {TARGET_GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
-              <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-2"><path d="M6 9l6 6 6-6" /></svg>
+              <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" className="accent-ink pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2"><path d="M6 9l6 6 6-6" /></svg>
             </span>
           )}
         </div>
