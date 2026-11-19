@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { move, stagger } from './motion.ts'
 
 interface Force {
   direction: 'left' | 'right' | 'up' | 'down'
@@ -18,6 +19,9 @@ interface Force {
  * still gets the longer one. The canvas grows to fit the longest vertical arrow and the
  * labels, never wider than a phone.
  * Props: { object: string, forces: Force[], resultant: boolean (default true), unit }.
+ *
+ * In motion (section 15 Part B) each force grows out of the object in turn, and the
+ * resultant appears once they are all there: the forces first, then what they add up to.
  */
 export function FreeBody({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const object = String(props.object ?? 'object')
@@ -63,6 +67,10 @@ export function FreeBody({ props, alt }: { props: Record<string, unknown>; alt: 
   const objectLines = wrap(object.replace(/(\d) (?=[^\d\s])/g, '$1\u00a0'), 10)
 
   // Several forces in one direction stack side by side so both stay readable.
+  const order = (['left', 'right', 'up', 'down'] as const).flatMap((d) => byDir[d])
+  const arrive = stagger(order.length, 0.2, 0.45, 2.6, 0.5)
+  const arrivalOf = new Map(order.map((f, k) => [f, arrive[k]!]))
+  const allIn = (arrive.at(-1) ?? 0) + 0.6
   const arrow = (f: Force, i: number, n: number) => {
     const l = len(f)
     const offset = (i - (n - 1) / 2) * 22
@@ -92,11 +100,14 @@ export function FreeBody({ props, alt }: { props: Record<string, unknown>; alt: 
         <text key={k} x={x1} y={first + k * LINE} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{t}</text>
       ))
     }
+    const at = arrivalOf.get(f) ?? 0.2
     return (
       <g key={`${f.direction}${i}`}>
-        <line x1={x0} y1={y0} x2={x1} y2={y1} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
-        <polygon points={head} fill={ACCENT} />
-        {text}
+        <g {...move(horizontal ? 'grow-x' : 'grow-y', at, 0.5, { at: [x0, y0] })}>
+          <line x1={x0} y1={y0} x2={x1} y2={y1} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
+          <polygon points={head} fill={ACCENT} />
+        </g>
+        <g {...move('fade', at + 0.25, 0.4)}>{text}</g>
       </g>
     )
   }
@@ -116,7 +127,7 @@ export function FreeBody({ props, alt }: { props: Record<string, unknown>; alt: 
       ))}
       {(['left', 'right', 'up', 'down'] as const).flatMap((d) => byDir[d].map((f, i) => arrow(f, i, byDir[d].length)))}
       {showResultant && (
-        <g>
+        <g {...move('fade', allIn, 0.5)}>
           <text x={cx} y={H - 26} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>Resultant force</text>
           <text x={cx} y={H - 8} textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={ACCENT}>{resultant}</text>
         </g>

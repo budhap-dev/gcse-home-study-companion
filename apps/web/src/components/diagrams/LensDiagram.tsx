@@ -1,5 +1,6 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 import { hits, type Seg } from './labelPlace.ts'
+import { move, polyPath } from './motion.ts'
 
 /**
  * Greedy word wrap to a room measured the same way the phone-fit test measures text: a
@@ -32,7 +33,20 @@ function wrapWords(text: string, size: number, room: number): string[] {
  *
  * Props: kind ('convex' | 'concave'), focalLength, objectDistance, objectHeight (all in
  * the same arbitrary units), note.
+ *
+ * In motion (section 15 Part B) the light travels: both rays leave the object together at
+ * one steady speed and bend at the lens, the dashed construction lines follow, and the
+ * image grows from the axis where the rays meet (or seem to come from).
  */
+/** Units a second that light is drawn at, the same for every ray, so they keep pace. */
+const LIGHT_SPEED = 200
+
+function polyLength(pts: [number, number][]): number {
+  let total = 0
+  for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i]![0] - pts[i - 1]![0], pts[i]![1] - pts[i - 1]![1])
+  return total
+}
+
 export function LensDiagram({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const concave = props.kind === 'concave'
   const f = (typeof props.focalLength === 'number' ? props.focalLength : 4) * (concave ? -1 : 1)
@@ -117,16 +131,20 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
     for (let i = 1; i < cut.length; i++) raySegs.push([{ x: cut[i - 1]![0], y: cut[i - 1]![1] }, { x: cut[i]![0], y: cut[i]![1] }])
     return drawRay(cut, dashed, key)
   }
-  const drawRay = (cut: [number, number][], dashed: boolean, key: string) => (
-    <polyline
-      key={key}
-      points={cut.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}
-      fill="none"
-      stroke={dashed ? INK_2 : '#d25b3b'}
-      strokeWidth={1.5}
-      strokeDasharray={dashed ? '5 4' : undefined}
-    />
-  )
+  const drawRay = (cut: [number, number][], dashed: boolean, key: string) =>
+    dashed ? (
+      <polyline
+        key={key}
+        points={cut.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}
+        fill="none"
+        stroke={INK_2}
+        strokeWidth={1.5}
+        strokeDasharray="5 4"
+        {...move('fade', 1.7, 0.5)}
+      />
+    ) : (
+      <path key={key} d={polyPath(cut)} fill="none" stroke="#d25b3b" strokeWidth={1.5} {...move('draw', 0.2, Math.max(0.6, polyLength(cut) / LIGHT_SPEED), { ease: 'linear' })} />
+    )
 
   const objX = sx(-u), objTop = sy(h)
   const imgX = sx(v), imgTop = sy(imageHeight)
@@ -144,7 +162,17 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
     rays.push(ray([[objX, objTop], [lensX, objTop], [endX, objTop + slope * (endX - lensX)]], false, 'r1'))
     rays.push(ray([[lensX, objTop], [fNear, axisY]], true, 'r1b'))
   } else {
-    rays.push(ray([[objX, objTop], [lensX, objTop], [sx(Math.max(v, Math.abs(f) * 2.2)), sy(imageHeight)]], false, 'r1'))
+    // Through the far focus, which a real image's tip also lies on, so the ray meets it. It
+    // used to end at the image's height but at 2.2 f along, wherever the image was: unless the
+    // image sat beyond 2.2 f the ray missed both F and the image, and for a virtual image it
+    // climbed after the lens. Found 19 November 2026, when the rays became paths a test reads.
+    // It stops at a real image, where the rays meet, as the centre ray does; past it, it ran
+    // through the image's own label.
+    const endX = real ? imgX : sx(Math.abs(f) * 2.2)
+    const slope = (axisY - objTop) / (fFar - lensX)
+    rays.push(ray([[objX, objTop], [lensX, objTop], [endX, objTop + slope * (endX - lensX)]], false, 'r1'))
+    // A virtual image is where the emerging rays seem to come from: this one's extension too.
+    if (!real) rays.push(ray([[lensX, objTop], [imgX, imgTop]], true, 'r1b'))
   }
   const centreSlope = (axisY - objTop) / (lensX - objX)
   const farX = real ? imgX : W - 14
@@ -222,7 +250,7 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
           object's tip to the image, so above the tip the word "object" sat on it. */}
       {arrow(objX, objTop, INK, 'object', 'obj', !real)}
       {/* A concave lens's image sits between F and the lens, where its dashed ray runs. */}
-      {arrow(imgX, imgTop, '#2e8b57', 'image', 'img', concave)}
+      <g {...move('grow-y', 1.8, 0.6, { at: [imgX, axisY] })}>{arrow(imgX, imgTop, '#2e8b57', 'image', 'img', concave)}</g>
       {titleLines.map((line, i) => (
         <text key={`title${i}`} x={W / 2} y={16 + i * 14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={12}>{line}</text>
       ))}

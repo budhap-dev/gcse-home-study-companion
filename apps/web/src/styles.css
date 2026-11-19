@@ -586,6 +586,55 @@ figure[data-diagram] {
 .map-on-l1, .map-on-l2 { color: var(--color-ink); }
 .map-on-l3, .map-on-l4 { color: var(--map-on-strong); }
 
+/* Figures that move (section 15 Part B; motion.ts says how a diagram uses them). Still until
+   the figure sets data-anim, once it is on screen; the still drawing is the final frame, so
+   every rule here is under [data-anim] and fills backwards only. A part that exists only in
+   motion is .fa-only and invisible when still. */
+.fa-only { opacity: 0; }
+[data-anim] .fa { animation-duration: var(--t, 0.8s); animation-delay: var(--d, 0s); animation-fill-mode: backwards; animation-timing-function: cubic-bezier(0.3, 0.7, 0.3, 1); }
+[data-anim] .fa-draw { stroke-dasharray: 1; animation-name: fa-draw; animation-timing-function: ease-in-out; }
+[data-anim] .fa-fade { animation-name: fa-fade; }
+[data-anim] .fa-grow { animation-name: fa-grow; }
+[data-anim] .fa-grow-x { animation-name: fa-grow-x; }
+[data-anim] .fa-grow-y { animation-name: fa-grow-y; }
+[data-anim] .fa-tip { animation-name: fa-tip; animation-timing-function: ease-in-out; }
+[data-anim] .fa-spin-y { animation-name: fa-spin-y; animation-timing-function: linear; }
+[data-anim] .fa-flow { animation-name: fa-flow; animation-timing-function: linear; }
+[data-anim] .fa-wipe { animation-name: fa-wipe; animation-timing-function: linear; }
+[data-anim] .fa-slide { animation-name: fa-slide; }
+@keyframes fa-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes fa-fade { from { opacity: 0; } }
+@keyframes fa-grow { from { transform: scale(0); } }
+@keyframes fa-grow-x { from { transform: scaleX(0); } }
+@keyframes fa-grow-y { from { transform: scaleY(0); } }
+@keyframes fa-tip {
+  0%, 18% { transform: rotate(0deg); }
+  40%, 54% { transform: rotate(var(--tilt, 6deg)); }
+  72% { transform: rotate(calc(var(--tilt, 6deg) * -0.3)); }
+  86% { transform: rotate(calc(var(--tilt, 6deg) * 0.1)); }
+  100% { transform: rotate(0deg); }
+}
+/* A turning loop seen side on: its height follows the cosine of the angle. */
+@keyframes fa-spin-y {
+  0%, 100% { transform: scaleY(1); }
+  12.5%, 87.5% { transform: scaleY(0.71); }
+  25%, 75% { transform: scaleY(0.02); }
+  37.5%, 62.5% { transform: scaleY(-0.71); }
+  50% { transform: scaleY(-1); }
+}
+@keyframes fa-flow {
+  0% { opacity: 0; stroke-dashoffset: var(--from, 0); }
+  10%, 86% { opacity: 1; }
+  100% { opacity: 0; stroke-dashoffset: calc(var(--from, 0) - var(--run, 100)); }
+}
+@keyframes fa-wipe { from { clip-path: inset(-20px 100% -20px -20px); } to { clip-path: inset(-20px -20px -20px -20px); } }
+@keyframes fa-slide { from { transform: translate(var(--dx, 0px), var(--dy, 0px)); } }
+[data-motion="off"] .fa { animation: none !important; }
+@media print {
+  .fa { animation: none !important; }
+  .fa-only, .fig-replay { display: none !important; }
+}
+
 /* The subject page's topic panel becomes a sheet from the bottom on a phone. */
 @keyframes sheet-up { from { transform: translateY(100%); opacity: 0.6; } }
 /* Blood along a vessel, a signal along a wire: short dashes that travel the way the path is

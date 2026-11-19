@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move, stagger } from './motion.ts'
 
 interface Submerged {
   /** Depth of the top face in metres. */
@@ -19,6 +20,10 @@ interface Submerged {
  * of it; the caption underneath is the other half — it is a full sentence, and at any
  * width narrow enough for a phone that sentence is wider than the canvas, so it now
  * wraps onto as many lines as it needs rather than running past the edge.
+ *
+ * In motion (section 15 Part B) the arrows lengthen out from the wall one depth at a time,
+ * shallowest first, so each deeper push is seen to be bigger; then, with a block, the
+ * smaller push down and the bigger push up.
  */
 export function FluidColumn({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const depth = Number(props.depth ?? 3)
@@ -66,15 +71,18 @@ export function FluidColumn({ props, alt }: { props: Record<string, unknown>; al
       <text x={tank.x + tank.w / 2} y={tank.y - 8} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>surface</text>
 
       {/* pressure arrows pushing on the right-hand wall, longer the deeper they are */}
-      {marks.map((d) => {
+      {[...marks].sort((a, b) => a - b).map((d, k, sorted) => {
+        const at = stagger(sorted.length, 0.2, 0.45, object ? 1.9 : 2.8, 0.55)[k]!
         const yy = y(d)
         const len = arrow(d)
         const x0 = tank.x + tank.w
         return (
           <g key={d}>
-            <line x1={x0 + len} y1={yy} x2={x0 + 8} y2={yy} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
-            <polygon points={`${x0 + 2},${yy} ${x0 + 12},${yy - 6} ${x0 + 12},${yy + 6}`} fill={ACCENT} />
-            <text x={x0 + len + 6} y={yy + 4} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(pressure(d))}</text>
+            <g {...move('grow-x', at, 0.55, { at: [x0, yy] })}>
+              <line x1={x0 + len} y1={yy} x2={x0 + 8} y2={yy} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
+              <polygon points={`${x0 + 2},${yy} ${x0 + 12},${yy - 6} ${x0 + 12},${yy + 6}`} fill={ACCENT} />
+            </g>
+            <text {...move('fade', at + 0.35, 0.4)} x={x0 + len + 6} y={yy + 4} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(pressure(d))}</text>
             <line x1={tank.x - 6} y1={yy} x2={tank.x} y2={yy} stroke={INK_2} />
             <text x={tank.x - 10} y={yy + 4} textAnchor="end" fontFamily={FONT} fontSize="12" fill={INK_2}>{d} m</text>
           </g>
@@ -92,15 +100,21 @@ export function FluidColumn({ props, alt }: { props: Record<string, unknown>; al
         return (
           <g>
             <rect x={bx} y={top} width={bw} height={bottom - top} rx="4" fill="#fff" stroke={INK} strokeWidth="2" />
-            <line x1={bx + bw / 2} y1={top - down} x2={bx + bw / 2} y2={top - 8} stroke={INK_2} strokeWidth="3" strokeLinecap="round" />
-            <polygon points={`${bx + bw / 2},${top - 2} ${bx + bw / 2 - 6},${top - 12} ${bx + bw / 2 + 6},${top - 12}`} fill={INK_2} />
-            <line x1={bx + bw / 2} y1={bottom + up} x2={bx + bw / 2} y2={bottom + 8} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
-            <polygon points={`${bx + bw / 2},${bottom + 2} ${bx + bw / 2 - 6},${bottom + 12} ${bx + bw / 2 + 6},${bottom + 12}`} fill={ACCENT} />
+            <g {...move('grow-y', 2.2, 0.5, { at: [bx + bw / 2, top] })}>
+              <line x1={bx + bw / 2} y1={top - down} x2={bx + bw / 2} y2={top - 8} stroke={INK_2} strokeWidth="3" strokeLinecap="round" />
+              <polygon points={`${bx + bw / 2},${top - 2} ${bx + bw / 2 - 6},${top - 12} ${bx + bw / 2 + 6},${top - 12}`} fill={INK_2} />
+            </g>
+            <g {...move('grow-y', 2.8, 0.6, { at: [bx + bw / 2, bottom] })}>
+              <line x1={bx + bw / 2} y1={bottom + up} x2={bx + bw / 2} y2={bottom + 8} stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
+              <polygon points={`${bx + bw / 2},${bottom + 2} ${bx + bw / 2 - 6},${bottom + 12} ${bx + bw / 2 + 6},${bottom + 12}`} fill={ACCENT} />
+            </g>
             {/* Centred in the tank, and the longer one on two lines: on one line, 10 right of
                 centre, "smaller push down" ran across the tank's wall. */}
-            <text x={tank.x + tank.w / 2} y={bottom + up + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>bigger push up</text>
-            <text x={tank.x + tank.w / 2} y={top - down - 19} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>smaller push</text>
-            <text x={tank.x + tank.w / 2} y={top - down - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>down</text>
+            <text {...move('fade', 3.1, 0.4)} x={tank.x + tank.w / 2} y={bottom + up + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={ACCENT}>bigger push up</text>
+            <g {...move('fade', 2.5, 0.4)}>
+              <text x={tank.x + tank.w / 2} y={top - down - 19} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>smaller push</text>
+              <text x={tank.x + tank.w / 2} y={top - down - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>down</text>
+            </g>
           </g>
         )
       })()}

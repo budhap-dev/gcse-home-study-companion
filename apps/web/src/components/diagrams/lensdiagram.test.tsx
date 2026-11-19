@@ -196,3 +196,62 @@ describe('lens diagram fits a phone', () => {
     }
   })
 })
+
+/**
+ * The construction itself, not only what the picture says about the image. The parallel ray
+ * used to end at the image's height but 2.2 f along, so in every convex figure the content
+ * draws (image nearer than 2.2 f, or virtual) it missed both F and the image; the polyline
+ * it was drawn as was invisible to the label test, and nothing else read the rays.
+ */
+describe('the rays obey the lens', () => {
+  type P = { x: number; y: number }
+  const pts = (d: string): P[] => [...d.matchAll(/[ML] ([-\d.]+) ([-\d.]+)/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) }))
+  const solid = (markup: string) => [...markup.matchAll(/<path d="([^"]+)"[^>]*stroke="#d25b3b"/g)].map((m) => pts(m[1]!))
+  const dashed = (markup: string) =>
+    [...markup.matchAll(/<polyline points="([^"]+)"[^>]*stroke-dasharray="5 4"/g)].map((m) => m[1]!.trim().split(/\s+/).map((xy) => { const [x, y] = xy.split(',').map(Number); return { x: x!, y: y! } }))
+  const foci = (markup: string) => [...markup.matchAll(/<circle cx="([-\d.]+)" cy="([-\d.]+)" r="3"/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) }))
+  /** Distance from p to the infinite line through a and b. */
+  const offLine = (p: P, a: P, b: P) => Math.abs((b.x - a.x) * (a.y - p.y) - (a.x - p.x) * (b.y - a.y)) / Math.hypot(b.x - a.x, b.y - a.y)
+  /** Distance from p to the segment a–b. */
+  const offSeg = (p: P, a: P, b: P) => {
+    const t = Math.max(0, Math.min(1, ((p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y)) / ((b.x - a.x) ** 2 + (b.y - a.y) ** 2)))
+    return Math.hypot(p.x - (a.x + t * (b.x - a.x)), p.y - (a.y + t * (b.y - a.y)))
+  }
+
+  // Every lens the content draws, and a real image beyond 2.2 f (the one case that was right).
+  const cases = [
+    { kind: 'convex', focalLength: 3, objectDistance: 15 },
+    { kind: 'convex', focalLength: 4, objectDistance: 30 },
+    { kind: 'convex', focalLength: 4, objectDistance: 12 },
+    { kind: 'convex', focalLength: 4, objectDistance: 3 },
+    { kind: 'convex', focalLength: 3, objectDistance: 9 },
+    { kind: 'convex', focalLength: 4, objectDistance: 6 },
+    { kind: 'concave', focalLength: 4, objectDistance: 12 },
+  ]
+  it.each(cases.map((c) => [`${c.kind} f=${c.focalLength} u=${c.objectDistance}`, c] as const))('%s', (_, c) => {
+    const markup = svg({ ...c, objectHeight: 3 })
+    const { object, image } = arrows(markup)
+    const [near, far] = foci(markup).sort((a, b) => a.x - b.x)
+    const lens = { x: 140, y: near!.y }
+    const objTip = { x: object!.x, y: object!.tip }, imgTip = { x: image!.x, y: image!.tip }
+    const [parallel, centre] = solid(markup)
+    // The parallel ray: level to the lens, then through the far focus (convex) or as if from the near one (concave).
+    expect(parallel![0]!.y).toBeCloseTo(objTip.y, 0)
+    expect(parallel![1]!.y).toBeCloseTo(objTip.y, 0)
+    expect(offLine(c.kind === 'convex' ? far! : near!, parallel![1]!, parallel![2]!)).toBeLessThan(0.5)
+    // The centre ray: from the object's tip straight through the middle of the lens.
+    expect(offSeg(objTip, centre![0]!, centre![1]!)).toBeLessThan(0.5)
+    expect(offSeg(lens, centre![0]!, centre![centre!.length - 1]!)).toBeLessThan(0.5)
+    if (stated(markup) === 'real and inverted') {
+      // Both rays reach the image's tip.
+      expect(offSeg(imgTip, parallel![1]!, parallel![2]!)).toBeLessThan(1)
+      expect(offSeg(imgTip, centre![0]!, centre![centre!.length - 1]!)).toBeLessThan(1)
+    } else {
+      // Both emerging rays, traced back, meet at the image's tip: drawn dashed, ending there.
+      const back = dashed(markup).filter((d) => Math.hypot(d.at(-1)!.x - imgTip.x, d.at(-1)!.y - imgTip.y) < 1 || Math.hypot(d[0]!.x - imgTip.x, d[0]!.y - imgTip.y) < 1)
+      expect(offLine(imgTip, parallel![1]!, parallel![2]!)).toBeLessThan(1)
+      expect(offLine(imgTip, centre![1]!, centre![2]!)).toBeLessThan(1)
+      expect(back.length + (c.kind === 'concave' ? 1 : 0)).toBeGreaterThanOrEqual(2)
+    }
+  })
+})

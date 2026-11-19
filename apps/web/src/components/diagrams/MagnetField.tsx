@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { move, seg } from './motion.ts'
 
 /**
  * Magnetic field patterns, and the force between two magnets, for AQA 4.7.1.2, and the
@@ -22,6 +23,11 @@ import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  *   current: 'out' | 'in'            -- wire only, out of the page (towards you) or into it
  *   current: 'up' | 'down'           -- solenoid only, the way it flows on the front of the coil
  *   note: a caption under the drawing
+ *
+ * In motion (section 15 Part B) every field line draws itself the way the field runs: out
+ * of north and round into south, inner lines first; round a wire in the direction the grip
+ * rule gives; inside a coil from south to north. The arrowheads appear as each line passes
+ * them, and the force on a pair of magnets grows out of each one.
  */
 const N_COLOUR = '#c8501f'
 const S_COLOUR = '#1f3a93'
@@ -89,8 +95,11 @@ export function MagnetField({ props, alt }: { props: Record<string, unknown>; al
     return (
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 360 }} role="img" aria-label={alt}>
         <rect x="1" y="1" width={W - 2} height={H - 2} rx="12" fill="none" stroke={RULE} />
-        {radii.map((r) => <circle key={r} cx={cx} cy={cy} r={r} fill="none" stroke={INK_2} strokeWidth="1.6" />)}
-        {heads}
+        {/* Drawn round the way the field circles: anticlockwise on screen is sweep 0. */}
+        {radii.map((r, i) => (
+          <path key={r} d={`M ${cx + r} ${cy} A ${r} ${r} 0 1 ${out ? 0 : 1} ${cx - r} ${cy} A ${r} ${r} 0 1 ${out ? 0 : 1} ${cx + r} ${cy}`} fill="none" stroke={INK_2} strokeWidth="1.6" {...move('draw', 0.2 + i * 0.35, 1.3)} />
+        ))}
+        <g {...move('fade', 1.9, 0.4)}>{heads}</g>
         <circle cx={cx} cy={cy} r="9" fill="#fff" stroke={INK} strokeWidth="1.6" />
         {out ? (
           <circle cx={cx} cy={cy} r="3" fill={INK} />
@@ -141,20 +150,25 @@ export function MagnetField({ props, alt }: { props: Record<string, unknown>; al
             const top = cy + side * bulge
             const d = `M ${nx} ${cy} C ${nx + dir * ctrl} ${top} ${sx - dir * ctrl} ${top} ${sx} ${cy}`
             const mid = (nx + sx) / 2
+            const t0 = 1.0 + i * 0.35
             return (
               <g key={`${side}${i}`}>
-                <path d={d} fill="none" stroke={INK_2} strokeWidth="1.6" />
-                {arrowHead(mid, top * 0.78 + cy * 0.22, dir > 0 ? Math.PI : 0, INK_2, `o${side}${i}`, 7)}
+                <path d={d} fill="none" stroke={INK_2} strokeWidth="1.6" {...move('draw', t0, 1.2)} />
+                <g {...move('fade', t0 + 0.6, 0.3)}>{arrowHead(mid, top * 0.78 + cy * 0.22, dir > 0 ? Math.PI : 0, INK_2, `o${side}${i}`, 7)}</g>
               </g>
             )
           }),
         )}
-        {inside.map((dy) => (
-          <g key={dy}>
-            <line x1={left - 30} y1={cy + dy} x2={right + 30} y2={cy + dy} stroke={INK_2} strokeWidth="1.6" />
-            {arrowHead((left + right) / 2 + (northAt === 'left' ? -8 : 8), cy + dy, toN, INK_2, `i${dy}`, 7)}
-          </g>
-        ))}
+        {inside.map((dy) => {
+          // From the south end to the north end, the way the field runs inside.
+          const [xs, xn] = northAt === 'left' ? [right + 30, left - 30] : [left - 30, right + 30]
+          return (
+            <g key={dy}>
+              <path d={seg(xs, cy + dy, xn, cy + dy)} fill="none" stroke={INK_2} strokeWidth="1.6" {...move('draw', 0.2, 0.9)} />
+              <g {...move('fade', 0.65, 0.3)}>{arrowHead((left + right) / 2 + (northAt === 'left' ? -8 : 8), cy + dy, toN, INK_2, `i${dy}`, 7)}</g>
+            </g>
+          )
+        })}
         {/* Each turn: the far half faint and dashed, the near half solid and carrying the current. */}
         {Array.from({ length: turns }, (_, i) => {
           const x0 = left + i * pitch
@@ -207,7 +221,7 @@ export function MagnetField({ props, alt }: { props: Record<string, unknown>; al
           const towards = attract ? (i === 0 ? 1 : -1) : (i === 0 ? -1 : 1)
           const tip = from + towards * 16
           return (
-            <g key={i}>
+            <g key={i} {...move('grow-x', 0.3, 0.6, { at: [from, y + bh / 2] })}>
               <line x1={from} y1={y + bh / 2} x2={tip} y2={y + bh / 2} stroke={INK} strokeWidth="2.5" />
               {arrowHead(tip, y + bh / 2, towards > 0 ? 0 : Math.PI, INK, `h${i}`)}
             </g>
@@ -244,10 +258,11 @@ export function MagnetField({ props, alt }: { props: Record<string, unknown>; al
           // The arrow sits at the midpoint of the loop, pointing the way the field travels:
           // out of north, round, and into south.
           const mid = (nx + sx) / 2
+          const t0 = 0.2 + i * 0.4
           return (
             <g key={`${side}${i}`}>
-              <path d={d} fill="none" stroke={INK_2} strokeWidth="1.6" />
-              {arrowHead(mid, top * 0.78 + cy * 0.22, dir > 0 ? Math.PI : 0, INK_2, `a${side}${i}`, 7)}
+              <path d={d} fill="none" stroke={INK_2} strokeWidth="1.6" {...move('draw', t0, 1.3)} />
+              <g {...move('fade', t0 + 0.65, 0.3)}>{arrowHead(mid, top * 0.78 + cy * 0.22, dir > 0 ? Math.PI : 0, INK_2, `a${side}${i}`, 7)}</g>
             </g>
           )
         }),
