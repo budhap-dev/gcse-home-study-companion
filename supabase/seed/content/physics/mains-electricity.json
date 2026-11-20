@@ -868,6 +868,10 @@
     {
       "id": "heater-fault",
       "body": "A 1.5 kW heater runs from the 230 V mains. It has a metal case connected to the earth wire, and a fuse in the plug."
+    },
+    {
+      "id": "challenge-grid-losses",
+      "body": "A power station sends 20 MW of electrical power along transmission cables with a total resistance of 5.0 Ω. It can send the power at a potential difference of 400 kV, or at 25 kV."
     }
   ],
   "questions": [
@@ -1836,6 +1840,130 @@
         }
       ],
       "discriminators": []
+    },
+    {
+      "id": "q32",
+      "type": "numeric",
+      "prompt": "Calculate the current in the cables when the power is sent at 400 kV.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "current from P = VI",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$I = \\frac{P}{V} = \\frac{20\\,000\\,000}{400\\,000} = 50$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "MW and kV in watts and volts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50 A"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 50,
+      "tolerance": 0.1,
+      "step": "s4",
+      "context": "challenge-grid-losses",
+      "challenge": {
+        "draws": [
+          "electromagnetic-devices",
+          "power-and-efficiency"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q33",
+      "type": "numeric",
+      "prompt": "Calculate the power wasted heating the cables when the power is sent at 400 kV.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "power loss from I squared R",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The current is $\\frac{20\\,000\\,000}{400\\,000} = 50$ A. $P = I^2R = 50^2 \\times 5.0 = 12\\,500$ W.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$50^2 \\times 5.0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12 500 W"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 12500,
+      "tolerance": 1,
+      "step": "s4",
+      "context": "challenge-grid-losses",
+      "challenge": {
+        "draws": [
+          "electromagnetic-devices",
+          "power-and-efficiency"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q34",
+      "type": "numeric",
+      "prompt": "Calculate the percentage of the 20 MW that is wasted in the cables when the power is sent at 25 kV instead.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "why the grid uses a high potential difference",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "At 25 kV the current is $\\frac{20\\,000\\,000}{25\\,000} = 800$ A, so the cables waste $800^2 \\times 5.0 = 3\\,200\\,000$ W. As a percentage of 20 000 000 W that is 16%, against well under 0.1% at 400 kV: sixteen times the voltage cuts the current by 16 and the heating by 256.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "current 800 A"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$800^2 \\times 5.0 = 3\\,200\\,000$ W"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "over 20 000 000 W, times 100"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16%"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 16,
+      "tolerance": 0.05,
+      "step": "s7",
+      "context": "challenge-grid-losses",
+      "challenge": {
+        "draws": [
+          "electromagnetic-devices",
+          "power-and-efficiency"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "%"
     }
   ],
   "examTechnique": {

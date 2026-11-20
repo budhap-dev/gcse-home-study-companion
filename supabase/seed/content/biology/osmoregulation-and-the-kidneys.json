@@ -1010,6 +1010,10 @@
     {
       "id": "hot-day",
       "body": "On a hot day, a person sweats a lot and drinks little."
+    },
+    {
+      "id": "challenge-kidney-glucose",
+      "body": "A person's kidneys filter 125 cm³ of fluid out of the blood every minute and produce 1.0 cm³ of urine every minute. The filtrate contains 1.0 g of glucose per dm³. In a healthy person all of this glucose is reabsorbed into the blood by active transport."
     }
   ],
   "questions": [
@@ -2269,6 +2273,85 @@
         }
       ],
       "modelAnswer": "Dialysis: available now; time-consuming, restricted diet. Transplant: normal life; scarce donors, rejection, lifelong drugs. Judgement."
+    },
+    {
+      "id": "q38",
+      "type": "numeric",
+      "prompt": "Calculate the percentage of the filtered fluid that is reabsorbed.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "percentage reabsorbed",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\frac{125 - 1.0}{125} \\times 100 = 99.2\\%$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{124}{125} \\times 100$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "99.2%"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 99.2,
+      "tolerance": 0.05,
+      "step": "s3",
+      "context": "challenge-kidney-glucose",
+      "challenge": {
+        "draws": [
+          "diffusion-osmosis-and-active-transport"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q39",
+      "type": "numeric",
+      "prompt": "Calculate the mass of glucose reabsorbed by active transport in one day, in grams.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "scaling a rate to a day",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "In a day the kidneys filter $125 \\times 60 \\times 24 = 180\\,000$ cm³ $= 180$ dm³. At 1.0 g per dm³ that is 180 g of glucose, all of it pumped back against its concentration gradient, which needs energy from respiration.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$125 \\times 1440$ cm³"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converted to 180 dm³"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "180 g"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 180,
+      "tolerance": 0.5,
+      "step": "s7",
+      "context": "challenge-kidney-glucose",
+      "challenge": {
+        "draws": [
+          "diffusion-osmosis-and-active-transport"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "g"
     }
   ],
   "worksheets": {

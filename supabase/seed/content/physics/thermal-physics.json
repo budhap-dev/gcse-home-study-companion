@@ -1118,6 +1118,10 @@
     {
       "id": "melt-ice",
       "body": "0.40 kg of ice at 0 °C is melted, and the water is then heated to 20 °C. The specific latent heat of fusion of ice is 334 000 J/kg and the specific heat capacity of water is 4200 J/kg °C."
+    },
+    {
+      "id": "challenge-kettle",
+      "body": "An electric kettle has a power of 2.0 kW and runs from the 230 V mains. It heats 1.5 kg of water from 20 °C to 100 °C. The specific heat capacity of water is 4200 J/kg °C. The kettle is 90% efficient."
     }
   ],
   "questions": [
@@ -2055,6 +2059,125 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "J"
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "prompt": "Calculate the energy needed to heat the water from 20 °C to 100 °C.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "energy from specific heat capacity",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\Delta E = mc\\Delta\\theta = 1.5 \\times 4200 \\times 80 = 504\\,000$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "temperature change 80 °C, used in $mc\\Delta\\theta$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "504 000 J"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 504000,
+      "tolerance": 100,
+      "step": "s2",
+      "context": "challenge-kettle",
+      "challenge": {
+        "draws": [
+          "power-and-efficiency",
+          "mains-electricity"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q30",
+      "type": "numeric",
+      "prompt": "Calculate how long the kettle takes to heat the water.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "heating time with an efficiency",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Only 90% of the 2000 W heats the water: useful power $= 0.90 \\times 2000 = 1800$ W. Energy needed $= 1.5 \\times 4200 \\times 80 = 504\\,000$ J, so $t = \\frac{504\\,000}{1800} = 280$ s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "useful power 1800 W"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$t = \\frac{504\\,000}{1800}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "280 s"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 280,
+      "tolerance": 1,
+      "step": "s3",
+      "context": "challenge-kettle",
+      "challenge": {
+        "draws": [
+          "power-and-efficiency",
+          "mains-electricity"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q31",
+      "type": "numeric",
+      "prompt": "Calculate the current in the kettle, to 3 significant figures.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "current from P = VI",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$P = VI$, so $I = \\frac{2000}{230} = 8.695\\ldots$, which is 8.70 A. The efficiency does not matter here: the kettle takes 2000 W from the mains whatever it does with it.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{2000}{230}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8.70 A"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 8.7,
+      "tolerance": 0.01,
+      "step": "s2",
+      "context": "challenge-kettle",
+      "challenge": {
+        "draws": [
+          "power-and-efficiency",
+          "mains-electricity"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "A"
     }
   ],
   "worksheets": {

@@ -750,6 +750,10 @@
     {
       "id": "methane-bonds",
       "body": "Methane burns: CH₄ + 2O₂ → CO₂ + 2H₂O. Bond energies, in kJ/mol: C–H 413, O=O 498, C=O 805, O–H 464."
+    },
+    {
+      "id": "challenge-hydrogen-fuel",
+      "body": "Hydrogen burns in oxygen: 2H₂ + O₂ → 2H₂O, with every substance a gas. Bond energies, in kJ/mol: H–H 436, O=O 498, O–H 464. One mole of any gas occupies 24 dm³ at room temperature and pressure."
     }
   ],
   "questions": [
@@ -1585,6 +1589,90 @@
         }
       ],
       "modelAnswer": "Activation energy is the hump; a catalyst lowers it, so more collisions succeed; the overall energy change is the same."
+    },
+    {
+      "id": "q26",
+      "type": "numeric",
+      "prompt": "Calculate the overall energy change for the reaction as written, in kJ/mol. Give a negative value if the reaction is exothermic.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "energy change from bond energies",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Bonds broken: $2 \\times 436 + 498 = 1370$ kJ. Bonds made: each H₂O has two O–H bonds, so $4 \\times 464 = 1856$ kJ. Overall $1370 - 1856 = -486$ kJ/mol: more energy is released making bonds than is taken in breaking them, so it is exothermic.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bonds broken 1370"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bonds made 1856 (four O–H)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−486 kJ/mol"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": -486,
+      "tolerance": 0.5,
+      "step": "s5",
+      "context": "challenge-hydrogen-fuel",
+      "challenge": {
+        "draws": [
+          "gas-volumes"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q27",
+      "type": "numeric",
+      "prompt": "Calculate the energy released when 6.0 dm³ of hydrogen, measured at room temperature and pressure, burns completely, to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "energy released from a gas volume",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The equation as written burns 2 mol of H₂ and releases $(4 \\times 464) - (2 \\times 436 + 498) = 486$ kJ, so 243 kJ for each mole of H₂. 6.0 dm³ is $\\frac{6.0}{24} = 0.25$ mol, releasing $0.25 \\times 243 = 60.75$ kJ, about 60.8 kJ.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "moles of H₂ = 0.25"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "243 kJ per mole of H₂, or 486 for 2 mol"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60.8 kJ"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 60.8,
+      "tolerance": 0.06,
+      "step": "s7",
+      "context": "challenge-hydrogen-fuel",
+      "challenge": {
+        "draws": [
+          "gas-volumes"
+        ]
+      },
+      "unitsRequired": false,
+      "units": "kJ"
     }
   ],
   "worksheets": {
