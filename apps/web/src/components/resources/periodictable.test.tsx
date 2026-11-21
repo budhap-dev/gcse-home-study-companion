@@ -41,6 +41,12 @@ describe('the periodic table', () => {
     for (const f of ['Group 1: alkali metals', 'Transition metals', 'Group 7: halogens', 'Group 0: noble gases']) expect(html).toContain(f)
   })
 
+  /** The reset shows only while something is picked out; on opening nothing is. */
+  it('opens with nothing picked out, so no Show all button', () => {
+    expect(html).not.toContain('data-show-all')
+    expect(html).not.toContain('aria-pressed="true">✓')
+  })
+
   it('says what the insert leaves out', () => {
     expect(html).toContain('lanthanides (58 to 71)')
   })
