@@ -195,11 +195,48 @@ export function neutrons(el: Pick<Element, 'z' | 'mass'>): number | undefined {
   return Number(el.mass) - el.z
 }
 
-/** What the insert's figure for an element's mass is, in words a student can use. */
-export function massNote(el: Pick<Element, 'z' | 'mass'>): string {
-  const n = neutrons(el)
-  if (n !== undefined) return `the usual atom has ${n} neutron${n === 1 ? '' : 's'}`
+/**
+ * What the insert's figure for an element's mass is, in words a student can use. The
+ * neutrons are worked out on their own card (`neutronWorking`), so this says only what
+ * the number is.
+ */
+export function massNote(el: Pick<Element, 'mass'>): string {
   if (el.mass.startsWith('[')) return 'in brackets because no atom of this element is stable. The figure is the mass number of one of its isotopes'
-  if (el.mass.includes('.')) return 'an average over its isotopes, so not a whole number'
-  return 'an average over the element’s isotopes, rounded to a whole number'
+  if (el.mass.includes('.')) return 'the average mass of its atoms. It is an average over more than one kind of atom, so it is not a whole number'
+  return 'the average mass of its atoms, rounded to a whole number'
+}
+
+/** The neutrons card: the sum where the insert's mass gives it, and otherwise why not. */
+export interface NeutronWorking {
+  /** "23 − 11 = 12", for the first 20 elements. */
+  sum?: string
+  words: string
+}
+
+const ASKED = 'An exam question on neutrons gives you the mass number of the atom it means.'
+
+export function neutronWorking(el: Pick<Element, 'z' | 'mass' | 'name' | 'symbol'>): NeutronWorking {
+  const n = neutrons(el)
+  if (n !== undefined) return { sum: `${el.mass} − ${el.z} = ${n}`, words: `Relative atomic mass take away atomic number: the usual ${el.name} atom has ${n} neutron${n === 1 ? '' : 's'}.` }
+  if (el.mass.startsWith('[')) return { words: `The mass is in brackets: no atom of ${el.name} is stable, and the figure belongs to one kind of its atom, not an average. ${ASKED}` }
+  if (el.mass.includes('.')) return { words: `${el.mass} is an average over two kinds of ${el.name} atom, so it is not a whole number and gives no neutron count. ${ASKED}` }
+  if (el.symbol === 'Br') return { words: `80 is an average: bromine atoms are bromine-79 and bromine-81, and none has a mass of 80. ${ASKED}` }
+  return { words: `Past calcium (20), the rounded average is not always the mass of a real atom: bromine’s 80 is an average of bromine-79 and bromine-81. ${ASKED}` }
+}
+
+/** What an element's row and column say about its atom. */
+export function placeOf(el: Pick<Element, 'z' | 'group' | 'period' | 'name'>): { row: string; column: string } {
+  const shells = electronShells(el.z)
+  const p = el.period
+  const row = `Period ${p}: its atoms have ${p} electron shell${p === 1 ? '' : 's'}${shells ? ` (${shells.join(', ')})` : ''}.`
+  const g = el.group
+  let column: string
+  if (g === null) column = 'Hydrogen stands on its own, in no group. Its atom has one electron.'
+  else if (g === 18) column = el.z === 2 ? 'Group 0: a full outer shell. Helium’s holds two electrons; the rest of the group have eight.' : 'Group 0: a full outer shell, with eight electrons.'
+  else if (g >= 3 && g <= 12) column = 'One of the ten middle columns with no group number: the transition metals.'
+  else {
+    const outer = g <= 2 ? g : g - 10
+    column = `Group ${outer}: ${outer} electron${outer === 1 ? '' : 's'} in the outer shell.`
+  }
+  return { row, column }
 }

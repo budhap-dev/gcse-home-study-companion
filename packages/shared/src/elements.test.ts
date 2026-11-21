@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ELEMENTS, FAMILY_FACT, electronShells, factFor, groupName, massNote, neutrons } from './elements.ts'
+import { ELEMENTS, FAMILY_FACT, electronShells, factFor, groupName, massNote, neutronWorking, neutrons, placeOf } from './elements.ts'
 
 const bySymbol = new Map(ELEMENTS.map((e) => [e.symbol, e]))
 
@@ -61,13 +61,46 @@ describe('the periodic table data', () => {
   })
 
   it('says what each kind of mass is', () => {
-    expect(massNote(bySymbol.get('Na')!)).toBe('the usual atom has 12 neutrons')
-    expect(massNote(bySymbol.get('H')!)).toBe('the usual atom has 0 neutrons')
+    expect(massNote(bySymbol.get('Na')!)).toBe('the average mass of its atoms, rounded to a whole number')
     expect(massNote(bySymbol.get('Cl')!)).toContain('not a whole number')
     expect(massNote(bySymbol.get('Br')!)).toContain('rounded to a whole number')
     expect(massNote(bySymbol.get('Fr')!)).toContain('no atom of this element is stable')
     // Nothing claims to be "the most stable isotope": the insert does not say so.
     for (const e of ELEMENTS) expect(massNote(e), e.symbol).not.toContain('most stable')
+  })
+
+  /** The neutrons card shows the sum only where `neutrons` allows it, and says why not elsewhere. */
+  it('works out the neutrons, or says why it cannot', () => {
+    expect(neutronWorking(bySymbol.get('Na')!)).toEqual({ sum: '23 − 11 = 12', words: 'Relative atomic mass take away atomic number: the usual sodium atom has 12 neutrons.' })
+    expect(neutronWorking(bySymbol.get('H')!).sum).toBe('1 − 1 = 0')
+    expect(neutronWorking(bySymbol.get('Cl')!).words).toContain('two kinds of chlorine atom')
+    expect(neutronWorking(bySymbol.get('Cu')!).words).toContain('two kinds of copper atom')
+    expect(neutronWorking(bySymbol.get('Br')!).words).toContain('bromine-79 and bromine-81')
+    expect(neutronWorking(bySymbol.get('Fr')!).words).toContain('no atom of francium is stable')
+    for (const e of ELEMENTS) {
+      const w = neutronWorking(e)
+      expect(w.sum !== undefined, e.symbol).toBe(neutrons(e) !== undefined)
+      if (w.sum === undefined) expect(w.words, e.symbol).toContain('gives you the mass number of the atom it means')
+      expect(w.words, e.symbol).not.toContain('most stable')
+    }
+  })
+
+  /** A row is the number of shells; a column the outer electrons, with Group 0, helium, hydrogen and the transition metals the exceptions. */
+  it('says what each element’s row and column mean', () => {
+    expect(placeOf(bySymbol.get('Na')!)).toEqual({ row: 'Period 3: its atoms have 3 electron shells (2, 8, 1).', column: 'Group 1: 1 electron in the outer shell.' })
+    expect(placeOf(bySymbol.get('Cl')!).column).toBe('Group 7: 7 electrons in the outer shell.')
+    expect(placeOf(bySymbol.get('He')!).column).toContain('two electrons')
+    expect(placeOf(bySymbol.get('Ne')!).column).toBe('Group 0: a full outer shell, with eight electrons.')
+    expect(placeOf(bySymbol.get('H')!)).toEqual({ row: 'Period 1: its atoms have 1 electron shell (1).', column: 'Hydrogen stands on its own, in no group. Its atom has one electron.' })
+    expect(placeOf(bySymbol.get('Fe')!)).toEqual({ row: 'Period 4: its atoms have 4 electron shells.', column: 'One of the ten middle columns with no group number: the transition metals.' })
+    for (const e of ELEMENTS) {
+      const shells = electronShells(e.z)
+      // The shells listed agree with the period, and the outer one with the group.
+      if (shells) {
+        expect(shells.length, e.symbol).toBe(e.period)
+        if (e.group !== null && e.group !== 18) expect(placeOf(e).column, e.symbol).toContain(`${shells.at(-1)} electron`)
+      }
+    }
   })
 
   /** The insert prints hydrogen alone, under no group number; Group 1 is "the alkali metals". */

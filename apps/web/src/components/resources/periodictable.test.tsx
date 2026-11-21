@@ -15,8 +15,26 @@ describe('the periodic table', () => {
   })
 
   it('opens on sodium, with what its numbers mean', () => {
-    expect(html).toContain('the usual atom has 12 neutrons')
+    expect(html).toContain('11 protons')
+    expect(html).toContain('the average mass of its atoms')
     expect(html).toContain('2, 8, 1')
+  })
+
+  /** "Reading a cell" was three fixed paragraphs under the figure; it is now worked for the pressed element. */
+  it('labels the cell’s three lines, in the insert’s order', () => {
+    const labels = [...html.match(/data-cell-labels[^>]*>(.*?)<\/div>/)![1]!.matchAll(/<span>([^<]*)<\/span>/g)].map((m) => m[1])
+    expect(labels).toEqual(['← relative atomic mass', '← symbol', '← atomic number'])
+  })
+
+  it('works out sodium’s neutrons, and says what its row and column mean', () => {
+    expect(html).toMatch(/data-neutrons[^>]*>23 − 11 = 12</)
+    expect(html).toContain('the usual sodium atom has 12 neutrons')
+    expect(html).toContain('Period 3: its atoms have 3 electron shells (2, 8, 1).')
+    expect(html).toContain('Group 1: 1 electron in the outer shell.')
+    expect(html).toContain('Show period 3')
+    expect(html).toContain('Show group 1')
+    // Each rule is stated once, under the worked line.
+    expect(html.split('A row is a period').length - 1).toBe(1)
   })
 
   it('offers every family as a filter', () => {
