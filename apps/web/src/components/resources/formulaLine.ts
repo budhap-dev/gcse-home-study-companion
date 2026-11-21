@@ -14,7 +14,7 @@
 /** After these a line may end: the next line then starts a fresh side. */
 const RELATIONS = new Set([
   '=', '<', '>', '\\le', '\\leq', '\\ge', '\\geq', '\\ne', '\\neq', '\\approx', '\\equiv', '\\propto',
-  '\\iff', '\\implies', '\\Rightarrow', '\\Leftrightarrow', '\\rightarrow', '\\to',
+  '\\iff', '\\implies', '\\Rightarrow', '\\Leftrightarrow', '\\rightarrow', '\\to', '\\rightleftharpoons',
 ])
 const BINARY = new Set(['+', '-', '*', '\\times', '\\div', '\\pm', '\\mp', '\\cdot'])
 
