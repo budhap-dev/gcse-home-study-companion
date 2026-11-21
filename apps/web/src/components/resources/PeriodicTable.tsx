@@ -1,4 +1,4 @@
-import { ELEMENTS, FAMILY_LABEL, electronShells, factFor, groupName, massNote, type Element, type ElementFamily } from '@study/shared'
+import { ELEMENTS, FAMILY_LABEL, electronShells, factFor, groupName, massNote, neutronWorking, placeOf, type Element, type ElementFamily } from '@study/shared'
 import { useRef, useState } from 'react'
 import { LIGHT_CANVAS } from '../Visual.tsx'
 
@@ -11,6 +11,10 @@ import { LIGHT_CANVAS } from '../Visual.tsx'
  * Coloured by family, with a legend that is also a filter: press a family and the rest of
  * the table fades. The name is always in the cell's accessible label, so the colour never
  * carries anything on its own.
+ *
+ * Under the panel, how to read the table, worked for the pressed element rather than told
+ * once for sodium: the neutrons sum (or why there is none), and what its row and column
+ * say, with buttons that pick that row or column out of the table as a family does.
  *
  * It is 18 columns wide. A phone gives each column about 19px, too small to press or to
  * read, so there the table splits in two: main groups, and the transition metals.
@@ -31,22 +35,43 @@ export const FAMILY_STYLE: Record<ElementFamily, { fill: string; edge: string }>
 }
 
 const FAMILIES = Object.keys(FAMILY_STYLE) as ElementFamily[]
+
+/** What the table is picking out: one family, or the pressed element's row or column. Only one at a time. */
+type Focus = { family: ElementFamily } | 'period' | 'group' | null
+
+function inFocus(focus: Focus, el: Element, picked: Element): boolean {
+  if (focus === null) return true
+  if (focus === 'period') return el.period === picked.period
+  if (focus === 'group') return el.group === picked.group
+  return el.family === focus.family
+}
 const INK = '#1e2330'
 const INK_2 = '#5a6070'
 
 export function PeriodicTable({ alt }: { alt: string }) {
   const [picked, setPicked] = useState<Element>(ELEMENTS.find((e) => e.symbol === 'Na')!)
-  const [family, setFamily] = useState<ElementFamily | null>(null)
+  const [focus, setFocus] = useState<Focus>(null)
   const detail = useRef<HTMLElement>(null)
+  const tables = useRef<HTMLDivElement>(null)
   // On a phone the panel is below both blocks, out of sight of the cell just pressed.
   const onPick = (el: Element) => {
     setPicked(el)
+    // Hydrogen has no column to show, so a column picked out for another element lets go.
+    if (focus === 'group' && el.group === null) setFocus(null)
     if (window.innerWidth < 640) requestAnimationFrame(() => detail.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }))
   }
-  const cell = { picked, family, onPick }
+  // The row and column buttons sit below the panel; on a phone the table is out of sight, so bring it back.
+  const onShow = (f: 'period' | 'group') => {
+    const next = focus === f ? null : f
+    setFocus(next)
+    if (next && window.innerWidth < 640) requestAnimationFrame(() => tables.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }))
+  }
+  const cell = { picked, lit: (el: Element) => inFocus(focus, el, picked), onPick }
+  const familyOn = (f: ElementFamily) => focus !== null && typeof focus === 'object' && focus.family === f
 
   return (
     <figure className="flex flex-col gap-3 rounded-xl border border-rule p-3" style={LIGHT_CANVAS} aria-label={alt}>
+      <div ref={tables} className="flex scroll-mt-20 flex-col gap-3">
       {/* The full table from tablet width. */}
       <div className="hidden sm:block">
         <Grid label="The periodic table" columns={18} column={(el) => el.group ?? HYDROGEN_COLUMN} header={(c) => (c <= 2 ? `${c}` : c >= 13 ? `${c === 18 ? 0 : c - 10}` : '')} elements={ELEMENTS} {...cell} />
@@ -59,8 +84,10 @@ export function PeriodicTable({ alt }: { alt: string }) {
         <Grid label="Main groups" columns={8} column={(el) => (el.group === null ? 'between 4 and 5' : el.group <= 2 ? el.group : el.group - 10)} header={(c) => `${c <= 2 ? c : c === 8 ? 0 : c}`} elements={ELEMENTS.filter((e) => e.group === null || e.group <= 2 || e.group >= 13)} {...cell} />
         <Grid label="Transition metals" columns={10} column={(el) => el.group! - 2} firstPeriod={4} elements={ELEMENTS.filter((e) => e.group !== null && e.group >= 3 && e.group <= 12)} {...cell} />
       </div>
+      </div>
 
       <Detail el={picked} ref={detail} />
+      <HowToRead el={picked} focus={focus} onShow={onShow} />
 
       <div className="flex flex-col gap-1.5">
         <span className="text-xs font-bold uppercase tracking-[0.08em]" style={{ color: INK_2 }}>Families: press one to pick it out</span>
@@ -69,10 +96,10 @@ export function PeriodicTable({ alt }: { alt: string }) {
             <button
               key={f}
               type="button"
-              aria-pressed={family === f}
-              onClick={() => setFamily(family === f ? null : f)}
+              aria-pressed={familyOn(f)}
+              onClick={() => setFocus(familyOn(f) ? null : { family: f })}
               className="flex min-h-9 items-center gap-1.5 rounded-full px-3 text-[13px] font-bold"
-              style={{ background: FAMILY_STYLE[f].fill, color: INK, border: `${family === f ? 2 : 1}px solid ${FAMILY_STYLE[f].edge}` }}
+              style={{ background: FAMILY_STYLE[f].fill, color: INK, border: `${familyOn(f) ? 2 : 1}px solid ${FAMILY_STYLE[f].edge}` }}
             >
               {FAMILY_LABEL[f]}
             </button>
@@ -99,11 +126,12 @@ interface GridProps {
   firstPeriod?: number
   elements: Element[]
   picked: Element
-  family: ElementFamily | null
+  /** False for a cell the table is not picking out just now, which fades. */
+  lit: (el: Element) => boolean
   onPick: (el: Element) => void
 }
 
-function Grid({ label, columns, column, header, firstPeriod = 1, elements, picked, family, onPick }: GridProps) {
+function Grid({ label, columns, column, header, firstPeriod = 1, elements, picked, lit, onPick }: GridProps) {
   const top = header ? 2 : 1
   return (
     <div className="flex flex-col gap-1">
@@ -115,7 +143,7 @@ function Grid({ label, columns, column, header, firstPeriod = 1, elements, picke
         {elements.map((el) => {
           const s = FAMILY_STYLE[el.family]
           const on = picked.z === el.z
-          const faded = family !== null && el.family !== family
+          const faded = !lit(el)
           const at = column(el)
           const between = typeof at === 'string' ? Number(at.split(' ')[1]) : undefined
           // Across the table like a wave, top left first: a cell waits for its row and its column.
@@ -159,10 +187,18 @@ function Detail({ el, ref }: { el: Element; ref: React.Ref<HTMLElement> }) {
   return (
     <section ref={ref} aria-live="polite" className="flex flex-col gap-2 rounded-xl p-3 transition-colors sm:flex-row sm:gap-4" style={{ background: s.fill, border: `1px solid ${s.edge}` }}>
       {/* Keyed by the element, so each press brings its card in afresh. The section itself stays, for the screen reader's sake. */}
-      <div key={el.z} className="anim-pop flex h-24 w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-white" style={{ border: `2px solid ${s.edge}`, color: INK }}>
-        <span className="text-xs" style={{ color: INK_2 }}>{el.mass}</span>
-        <span className="text-3xl font-bold leading-none">{el.symbol}</span>
-        <span className="text-xs" style={{ color: INK_2 }}>{el.z}</span>
+      {/* The cell, labelled: what each of its three lines is. The words beside it say the same to a screen reader, so the labels are hidden from one. */}
+      <div key={el.z} className="anim-pop flex shrink-0 gap-2">
+        <div className="flex h-24 w-20 flex-col items-center justify-between rounded-lg bg-white py-1.5" style={{ border: `2px solid ${s.edge}`, color: INK }}>
+          <span className="text-xs leading-4" style={{ color: INK_2 }}>{el.mass}</span>
+          <span className="text-3xl font-bold leading-none">{el.symbol}</span>
+          <span className="text-xs leading-4" style={{ color: INK_2 }}>{el.z}</span>
+        </div>
+        <div aria-hidden data-cell-labels className="flex h-24 flex-col justify-between py-1.5 text-[12px] font-bold leading-4" style={{ color: INK_2 }}>
+          <span>← relative atomic mass</span>
+          <span>← symbol</span>
+          <span>← atomic number</span>
+        </div>
       </div>
       <div key={`words-${el.z}`} className="anim-fade-up flex min-w-0 flex-col gap-1" style={{ color: INK }}>
         <h3 className="text-lg font-bold capitalize leading-tight">{el.name}</h3>
@@ -175,5 +211,56 @@ function Detail({ el, ref }: { el: Element; ref: React.Ref<HTMLElement> }) {
         <p className="text-sm">{factFor(el)}</p>
       </div>
     </section>
+  )
+}
+
+/**
+ * How to read the table, for the element pressed: the neutrons sum and what its row and
+ * column say. The rule is stated once under each, in grey; the line above it changes.
+ */
+function HowToRead({ el, focus, onShow }: { el: Element; focus: Focus; onShow: (f: 'period' | 'group') => void }) {
+  const work = neutronWorking(el)
+  const place = placeOf(el)
+  const columnName = el.group === null ? null : el.group >= 3 && el.group <= 12 ? 'its column' : groupName(el.group)
+  const card = 'flex flex-col gap-2 rounded-xl bg-white p-3'
+  const heading = 'text-xs font-bold uppercase tracking-[0.08em]'
+  const show = (f: 'period' | 'group', label: string) => (
+    // The figure is white in every theme, so the button's colours are this figure's own, not the theme's.
+    <button
+      type="button"
+      aria-pressed={focus === f}
+      onClick={() => onShow(f)}
+      className="btn min-h-9 shrink-0 self-start whitespace-nowrap px-3 text-[13px]"
+      style={focus === f ? { background: INK, color: '#fff', borderColor: INK } : { background: '#fff', color: INK, borderColor: '#9ca3af' }}
+    >
+      {/* A toggle keeps its name, as the family buttons do; pressed shows in the fill. */}
+      Show {label}
+    </button>
+  )
+  return (
+    <div className="grid gap-3 sm:grid-cols-2" style={{ color: INK }}>
+      <section aria-label="Finding the neutrons" className={card} style={{ border: '1px solid #d1d5db' }}>
+        <h3 className={heading} style={{ color: INK_2 }}>Finding the neutrons</h3>
+        <div key={el.z} className="anim-fade-up flex flex-col gap-1">
+          <p className="text-2xl font-bold tabular-nums" data-neutrons>{work.sum ?? 'Given in the question'}</p>
+          <p className="text-sm">{work.words}</p>
+        </div>
+        <p className="mt-auto text-xs" style={{ color: INK_2 }}>Neutrons = relative atomic mass − atomic number. It works for the first 20 elements, except chlorine.</p>
+      </section>
+      <section aria-label="Its row and its column" className={card} style={{ border: '1px solid #d1d5db' }}>
+        <h3 className={heading} style={{ color: INK_2 }}>Its row and its column</h3>
+        <div key={el.z} className="anim-fade-up flex flex-col gap-2">
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-sm"><strong>Row:</strong> {place.row}</p>
+            {show('period', `period ${el.period}`)}
+          </div>
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-sm"><strong>Column:</strong> {place.column}</p>
+            {columnName && show('group', columnName.startsWith('Group') ? `group ${columnName.slice(6)}` : columnName)}
+          </div>
+        </div>
+        <p className="mt-auto text-xs" style={{ color: INK_2 }}>A row is a period: every element in it has the same number of electron shells. A column is a group: the same number of electrons in the outer shell, which is why its elements react alike.</p>
+      </section>
+    </div>
   )
 }
