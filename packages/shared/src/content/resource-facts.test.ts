@@ -55,6 +55,121 @@ describe('Chemistry, against AQA 8462', () => {
   })
 })
 
+/**
+ * Atom counts from a formula as the sheets write it in KaTeX: \text{(NH}_4\text{)}_2\text{SO}_4.
+ * A polymer's n is counted as 3, so (C₂H₄)ₙ and n C₂H₄ agree only if both carry the n.
+ */
+function atomsOf(tex: string): Map<string, number> {
+  const f = tex.replace(/\\text\{([^}]*)\}/g, '$1').replace(/_\{?(\d+|n)\}?/g, '$1').replace(/\)n$/, ')3').replace(/\s/g, '')
+  const stack: Map<string, number>[] = [new Map()]
+  const add = (m: Map<string, number>, k: string, v: number) => m.set(k, (m.get(k) ?? 0) + v)
+  for (let i = 0; i < f.length;) {
+    if (f[i] === '(') { stack.push(new Map()); i++; continue }
+    if (f[i] === ')') {
+      const n = /^\d*/.exec(f.slice(i + 1))![0]
+      const inner = stack.pop()!
+      for (const [k, v] of inner) add(stack.at(-1)!, k, v * Number(n || 1))
+      i += 1 + n.length
+      continue
+    }
+    const m = /^([A-Z][a-z]?)(\d*)/.exec(f.slice(i))
+    if (!m) throw new Error(`cannot read ${tex} at ${f.slice(i)}`)
+    add(stack.at(-1)!, m[1]!, Number(m[2] || 1))
+    i += m[0].length
+  }
+  expect(stack).toHaveLength(1)
+  return stack[0]!
+}
+const sameAtoms = (a: Map<string, number>, b: Map<string, number>) => a.size === b.size && [...a].every(([k, v]) => b.get(k) === v)
+/** One side of an equation: each term's coefficient and formula. */
+const terms = (side: string) => side.split(' + ').map((t) => {
+  const m = /^\s*(\d+|n\\,)?(.+?)\s*$/.exec(t)!
+  return { coef: m[1] === undefined ? 1 : m[1].startsWith('n') ? 3 : Number(m[1]), atoms: atomsOf(m[2]!) }
+})
+const total = (side: string) => {
+  const sum = new Map<string, number>()
+  for (const t of terms(side)) for (const [k, v] of t.atoms) sum.set(k, (sum.get(k) ?? 0) + t.coef * v)
+  return sum
+}
+
+/**
+ * The compounds sheet is something to learn by heart, so a slip in it is learnt too. Each
+ * equation must balance and must make the compound its row is about; a formula pasted into
+ * the wrong row, or a coefficient dropped, fails here.
+ */
+describe('Chemistry, common compounds and bonds', () => {
+  const compounds = tables(sheet('chemistry', 'common-compounds'))
+  const rows = compounds.flatMap((t) => t.rows)
+  const equations = rows.flatMap((row) => [...row[3]!.matchAll(/\$([^$]*\\(?:rightarrow|rightleftharpoons)[^$]*)\$/g)].map((m) => ({ row, eq: m[1]! })))
+
+  it('reads every equation on the sheet, not none of them', () => {
+    expect(rows.length).toBeGreaterThanOrEqual(40)
+    expect(equations.length).toBeGreaterThanOrEqual(35)
+  })
+
+  it('balances every equation', () => {
+    for (const { eq } of equations) {
+      const [left, right] = eq.split(/\\rightarrow|\\rightleftharpoons/)
+      expect(sameAtoms(total(left!), total(right!)), eq).toBe(true)
+    }
+  })
+
+  it('makes the compound named in the row', () => {
+    for (const { row, eq } of equations) {
+      const made = atomsOf(row[1]!.replace(/\$/g, ''))
+      const right = eq.split(/\\rightarrow|\\rightleftharpoons/)[1]!
+      expect(terms(right).some((t) => sameAtoms(t.atoms, made)), `${row[0]}: ${eq}`).toBe(true)
+    }
+  })
+
+  it('names each compound once', () => {
+    const names = rows.map((r) => r[0])
+    expect(new Set(names).size).toBe(names.length)
+  })
+
+  /** 4.2.1.4: "draw dot and cross diagrams for the molecules of hydrogen, chlorine, oxygen, nitrogen, hydrogen chloride, water, ammonia and methane". */
+  it('lists the eight molecules the specification names, and draws each', () => {
+    const r = sheet('chemistry', 'how-bonds-form')
+    const molecules = tables(r).find((t) => t.title === 'The eight molecules to draw')!.rows
+    expect(molecules.map((m) => m[0])).toEqual(['Hydrogen', 'Chlorine', 'Hydrogen chloride', 'Oxygen', 'Nitrogen', 'Water', 'Ammonia', 'Methane'])
+    const drawn = r.blocks.flatMap((b) => (b.kind === 'visual' && b.visual.type === 'diagram' && b.visual.props.kind === 'covalent' ? [b.visual.props.atoms as { symbol: string }[]] : []))
+    expect(drawn).toHaveLength(8)
+    drawn.forEach((atoms, i) => {
+      const counted = new Map<string, number>()
+      for (const a of atoms) counted.set(a.symbol, (counted.get(a.symbol) ?? 0) + 1)
+      expect(sameAtoms(counted, atomsOf(molecules[i]![1]!.replace(/\$/g, ''))), molecules[i]![0]).toBe(true)
+    })
+  })
+
+  it('counts the atoms each naming prefix says', () => {
+    const prefixes = tables(sheet('chemistry', 'naming-compounds')).find((t) => t.title?.startsWith('Prefixes'))!.rows
+    expect(prefixes.length).toBeGreaterThanOrEqual(4)
+    for (const [, means, example] of prefixes) {
+      const formula = atomsOf(/\$([^$]+)\$/.exec(example!)![1]!)
+      // the counted element is the second one, the one the prefix stands in front of
+      expect([...formula.values()].at(-1), example).toBe(Number(means))
+    }
+  })
+
+  /** AQA 8462 names compounds with -ide, -ate and Roman numerals; it has no -ite ion and no -ous or -ic names. The sheet writes a suffix's hyphen non-breaking. */
+  it('marks the -ite ions and the -ous and -ic names as beyond the course', () => {
+    const r = sheet('chemistry', 'naming-compounds')
+    const rows = tables(r).flatMap((t) => t.rows)
+    for (const row of rows.filter((x) => /^[-‑]ite|[-‑]ous|ous acid/.test(x[0]!))) expect(row[0], row[0]).toContain('beyond the course')
+    expect(rows.filter((x) => x[0]!.includes('beyond the course')).length).toBe(4)
+  })
+
+  it('accounts for every outer electron in each molecule', () => {
+    const outer: Record<string, number> = { H: 1, C: 4, N: 5, O: 6, Cl: 7 }
+    const molecules = tables(sheet('chemistry', 'how-bonds-form')).find((t) => t.title === 'The eight molecules to draw')!.rows
+    for (const [name, formula, shared, unshared] of molecules) {
+      let electrons = 0
+      for (const [k, v] of atomsOf(formula!.replace(/\$/g, ''))) electrons += outer[k]! * v
+      expect(2 * Number(shared) + 2 * Number(unshared), name).toBe(electrons)
+    }
+  })
+})
+
 describe('Biology, against Edexcel 1BI0', () => {
   const practicals = tables(sheet('biology', 'core-practicals'))[0]!.rows
 
