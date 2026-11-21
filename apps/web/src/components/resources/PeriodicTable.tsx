@@ -101,9 +101,24 @@ export function PeriodicTable({ alt }: { alt: string }) {
               className="flex min-h-9 items-center gap-1.5 rounded-full px-3 text-[13px] font-bold"
               style={{ background: FAMILY_STYLE[f].fill, color: INK, border: `${familyOn(f) ? 2 : 1}px solid ${FAMILY_STYLE[f].edge}` }}
             >
+              {/* A tick as well as the thicker edge: the edge alone was easy to miss. */}
+              {familyOn(f) && <span aria-hidden>✓</span>}
               {FAMILY_LABEL[f]}
             </button>
           ))}
+          {/* Pressing the family again lets go too, but nothing said so. This shows while
+              anything is picked out, a family or the pressed element's row or column. */}
+          {focus !== null && (
+            <button
+              type="button"
+              onClick={() => setFocus(null)}
+              data-show-all
+              className="flex min-h-9 items-center gap-1.5 rounded-full px-3 text-[13px] font-bold"
+              style={{ background: INK, color: '#fff', border: `1px solid ${INK}` }}
+            >
+              <span aria-hidden>✕</span>Show all
+            </button>
+          )}
         </div>
       </div>
       <figcaption className="text-sm" style={{ color: INK_2 }}>
